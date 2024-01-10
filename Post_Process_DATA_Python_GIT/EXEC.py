@@ -444,6 +444,7 @@ elif superposer_courbes:	# Si on affiche les fichiers de données d'un dossier
 				if calcul_ok_vimpact:
 					vitesse_impact_moyenne_tab.append(mean(v_pts))
 				else:
+					vitesse_impact_moyenne_tab.append(0)
 					break
 
 			vitesse_impact_moyenne = mean(vitesse_impact_moyenne_tab)
