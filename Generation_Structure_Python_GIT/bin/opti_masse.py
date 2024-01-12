@@ -131,8 +131,6 @@ def opti_masse(	doc,
 	# Importation des modules externes
 	import sys
 
-	print(gen)
-
 	# Génération de la structure
 	gen(ep, doc, file_debug, *args)
 	

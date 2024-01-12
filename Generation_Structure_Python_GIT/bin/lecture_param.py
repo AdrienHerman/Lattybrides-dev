@@ -51,7 +51,7 @@ def lecture_param(path_config="config.txt", debug=True):
 	gen_hex_tri1_2D_aligne_grad = None
 	gen_hex_tri1_2D_naligne_basic = None
 	gen_hex_tri1_2D_naligne_grad = None
-	gen_func = [None for i in range(4)]
+	gen_func = [None for i in range(6)]
 	#	Géométrie générale
 	generation_plateaux_extremitees = None
 	ep_plateau_dessous = None
@@ -162,20 +162,20 @@ def lecture_param(path_config="config.txt", debug=True):
 		elif lignes[i][0] == "gen_hex_tri1_2D_naligne_basic":
 			if lignes[i][1] == "False":
 				gen_hex_tri1_2D_naligne_basic = False
-				gen_func[2] = False
+				gen_func[4] = False
 			elif lignes[i][1] == "True":
 				gen_hex_tri1_2D_naligne_basic = True
-				gen_func[2] = True
+				gen_func[4] = True
 			else:
 				if debug:
 					log += "lecture_param\nCommande inconnue pour gen_hex_tri1_2D_naligne_basic\n"
 		elif lignes[i][0] == "gen_hex_tri1_2D_naligne_grad":
 			if lignes[i][1] == "False":
 				gen_hex_tri1_2D_naligne_grad = False
-				gen_func[3] = False
+				gen_func[5] = False
 			elif lignes[i][1] == "True":
 				gen_hex_tri1_2D_naligne_grad = True
-				gen_func[3] = True
+				gen_func[5] = True
 			else:
 				if debug:
 					log += "lecture_param\nCommande inconnue pour gen_hex_tri1_2D_naligne_grad\n"

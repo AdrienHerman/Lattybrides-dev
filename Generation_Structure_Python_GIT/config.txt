@@ -20,7 +20,7 @@
 #: ** correction_ep_par_pas, pourcentage_modification_correction,
 #: ** seuil_augmentation_correction, seuil_diminution_correction, rho
 #: ** doivent-être renseignées
-optimisation_masse:True:
+optimisation_masse:False:
 #: ** Objectif de masse à atteindre avant l'arrêt des calculs (en g)
 objectif_masse:18:
 #: ** Tolérance sur l'objectif de masse
@@ -52,8 +52,8 @@ gen_hex_tri1_2D_aligne_basic:False:
 gen_hex_tri1_2D_aligne_grad:False:
 #:
 #: Structure à base d'hexagones et de triangles non alignés  : No3
-gen_hex_tri1_2D_naligne_basic:False:
-gen_hex_tri1_2D_naligne_grad:True:
+gen_hex_tri1_2D_naligne_basic:True:
+gen_hex_tri1_2D_naligne_grad:False:
 #:--------------------------------------
 #:
 #:-----------------------------------------
@@ -103,7 +103,7 @@ nb_y_par_couche:8,6:
 #:
 #: ** Choix du nombre de losanges en x par couches
 #: ** ATTENTION : Il doit il y avoir le même nombre de valeur que nb_y_par_couche
-nb_x_par_couche:7,7:
+nb_x_par_couche:10,5:
 #:
 #: ** Épaisseur des couches (en y)
 #: ** Si dimlat_par_couche_manuel = False, les dimensions des couches
@@ -118,12 +118,12 @@ dimlat_par_couche:13.3,17.7:
 #: ** Choix de l'épaisseur des parois de chaque couche
 #: ** ep_par_couche est en pourcentage de l'épaisseur ep définie ci-dessus
 #: ** ATTENTION : Il doit il y avoir le même nombre de valeur que nb_y_par_couche
-ep_par_couche:1,0.73:
+ep_par_couche:1,1:
 #:
 #: ** Choix de l'épaisseur des plateaux liants les différentes couches en (mm)
 #: ** Laisser la valeur à 0 si le plateau ne doit pas être créé
 #: ** ATTENTION : Il doit il y avoir une valeur de moins que nb_y_par_couche
-ep_plateaux:0:
+ep_plateaux:0.4:
 #:
 #: /// GÉNÉRATION DE LA STRUCTURE HEXAGONES + TRIANGLES1 2D ALIGNÉS OU NON \\\
 #: Radians
