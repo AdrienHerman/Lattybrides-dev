@@ -118,7 +118,7 @@ if not superposer_courbes:	# Si on affiche qu'un seul fichier de données
 			if impact:
 				impact_text = " / Stop impacteur"
 			elif impact == False:
-				impact_text = " / Énergie totalement absobée"
+				impact_text = " / Énergie totalement absorbée"
 
 		elif (not sppr_rollback or not recherche_deb_impact or not tarrage_dep) and not deb_impact_manuel:
 			print("Les paramètres deb_impact_manuel ou sppr_rollback, recherche_deb_impact et tarrage_dep doivent-être activés pour effectuer la détection de fin d'impact !")
@@ -389,7 +389,7 @@ elif superposer_courbes:	# Si on affiche les fichiers de données d'un dossier
 			elif True in impact:
 				impact_text = " / Stop impacteur"
 			else:
-				impact_text = " / Énergie totalement absobée"
+				impact_text = " / Énergie totalement absorbée"
 
 		elif (not sppr_rollback or not recherche_deb_impact or not tarrage_dep) and not deb_impact_manuel:
 			print("Les paramètres deb_impact_manuel ou sppr_rollback, recherche_deb_impact et tarrage_dep doivent-être activés pour effectuer la détection de fin d'impact !")
