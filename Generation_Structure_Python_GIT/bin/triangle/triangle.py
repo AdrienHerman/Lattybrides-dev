@@ -54,7 +54,7 @@ def gen_triangle_basic(	ep=0.4,
 		- gen_plateaux -> Fonction de génération des plateaux liant les deux extrémités
 		- generation_plateaux_extremitees -> True = Les plateaux aux extrémités sont générés, False = Génération des plateaux ignorés
 		- wdebug -> Fonction d'écriture des informations de débogage dans le terminal et dans le fichier log
-		- sketch -> Objet contenant l'esquisse de la structure losange
+		- sketch -> Objet contenant l'esquisse de la structure triangle
 	-----------
 	"""
 
@@ -86,7 +86,7 @@ def gen_triangle_basic(	ep=0.4,
 	-------------------------------
 	Note : Toutes les dimensions sont exprimées en mm et réfèrent au schéma
 	"""
-	# Dimensions caractéristiques du losange calculées (voir schéma)
+	# Dimensions caractéristiques du triangle calculées (voir schéma)
 	lx = dimlat_x/nb_tri_x/2
 	ly = dimlat_x/nb_tri_y/2
 	if file_debug != None and debug: wdebug("""lx:{0}
@@ -108,8 +108,8 @@ def gen_triangle_basic(	ep=0.4,
 	# Création d'une nouvelle esquisse et de la pièce
 	if sketch == "":
 		if file_debug != None and debug:
-			wdebug("Création de l'esquisse du losange : {0}\n".format(nom_sketch_tri), file_debug)
-			wdebug("Création du body du losange : {0}\n".format(nom_body_tri), file_debug)
+			wdebug("Création de l'esquisse du triangle : {0}\n".format(nom_sketch_tri), file_debug)
+			wdebug("Création du body du triangle : {0}\n".format(nom_body_tri), file_debug)
 
 		sketch = doc.addObject("Sketcher::SketchObject", nom_sketch_tri)
 		body = doc.addObject('PartDesign::Body', nom_body_tri)
@@ -135,7 +135,7 @@ def gen_triangle_basic(	ep=0.4,
 																										file_debug)
 				wdebug("\n", file_debug)
 
-	# Curseur de position (repère local à chaque losange)
+	# Curseur de position (repère local à chaque triangle)
 	current_pos = (0,0,0)
 
 	# i = Numéro de triangle y (ligne)
