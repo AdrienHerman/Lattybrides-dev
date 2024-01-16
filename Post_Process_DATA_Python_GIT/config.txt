@@ -12,13 +12,13 @@
 #: ** Si cette option est à True, nom_dossier doit-être renseigné
 #: ** Sinon, nom_fichier doit-être renseigné
 superposer_courbes:False:
-nom_fichier:DATA/STRUCT_09_2.CSV:
+nom_fichier:DATA/STRUCT_11P_3.txt:
 nom_dossier:DATA/:
 #:
 #: ** Fichier(s) de données. Le type CSV provient de l'oscilloscope
 #: ** et le type TXT provient de l'enregistrement de ce logiciel.
 #: ** Cette option n'est prise en compte uniquement si superposer_courbes = True
-type_fichier:CSV:
+type_fichier:TXT:
 #:
 #: ** Calculer les données de temps de l'essai
 #: ** True = Oui / False = Non
@@ -30,7 +30,7 @@ calc_temps:True:
 #: ** Sinon vous pouvez renseigner le nom de fichier ci-dessous.
 #: ** ATTENTION : Ne pas mettre .txt à la fin du nom de fichier.
 enregistrer_data:True:
-nom_enregistrement:STRUCT_09_2:
+nom_enregistrement:STRUCT_9_3:
 dossier_enregistrement:DATA/:
 #:-----------------------------------
 #:
@@ -77,8 +77,8 @@ tarrage_tmps:True:
 #: ** ATTENTION : detect_fin_essai ne peut-être activé que lorsque sppr_rollback, recherche_deb_impact
 #: ** et tarrage_dep sont activés !
 detect_fin_essai:True:
-#:dep_max:3.3:
-dep_max:19.73:
+dep_max:5.7:
+#:dep_max:19.73:
 #:
 #: ** Si calculer_energie = True, un calcul de l'énergie (intégration des données
 #: ** Force = f(Déplacement) avec la méthode de Simpson à 3 points) est effectué.

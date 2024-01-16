@@ -65,7 +65,7 @@ def gen_losange(	ep=0.4,
 	-------------------------------
 	--- Variables de l'objet 3D ---
 	-------------------------------
-	Note : Toutes les dimensions sont exprimées en mm
+	Note : Toutes les dimensions sont exprimées en mm et réfèrent au schéma
 	"""
 	# Listes de points utilisés
 	liste_points_dessous = [[None for i in range(nb_losange_x)] for j in range(nb_losange_y * 2)]

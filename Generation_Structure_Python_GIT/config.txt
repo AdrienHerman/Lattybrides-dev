@@ -52,8 +52,12 @@ gen_hex_tri1_2D_aligne_basic:False:
 gen_hex_tri1_2D_aligne_grad:False:
 #:
 #: Structure à base d'hexagones et de triangles non alignés  : No3
-gen_hex_tri1_2D_naligne_basic:True:
+gen_hex_tri1_2D_naligne_basic:False:
 gen_hex_tri1_2D_naligne_grad:False:
+#:
+#: Structure à base de triangles : No4
+gen_tri_2D_basic:False:
+gen_tri_2D_grad:True:
 #:--------------------------------------
 #:
 #:-----------------------------------------
@@ -131,6 +135,13 @@ ep_plateaux:0.4:
 alpha_hex_tri1_2D:1.01:
 #: ** Avec gradients
 alpha_hex_tri1_2D_grad:1.01,0.95,0.87:
+#:
+#: /// GÉNÉRATION DE LA STRUCTURE TRIANGLES 2D \\\
+#: Radians
+#: ** Sans gradients
+alpha_tri_2D:1.01:
+#: ** Avec gradients
+alpha_tri_2D_grad:1.01,0.95,0.87:
 #:
 #:-----------------------------------------
 #:

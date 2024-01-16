@@ -10,6 +10,7 @@ from PySide import QtGui
 import FreeCADGui, ImportGui, Part, Sketcher, math, os, sys, time
 
 # Modules du Logiciel
+#path_soft = "C:/Users/Adrien Herman/Documents/Shadow Drive/INSA 5A/PLP/Python/Utilisation/Generation Structures Python/"
 path_soft = "/home/adrienherman/Documents/Shadow Drive/INSA 5A/PLP/Python/dev/Generation_Structure_Python_GIT/"
 sys.path.append(path_soft + "bin/")
 sys.path.append(path_soft + "bin/losange/")
@@ -22,6 +23,8 @@ from losange.losange import *
 from losange.losange_grad import *
 from hexagone_triangle1_2D.hex_tri1_2D import *
 from hexagone_triangle1_2D.hex_tri1_2D_grad import *
+from triangle.triangle import *
+from triangle.triangle_grad import *
 
 # Lecture des parmaètres du programme
 [	lecture_param_ok,
@@ -31,6 +34,8 @@ from hexagone_triangle1_2D.hex_tri1_2D_grad import *
 	gen_hex_tri1_2D_aligne_grad,
 	gen_hex_tri1_2D_naligne_basic,
 	gen_hex_tri1_2D_naligne_grad,
+	gen_tri_2D_basic,
+	gen_tri_2D_grad,
 	generation_plateaux_extremitees,
 	ep_plateaux_extremitees,
 	ep,
@@ -56,6 +61,8 @@ from hexagone_triangle1_2D.hex_tri1_2D_grad import *
 	ep_plateaux,
 	alpha_hex_tri1_2D,
 	alpha_hex_tri1_2D_grad,
+	alpha_tri_2D,
+	alpha_tri_2D_grad,
 	extrude,
 	export,
 	export_name,
@@ -289,7 +296,76 @@ if lecture_param_ok:
 										generation_plateaux_extremitees,
 										wdebug)
 
-	elif gen_losange_grad or gen_hex_tri1_2D_aligne_grad or gen_hex_tri1_2D_naligne_grad:
+	elif gen_tri_2D_basic:
+		if optimisation_masse:
+			masse, pas_final, ep_finale, porosite = opti_masse(	
+					doc,
+					"Body_Tri_2D",
+					"Pad_Tri_2D",
+					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
+					"Sketch_Tri_2D",
+					["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
+					gen_triangle_basic,
+					file_debug,
+					wdebug,
+					debug,
+					tolerance,
+					nb_pas_max,
+					[0 for i in range(nb_pas_max)],
+					ep,
+					0,
+					correction_ep_par_pas,
+					pourcentage_modification_correction,
+					seuil_augmentation_correction,
+					seuil_diminution_correction,
+					objectif_masse,
+					rho,
+					volume_max,
+					nb_motif_x_sg,
+					nb_motif_y_sg,
+					alpha_tri_2D,
+					dimlat_x,
+					dimlat_y,
+					dimlat_ep,
+					ep_plateaux_extremitees,
+					semi_debug,
+					debug,
+					sketch_visible,
+					extrude,
+					"Sketch_Tri_2D",
+					["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
+					"Body_Tri_2D",
+					"Pad_Tri_2D",
+					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
+					gen_plateaux,
+					generation_plateaux_extremitees,
+					wdebug)
+
+		else:
+			gen_triangle_basic(	ep,
+								doc,
+								file_debug,
+								nb_motif_x_sg,
+								nb_motif_y_sg,
+								alpha_tri_2D,
+								dimlat_x,
+								dimlat_y,
+								dimlat_ep,
+								ep_plateaux_extremitees,
+								semi_debug,
+								debug,
+								sketch_visible,
+								extrude,
+								"Sketch_Tri_2D",
+								["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
+								"Body_Tri_2D",
+								"Pad_Tri_2D",
+								["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
+								gen_plateaux,
+								generation_plateaux_extremitees,
+								wdebug)
+
+	elif gen_losange_grad or gen_hex_tri1_2D_aligne_grad or gen_hex_tri1_2D_naligne_grad or gen_tri_2D_grad:
 		# Création des listes pour les plateaux
 		plateaux = []
 		if generation_plateaux_extremitees:	plateaux.append(ep_plateaux_extremitees[0])
@@ -529,6 +605,79 @@ if lecture_param_ok:
 											gen_plateaux,
 											gen_hex_tri1_2D_naligne,
 											wdebug)
+
+		elif gen_tri_2D_grad:
+			if optimisation_masse:
+				masse, pas_final, ep_finale, porosite = opti_masse(	
+					doc,
+					"Body_Hex_Tri",
+					nom_pad_par_couche,
+					nom_pad_plateaux,
+					nom_sketch_par_couche,
+					nom_sketch_plateaux,
+					gen_triangle_grad,
+					file_debug,
+					wdebug,
+					debug,
+					tolerance,
+					nb_pas_max,
+					[0 for i in range(nb_pas_max)],
+					ep,
+					0,
+					correction_ep_par_pas,
+					pourcentage_modification_correction,
+					seuil_augmentation_correction,
+					seuil_diminution_correction,
+					objectif_masse,
+					rho,
+					volume_max,
+					nb_couches,
+					nb_x_par_couche,
+					nb_y_par_couche,
+					alpha_tri_2D_grad,
+					dimlat_x,
+					dimlat_par_couche,
+					dimlat_ep,
+					ep_par_couche,
+					plateaux,
+					semi_debug,
+					debug,
+					sketch_visible,
+					extrude,
+					nom_sketch_par_couche,
+					nom_sketch_plateaux,
+					"Body_Tri",
+					nom_pad_par_couche,
+					nom_pad_plateaux,
+					gen_plateaux,
+					gen_triangle_basic,
+					wdebug)
+
+			else:
+				gen_triangle_grad(	ep,
+									doc,
+									file_debug,
+									nb_couches,
+									nb_x_par_couche,
+									nb_y_par_couche,
+									alpha_tri_2D_grad,
+									dimlat_x,
+									dimlat_par_couche,
+									dimlat_ep,
+									ep_par_couche,
+									plateaux,
+									semi_debug,
+									debug,
+									sketch_visible,
+									extrude,
+									nom_sketch_par_couche,
+									nom_sketch_plateaux,
+									"Body_Tri",
+									nom_pad_par_couche,
+									nom_pad_plateaux,
+									gen_plateaux,
+									gen_triangle_basic,
+									wdebug)
 
 	if optimisation_masse:
 		# Affichage du graphe de convergeance

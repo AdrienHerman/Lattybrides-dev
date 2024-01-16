@@ -80,6 +80,12 @@ def gen_hex_tri1_2D_aligne(	ep=0.4,
 																	alpha),
 																	file_debug)
 
+	"""
+	-------------------------------
+	--- Variables de l'objet 3D ---
+	-------------------------------
+	Note : Toutes les dimensions sont exprimées en mm et réfèrent au schéma
+	"""
 	# Dimensions caractéristiques du losange calculées (voir schéma)
 	beta = math.pi/2-alpha
 	lx = dimlat_x/nb_hex_x
@@ -101,6 +107,7 @@ def gen_hex_tri1_2D_aligne(	ep=0.4,
 																	beta),
 																	file_debug)
 
+	# Condition à respecter pour pouvoir générer le motif
 	if math.cos(alpha) * cote >= lx / 2:
 		wdebug("gen_hex_tri1_2D_aligne : Il y a trop de motifs en x !\n     nb_hex_x={0}\n".format(nb_hex_x), file_debug)
 		return
