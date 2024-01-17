@@ -618,7 +618,7 @@ def lecture_param(path_config="config.txt", debug=True):
 				log += "lecture_param\ndimlat_par_couche_manuel n'est pas définie !\n"
 			return_nok.append(log)
 			return return_nok
-		elif dimlat_par_couche == None:
+		elif dimlat_par_couche_manuel and dimlat_par_couche == None:
 			if debug:
 				log += "lecture_param\ndimlat_par_couche n'est pas définie !\n"
 			return_nok.append(log)
@@ -641,7 +641,7 @@ def lecture_param(path_config="config.txt", debug=True):
 																					len(nb_y_par_couche))
 			return_nok.append(log)
 			return return_nok
-		if len(dimlat_par_couche) != len(nb_y_par_couche):
+		if dimlat_par_couche_manuel and len(dimlat_par_couche) != len(nb_y_par_couche):
 			if debug:
 				log += """lecture_param\ndimlat_par_couche doit ({0}) avoir le 
 						même nombre d'items que nb_y_par_couche ({1}) !\n""".format(	len(dimlat_par_couche),
