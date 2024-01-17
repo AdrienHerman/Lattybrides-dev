@@ -14,6 +14,9 @@ import FreeCADGui, ImportGui, Part, Sketcher, math, os, sys, time
 path_soft = "/home/adrienherman/Documents/Shadow Drive/INSA 5A/PLP/Python/dev/Generation_Structure_Python_GIT/"
 sys.path.append(path_soft + "bin/")
 sys.path.append(path_soft + "bin/losange/")
+sys.path.append(path_soft + "bin/hexagone_triangle1_2D/")
+sys.path.append(path_soft + "bin/triangle/")
+sys.path.append(path_soft + "bin/math_func/")
 from lecture_param import *
 from plateaux_liants import *
 from export_body import *
@@ -74,7 +77,7 @@ from triangle.triangle_grad import *
 	log] = lecture_param(path_soft + "config.txt")
 
 # Création du fichier de débogage & écriture des log de la fonction lecture_param
-if not debug_current_folder:	debug_current_folder = "log"
+if not debug_current_folder:	debug_current_folder = "log/"
 file_debug = create_file_debug(path_soft + debug_current_folder)
 wdebug(log, file_debug)
 
