@@ -26,8 +26,11 @@ from losange.losange import *
 from losange.losange_grad import *
 from hexagone_triangle1_2D.hex_tri1_2D import *
 from hexagone_triangle1_2D.hex_tri1_2D_grad import *
-from triangle.triangle import *
+from triangle.triangle_struct import *
 from triangle.triangle_grad import *
+from math_func.cosinus import *
+from math_func.cosinus_grad import *
+from math_func.plot_math_function import *
 
 # Lecture des parmaètres du programme
 [	lecture_param_ok,
@@ -39,6 +42,8 @@ from triangle.triangle_grad import *
 	gen_hex_tri1_2D_naligne_grad,
 	gen_tri_2D_basic,
 	gen_tri_2D_grad,
+	gen_cos_2D_basic,
+	gen_cos_2D_grad,
 	generation_plateaux_extremitees,
 	ep_plateaux_extremitees,
 	ep,
@@ -66,6 +71,13 @@ from triangle.triangle_grad import *
 	alpha_hex_tri1_2D_grad,
 	alpha_tri_2D,
 	alpha_tri_2D_grad,
+	phi_x,
+	phi_y,
+	period_fact_x,
+	period_fact_y,
+	amp_x,
+	amp_y,
+	nbpts_cos,
 	extrude,
 	export,
 	export_name,
@@ -367,6 +379,89 @@ if lecture_param_ok:
 								gen_plateaux,
 								generation_plateaux_extremitees,
 								wdebug)
+
+	elif gen_cos_2D_basic:
+		if optimisation_masse:
+			masse, pas_final, ep_finale, porosite = opti_masse(	
+					doc,
+					"Body_Cos_2D",
+					"Pad_Cos_2D",
+					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
+					"Sketch_Cos_2D",
+					["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
+					gen_cosinus,
+					file_debug,
+					wdebug,
+					debug,
+					tolerance,
+					nb_pas_max,
+					[0 for i in range(nb_pas_max)],
+					ep,
+					0,
+					correction_ep_par_pas,
+					pourcentage_modification_correction,
+					seuil_augmentation_correction,
+					seuil_diminution_correction,
+					objectif_masse,
+					rho,
+					volume_max,
+					nb_motif_x_sg,
+					nb_motif_y_sg,
+					amp_x,
+					period_fact_x,
+					phi_x,
+					amp_y,
+					period_fact_y,
+					phi_y,
+					nbpts_cos,
+					plot_math_func,
+					dimlat_x,
+					dimlat_y,
+					dimlat_ep,
+					ep_plateaux_extremitees,
+					semi_debug,
+					debug,
+					sketch_visible,
+					extrude,
+					"Sketch_Cos_2D",
+					["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
+					"Body_Cos_2D",
+					"Pad_Cos_2D",
+					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
+					gen_plateaux,
+					generation_plateaux_extremitees,
+					wdebug)
+
+		else:
+			gen_cosinus(	ep,
+							doc,
+							file_debug,
+							nb_motif_x_sg,
+							nb_motif_y_sg,
+							amp_x,
+							period_fact_x,
+							phi_x,
+							amp_y,
+							period_fact_y,
+							phi_y,
+							nbpts_cos,
+							plot_math_func,
+							dimlat_x,
+							dimlat_y,
+							dimlat_ep,
+							ep_plateaux_extremitees,
+							semi_debug,
+							debug,
+							sketch_visible,
+							extrude,
+							"Sketch_Cos_2D",
+							["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
+							"Body_Cos_2D",
+							"Pad_Cos_2D",
+							["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
+							gen_plateaux,
+							generation_plateaux_extremitees,
+							wdebug)
 
 	elif gen_losange_grad or gen_hex_tri1_2D_aligne_grad or gen_hex_tri1_2D_naligne_grad or gen_tri_2D_grad:
 		# Création des listes pour les plateaux

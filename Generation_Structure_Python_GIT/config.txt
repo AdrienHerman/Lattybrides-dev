@@ -57,7 +57,11 @@ gen_hex_tri1_2D_naligne_grad:False:
 #:
 #: Structure à base de triangles : No4
 gen_tri_2D_basic:False:
-gen_tri_2D_grad:True:
+gen_tri_2D_grad:False:
+#:
+#: Structure à base de cosinus : No5
+gen_cos_2D_basic:True:
+gen_cos_2D_grad:False:
 #:--------------------------------------
 #:
 #:-----------------------------------------
@@ -80,7 +84,7 @@ ep_plateau_dessus:0.25:
 #: /// PROPRIÉTÉS GÉOMÉTRIQUES COMMUNES \\\
 #: ** Choix de l'épaisseur des parois
 #: ** Entrer un nombre réel positif
-ep:0.35:
+ep:0.2:
 #:
 #: ** Choix de l'épaisseur d'extrusion du modèle
 #: ** Entrer un nombre réel positif
@@ -95,19 +99,19 @@ dimlat_y:40:
 #: /// GÉNÉRATION DE MOTIFS SANS GRADIENT \\\
 #: ** Choix du nombre de losange sur l'axe x et sur l'axe y
 #: ** Entrer un nombre entier
-nb_motif_x_sg:5:
-nb_motif_y_sg:10:
+nb_motif_x_sg:4:
+nb_motif_y_sg:4:
 #:
 #:
 #: /// GÉNÉRATION DE MOTIFS AVEC GRADIENT \\\
 #: ** Choix du nombre de losanges en y par couches
 #: ** Les nombre de losanges doivent-être séparés par une ,
 #: ** ATTENTION : Il ne doit pas il y avoir un espace !
-nb_y_par_couche:8,6:
+nb_y_par_couche:4,6,4:
 #:
 #: ** Choix du nombre de losanges en x par couches
 #: ** ATTENTION : Il doit il y avoir le même nombre de valeur que nb_y_par_couche
-nb_x_par_couche:10,5:
+nb_x_par_couche:7,7,7:
 #:
 #: ** Épaisseur des couches (en y)
 #: ** Si dimlat_par_couche_manuel = False, les dimensions des couches
@@ -117,17 +121,17 @@ nb_x_par_couche:10,5:
 #: ** les épaisseur de chaque couches
 dimlat_par_couche_manuel:False:
 #: ** ATTENTION : Il doit il y avoir le même nombre de valeur que nb_y_par_couche
-dimlat_par_couche:13.3,17.7:
+dimlat_par_couche:13.3,17.7,0:
 #:
 #: ** Choix de l'épaisseur des parois de chaque couche
 #: ** ep_par_couche est en pourcentage de l'épaisseur ep définie ci-dessus
 #: ** ATTENTION : Il doit il y avoir le même nombre de valeur que nb_y_par_couche
-ep_par_couche:1,1:
+ep_par_couche:0.73,1,0.73:
 #:
 #: ** Choix de l'épaisseur des plateaux liants les différentes couches en (mm)
 #: ** Laisser la valeur à 0 si le plateau ne doit pas être créé
 #: ** ATTENTION : Il doit il y avoir une valeur de moins que nb_y_par_couche
-ep_plateaux:0.4:
+ep_plateaux:0,0:
 #:
 #: /// GÉNÉRATION DE LA STRUCTURE HEXAGONES + TRIANGLES1 2D ALIGNÉS OU NON \\\
 #: Radians
@@ -142,6 +146,37 @@ alpha_hex_tri1_2D_grad:1.01,0.95,0.87:
 alpha_tri_2D:1.01:
 #: ** Avec gradients
 alpha_tri_2D_grad:1.01,0.95,0.87:
+#:
+#: /// GÉNÉRATION DE LA STRUCTURE COSINUS 2D \\\
+#: *** Déphasage du cosinus en radians (cos(x + phi))
+#: *** Il est possible de renseigner plusieurs déphasages (un par cosinus
+#: *** tracé). Il faudra donc commenter les lignes sans plusieurs déphasages
+#: *** et s'assurer que phi_x et phi_x soient respectivements aussi longs que
+#: *** le nombres de motifs en x et en y.
+#: ATTENTION : Si phi_x contient pliseurs déphasages alors phi_y doit aussi
+#: contenir plusieurs déphasages même s'ils sont identiques.
+phi_x:0.0:
+#:phi_x:0.0,0.0,0.0:
+phi_y:0.0:
+#:phi_y:0.0,0.0,0.0:
+#: *** Facteur sur la période du cosinus (cos(x * period_fact))
+#: *** Même chose que sur le déphasage il est possible de renseigner
+#: *** plusieurs périodes.
+period_fact_x:1.0:
+#:period_fact_x:1.0,1.0,1.0:
+period_fact_y:1.0:
+#:period_fact_y:1.0,1.0,1.0:
+#: *** Amplitude du cosinus (amp * cos(x))
+#: *** Même chose que sur le déphasage il est possible de renseigner
+#: *** plusieurs amplitudes.
+amp_x:2.0:
+#:amp_x:2.0,2.0,2.0:
+amp_y:2.0:
+#:amp_y:2.0,2.0,2.0:
+#: *** Nombre de points de discrétisation du cosinus
+#: *** nbpts_cos = 4 points par période minimum pour avoir une
+#: *** bonne précision
+nbpts_cos:160:
 #:
 #:-----------------------------------------
 #:

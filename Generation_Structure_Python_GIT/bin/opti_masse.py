@@ -54,6 +54,17 @@ def suppr_structure(doc,
 	-----------
 	"""
 
+	import FreeCAD as App
+	import FreeCADGui as Gui
+
+	Gui.Selection.addSelectionGate("SELECT PartDesign::Body")
+	if len(Gui.Selection.getSelection()) != 0:	App.getDocument('Unnamed').removeObject(Gui.Selection.getSelection()[0].Label)
+	Gui.Selection.addSelectionGate("SELECT PartDesign::Pad")
+	if len(Gui.Selection.getSelection()) != 0:	App.getDocument('Unnamed').removeObject(Gui.Selection.getSelection()[0].Label)
+	Gui.Selection.addSelectionGate("SELECT Sketcher::SketchObject")
+	if len(Gui.Selection.getSelection()) != 0:	App.getDocument('Unnamed').removeObject(Gui.Selection.getSelection()[0].Label)
+
+	"""
 	doc.getObject(nom_body).removeObjectsFromDocument()
 	doc.removeObject(nom_body)
 	if type(nom_sketch_losange) == list:
@@ -69,6 +80,7 @@ def suppr_structure(doc,
 			except:	pass
 	else:
 		doc.removeObject(nom_sketch_plateaux)
+	"""
 	doc.recompute()
 
 def opti_masse(	doc,

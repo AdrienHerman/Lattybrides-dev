@@ -18,7 +18,7 @@ def gen_plateaux(	nb_couches=3,
 					file_debug=None,
 					wdebug=None):
 	"""
-	Génération des plateaux liants les strcutures sur le haut et le bas
+	Génération des plateaux liants les strcutures
 
 	-----------
 	Variables :

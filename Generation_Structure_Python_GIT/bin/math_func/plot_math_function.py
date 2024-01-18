@@ -61,6 +61,7 @@ def plot_math_func(	nbpts=10,
 		if file_debug != None and debug:	wdebug("Création d'un nouveau document\n", file_debug)
 
 	if sketch == None:
+		print("ok")
 		sketch = doc.addObject("Sketcher::SketchObject", "Plot_Sketch")
 		if file_debug != None and debug:	wdebug("Création d'une nouvelle esquisse\n\n", file_debug)
 
@@ -73,7 +74,8 @@ def plot_math_func(	nbpts=10,
 		wdebug("]\n\n", file_debug)
 
 	if file_debug != None and debug:	wdebug("Calcul du vecteur de la fonction mathématique = [", file_debug)
-	pts_fct = [func(e, *args) for e in echantillonnage]
+	if y:	pts_fct = [func(e, *args) + current_pos[1] for e in echantillonnage]
+	elif x:	pts_fct = [func(e, *args) + current_pos[0] for e in echantillonnage]
 	if file_debug != None and debug:
 		for pts in pts_fct:
 			wdebug("{0},".format(pts), file_debug)
@@ -81,11 +83,11 @@ def plot_math_func(	nbpts=10,
 
 	if file_debug != None and debug:	wdebug("Création des objets points FreeCAD.\n", file_debug)
 	if y:
-		pts_freecad = [App.Vector(echantillonnage[i], pts_fct[i] + current_pos[1], 0) for i in range(len(pts_fct))]
+		pts_freecad = [App.Vector(echantillonnage[i], pts_fct[i], 0) for i in range(len(pts_fct))]
 		for pts in pts_freecad:	sketch.addGeometry(Part.Point(pts), False)
 
 	elif x:
-		pts_freecad = [App.Vector(pts_fct[i] + current_pos[1], echantillonnage[i], 0) for i in range(len(pts_fct))]
+		pts_freecad = [App.Vector(pts_fct[i], echantillonnage[i], 0) for i in range(len(pts_fct))]
 		for pts in pts_freecad:	sketch.addGeometry(Part.Point(pts), False)
 
 	# Tracer la fonction mathématique

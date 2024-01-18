@@ -53,7 +53,9 @@ def lecture_param(path_config="config.txt", debug=True):
 	gen_hex_tri1_2D_naligne_grad = None
 	gen_tri_2D_basic = None
 	gen_tri_2D_grad = None
-	gen_func = [None for i in range(8)]
+	gen_cos_2D_basic = None
+	gen_cos_2D_grad = None
+	gen_func = [None for i in range(10)]
 	#	Géométrie générale
 	generation_plateaux_extremitees = None
 	ep_plateau_dessous = None
@@ -88,6 +90,14 @@ def lecture_param(path_config="config.txt", debug=True):
 	#	Géométrie Triangles 2D (Avec ou sans gradients)
 	alpha_tri_2D = None
 	alpha_tri_2D_grad = None
+	#	Géométrie Cosinus 2D (Avec ou sans gradients)
+	phi_x = None
+	phi_y = None
+	period_fact_x = None
+	period_fact_y = None
+	amp_x = None
+	amp_y = None
+	nbpts_cos = None
 	#	Partie exploitation du modèle 3D
 	extrude = None 
 	export = None 
@@ -204,6 +214,26 @@ def lecture_param(path_config="config.txt", debug=True):
 			else:
 				if debug:
 					log += "lecture_param\nCommande inconnue pour gen_tri_2D_grad\n"
+		elif lignes[i][0] == "gen_cos_2D_basic":
+			if lignes[i][1] == "False":
+				gen_cos_2D_basic = False
+				gen_func[8] = False
+			elif lignes[i][1] == "True":
+				gen_cos_2D_basic = True
+				gen_func[8] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_cos_2D\n"
+		elif lignes[i][0] == "gen_cos_2D_grad":
+			if lignes[i][1] == "False":
+				gen_cos_2D_grad = False
+				gen_func[9] = False
+			elif lignes[i][1] == "True":
+				gen_cos_2D_grad = True
+				gen_func[9] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_cos_2D_grad\n"
 
 		# Géométrie
 		if lignes[i][0] == "generation_plateaux_extremitees":
@@ -410,6 +440,99 @@ def lecture_param(path_config="config.txt", debug=True):
 					log += """	lecture_param\nLe type de données entrée dans alpha_tri_2D_grad n'est pas correct !
 									\n     alpha_tri_2D_grad={0}\n""".format(lignes[i][1])
 
+		# Géométrie Cosinus 2D (Avec ou sans gradients)
+		if lignes[i][0] == "phi_x" and ',' in lignes[i][1]:
+			try:
+				phi_x = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans phi_x n'est pas correct !
+									\n     phi_x={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "phi_x":
+			try:
+				phi_x = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans phi_x n'est pas correct !
+									\n     phi_x={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "phi_y" and ',' in lignes[i][1]:
+			try:
+				phi_y = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans phi_y n'est pas correct !
+									\n     phi_y={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "phi_y":
+			try:
+				phi_y = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans phi_y n'est pas correct !
+									\n     phi_y={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "period_fact_x" and ',' in lignes[i][1]:
+			try:
+				period_fact_x = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans period_fact_x n'est pas correct !
+									\n     period_fact_x={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "period_fact_x":
+			try:
+				period_fact_x = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans period_fact_x n'est pas correct !
+									\n     period_fact_x={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "period_fact_y" and ',' in lignes[i][1]:
+			try:
+				period_fact_y = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans period_fact_y n'est pas correct !
+									\n     period_fact_y={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "period_fact_y":
+			try:
+				period_fact_y = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans period_fact_y n'est pas correct !
+									\n     period_fact_y={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "amp_x" and ',' in lignes[i][1]:
+			try:
+				amp_x = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans amp_x n'est pas correct !
+									\n     amp_x={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "amp_x":
+			try:
+				amp_x = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans amp_x n'est pas correct !
+									\n     amp_x={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "amp_y" and ',' in lignes[i][1]:
+			try:
+				amp_y = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans amp_y n'est pas correct !
+									\n     amp_y={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "amp_y":
+			try:
+				amp_y = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans amp_y n'est pas correct !
+									\n     amp_y={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "nbpts_cos":
+			try:
+				nbpts_cos = int(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans nbpts_cos n'est pas correct !
+									\n     nbpts_cos={0}\n""".format(lignes[i][1])
+
 		# Partie exploitation du modèle 3D
 		if lignes[i][0] == "extrude":
 			if lignes[i][1] == "False":		extrude = False
@@ -460,6 +583,8 @@ def lecture_param(path_config="config.txt", debug=True):
 				gen_hex_tri1_2D_naligne_grad,
 				gen_tri_2D_basic,
 				gen_tri_2D_grad,
+				gen_cos_2D_basic,
+				gen_cos_2D_grad,
 				generation_plateaux_extremitees,
 				[ep_plateau_dessous, ep_plateau_dessus],
 				ep,
@@ -487,6 +612,13 @@ def lecture_param(path_config="config.txt", debug=True):
 				alpha_hex_tri1_2D_grad,
 				alpha_tri_2D,
 				alpha_tri_2D_grad,
+				phi_x,
+				phi_y,
+				period_fact_x,
+				period_fact_y,
+				amp_x,
+				amp_y,
+				nbpts_cos,
 				extrude,
 				export,
 				export_name,
@@ -692,6 +824,44 @@ def lecture_param(path_config="config.txt", debug=True):
 		if alpha_tri_2D_grad == None:
 			if debug:
 				log += "lecture_param\nalpha_tri_2D_grad n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+
+	# Géométrie Cosinus 2D (Avec ou sans gradients)
+	if gen_cos_2D_basic:
+		if phi_x == None:
+			if debug:
+				log += "lecture_param\nphi_x n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif phi_y == None:
+			if debug:
+				log += "lecture_param\nphi_y n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif period_fact_x == None:
+			if debug:
+				log += "lecture_param\nperiod_fact_x n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif period_fact_y == None:
+			if debug:
+				log += "lecture_param\nperiod_fact_y n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif amp_x == None:
+			if debug:
+				log += "lecture_param\namp_x n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif amp_y == None:
+			if debug:
+				log += "lecture_param\namp_y n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif nbpts_cos == None:
+			if debug:
+				log += "lecture_param\nnbpts_cos n'est pas définie !\n"
 			return_nok.append(log)
 			return return_nok
 
