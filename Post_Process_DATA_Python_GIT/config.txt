@@ -12,13 +12,13 @@
 #: ** Si cette option est à True, nom_dossier doit-être renseigné
 #: ** Sinon, nom_fichier doit-être renseigné
 superposer_courbes:False:
-nom_fichier:DATA/STRUCT_11P_3.txt:
+nom_fichier:DATA/STRUCT_1_01.txt:
 nom_dossier:DATA/:
 #:
 #: ** Fichier(s) de données. Le type CSV provient de l'oscilloscope
 #: ** et le type TXT provient de l'enregistrement de ce logiciel.
 #: ** Cette option n'est prise en compte uniquement si superposer_courbes = True
-type_fichier:TXT:
+type_fichier:CSV:
 #:
 #: ** Calculer les données de temps de l'essai
 #: ** True = Oui / False = Non
