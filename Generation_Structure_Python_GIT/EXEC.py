@@ -71,12 +71,9 @@ from math_func.plot_math_function import *
 	alpha_hex_tri1_2D_grad,
 	alpha_tri_2D,
 	alpha_tri_2D_grad,
-	phi_x,
-	phi_y,
-	period_fact_x,
-	period_fact_y,
-	amp_x,
-	amp_y,
+	phi,
+	period_fact,
+	amp,
 	nbpts_cos,
 	extrude,
 	export,
@@ -107,10 +104,11 @@ if lecture_param_ok:
 	doc = FreeCAD.newDocument()											# Création d'un nouveau document FreeCAD
 
 	if gen_losange_basic:
+		nom_body = nom_body
 		if optimisation_masse:
 			masse, pas_final, ep_finale, porosite = opti_masse(	
 					doc,
-					"Body_Losange",
+					nom_body,
 					"Pad_Losange",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					"Sketch_Losange",
@@ -121,7 +119,7 @@ if lecture_param_ok:
 					debug,
 					tolerance,
 					nb_pas_max,
-					[0 for i in range(nb_pas_max)],
+					[0 for i in range(nb_pas_max + 1)],
 					ep,
 					0,
 					correction_ep_par_pas,
@@ -143,7 +141,7 @@ if lecture_param_ok:
 					extrude,
 					"Sketch_Losange",
 					["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-					"Body_Losange",
+					nom_body,
 					"Pad_Losange",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					gen_plateaux,
@@ -166,7 +164,7 @@ if lecture_param_ok:
 							extrude,
 							"Sketch_Losange",
 							["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-							"Body_Losange",
+							nom_body,
 							"Pad_Losange",
 							["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 							gen_plateaux,
@@ -174,10 +172,11 @@ if lecture_param_ok:
 							wdebug)
 
 	elif gen_hex_tri1_2D_aligne_basic:
+		nom_body = "Body_Hex_Tri1_2D_Alignes"
 		if optimisation_masse:
 			masse, pas_final, ep_finale, porosite = opti_masse(	
 					doc,
-					"Body_Hex_Tri1_2D_Alignes",
+					nom_body,
 					"Pad_Hex_Tri1_2D_Alignes",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					"Sketch_Hex_Tri1_2D_Alignes",
@@ -188,7 +187,7 @@ if lecture_param_ok:
 					debug,
 					tolerance,
 					nb_pas_max,
-					[0 for i in range(nb_pas_max)],
+					[0 for i in range(nb_pas_max + 1)],
 					ep,
 					0,
 					correction_ep_par_pas,
@@ -211,7 +210,7 @@ if lecture_param_ok:
 					extrude,
 					"Sketch_Hex_Tri1_2D_Alignes",
 					["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-					"Body_Hex_Tri1_2D_Alignes",
+					nom_body,
 					"Pad_Hex_Tri1_2D_Alignes",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					gen_plateaux,
@@ -235,7 +234,7 @@ if lecture_param_ok:
 									extrude,
 									"Sketch_Hex_Tri1_2D_Alignes",
 									["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-									"Body_Hex_Tri1_2D_Alignes",
+									nom_body,
 									"Pad_Hex_Tri1_2D_Alignes",
 									["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 									gen_plateaux,
@@ -243,10 +242,11 @@ if lecture_param_ok:
 									wdebug)
 
 	elif gen_hex_tri1_2D_naligne_basic:
+		nom_body = "Body_Hex_Tri1_2D_Alignes"
 		if optimisation_masse:
 			masse, pas_final, ep_finale, porosite = opti_masse(	
 					doc,
-					"Body_Hex_Tri1_2D_Alignes",
+					nom_body,
 					"Pad_Hex_Tri1_2D_Alignes",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					"Sketch_Hex_Tri1_2D_Alignes",
@@ -257,7 +257,7 @@ if lecture_param_ok:
 					debug,
 					tolerance,
 					nb_pas_max,
-					[0 for i in range(nb_pas_max)],
+					[0 for i in range(nb_pas_max + 1)],
 					ep,
 					0,
 					correction_ep_par_pas,
@@ -280,7 +280,7 @@ if lecture_param_ok:
 					extrude,
 					"Sketch_Hex_Tri1_2D_Alignes",
 					["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-					"Body_Hex_Tri1_2D_Alignes",
+					nom_body,
 					"Pad_Hex_Tri1_2D_Alignes",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					gen_plateaux,
@@ -304,7 +304,7 @@ if lecture_param_ok:
 										extrude,
 										"Sketch_Hex_Tri1_2D_Alignes",
 										["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-										"Body_Hex_Tri1_2D_Alignes",
+										nom_body,
 										"Pad_Hex_Tri1_2D_Alignes",
 										["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 										gen_plateaux,
@@ -312,10 +312,11 @@ if lecture_param_ok:
 										wdebug)
 
 	elif gen_tri_2D_basic:
+		nom_body = "Body_Tri_2D"
 		if optimisation_masse:
 			masse, pas_final, ep_finale, porosite = opti_masse(	
 					doc,
-					"Body_Tri_2D",
+					nom_body,
 					"Pad_Tri_2D",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					"Sketch_Tri_2D",
@@ -326,7 +327,7 @@ if lecture_param_ok:
 					debug,
 					tolerance,
 					nb_pas_max,
-					[0 for i in range(nb_pas_max)],
+					[0 for i in range(nb_pas_max + 1)],
 					ep,
 					0,
 					correction_ep_par_pas,
@@ -349,7 +350,7 @@ if lecture_param_ok:
 					extrude,
 					"Sketch_Tri_2D",
 					["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-					"Body_Tri_2D",
+					nom_body,
 					"Pad_Tri_2D",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					gen_plateaux,
@@ -373,7 +374,7 @@ if lecture_param_ok:
 								extrude,
 								"Sketch_Tri_2D",
 								["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-								"Body_Tri_2D",
+								nom_body,
 								"Pad_Tri_2D",
 								["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 								gen_plateaux,
@@ -381,10 +382,11 @@ if lecture_param_ok:
 								wdebug)
 
 	elif gen_cos_2D_basic:
+		nom_body = "Body_Cos_2D"
 		if optimisation_masse:
 			masse, pas_final, ep_finale, porosite = opti_masse(	
 					doc,
-					"Body_Cos_2D",
+					nom_body,
 					"Pad_Cos_2D",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					"Sketch_Cos_2D",
@@ -395,7 +397,7 @@ if lecture_param_ok:
 					debug,
 					tolerance,
 					nb_pas_max,
-					[0 for i in range(nb_pas_max)],
+					[0 for i in range(nb_pas_max + 1)],
 					ep,
 					0,
 					correction_ep_par_pas,
@@ -407,14 +409,12 @@ if lecture_param_ok:
 					volume_max,
 					nb_motif_x_sg,
 					nb_motif_y_sg,
-					amp_x,
-					period_fact_x,
-					phi_x,
-					amp_y,
-					period_fact_y,
-					phi_y,
+					amp,
+					period_fact,
+					phi,
 					nbpts_cos,
 					plot_math_func,
+					cosinus_fct,
 					dimlat_x,
 					dimlat_y,
 					dimlat_ep,
@@ -425,7 +425,7 @@ if lecture_param_ok:
 					extrude,
 					"Sketch_Cos_2D",
 					["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-					"Body_Cos_2D",
+					nom_body,
 					"Pad_Cos_2D",
 					["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 					gen_plateaux,
@@ -438,14 +438,12 @@ if lecture_param_ok:
 							file_debug,
 							nb_motif_x_sg,
 							nb_motif_y_sg,
-							amp_x,
-							period_fact_x,
-							phi_x,
-							amp_y,
-							period_fact_y,
-							phi_y,
+							amp,
+							period_fact,
+							phi,
 							nbpts_cos,
 							plot_math_func,
+							cosinus_fct,
 							dimlat_x,
 							dimlat_y,
 							dimlat_ep,
@@ -456,7 +454,7 @@ if lecture_param_ok:
 							extrude,
 							"Sketch_Cos_2D",
 							["Sketch_Plateau_Dessous", "Sketch_Plateau_Dessus"],
-							"Body_Cos_2D",
+							nom_body,
 							"Pad_Cos_2D",
 							["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
 							gen_plateaux,
@@ -488,10 +486,11 @@ if lecture_param_ok:
 			dimlat_par_couche = [nb_y_par_couche[i] / nb_losange_y * dimlat_y for i in range(nb_couches)]
 
 		if gen_losange_grad:
+			nom_body = "Body_Losange"
 			if optimisation_masse:
 				masse, pas_final, ep_finale, porosite = opti_masse(	
 						doc,
-						"Body_Losange",
+						nom_body,
 						nom_pad_par_couche,
 						nom_pad_plateaux,
 						nom_sketch_par_couche,
@@ -502,7 +501,7 @@ if lecture_param_ok:
 						debug,
 						tolerance,
 						nb_pas_max,
-						[0 for i in range(nb_pas_max)],
+						[0 for i in range(nb_pas_max + 1)],
 						ep,
 						0,
 						correction_ep_par_pas,
@@ -523,7 +522,7 @@ if lecture_param_ok:
 						nb_x_par_couche,
 						nom_sketch_plateaux,
 						nom_pad_plateaux,
-						"Body_Losange",
+						nom_body,
 						plateaux,
 						gen_plateaux,
 						gen_losange,
@@ -548,7 +547,7 @@ if lecture_param_ok:
 								nb_x_par_couche,
 								nom_sketch_plateaux,
 								nom_pad_plateaux,
-								"Body_Losange",
+								nom_body,
 								plateaux,
 								gen_plateaux,
 								gen_losange,
@@ -559,10 +558,11 @@ if lecture_param_ok:
 								wdebug)
 
 		elif gen_hex_tri1_2D_aligne_grad:
+			nom_body = "Body_Hex_Tri1_2D_Alignes"
 			if optimisation_masse:
 				masse, pas_final, ep_finale, porosite = opti_masse(	
 						doc,
-						"Body_Hex_Tri",
+						nom_body,
 						nom_pad_par_couche,
 						nom_pad_plateaux,
 						nom_sketch_par_couche,
@@ -573,7 +573,7 @@ if lecture_param_ok:
 						debug,
 						tolerance,
 						nb_pas_max,
-						[0 for i in range(nb_pas_max)],
+						[0 for i in range(nb_pas_max + 1)],
 						ep,
 						0,
 						correction_ep_par_pas,
@@ -598,7 +598,7 @@ if lecture_param_ok:
 						extrude,
 						nom_sketch_par_couche,
 						nom_sketch_plateaux,
-						"Body_Hex_Tri",
+						nom_body,
 						nom_pad_par_couche,
 						nom_pad_plateaux,
 						gen_plateaux,
@@ -624,7 +624,7 @@ if lecture_param_ok:
 											extrude,
 											nom_sketch_par_couche,
 											nom_sketch_plateaux,
-											"Body_Hex_Tri",
+											nom_body,
 											nom_pad_par_couche,
 											nom_pad_plateaux,
 											gen_plateaux,
@@ -632,10 +632,11 @@ if lecture_param_ok:
 											wdebug)
 			
 		elif gen_hex_tri1_2D_naligne_grad:
+			nom_body = "Body_Hex_Tri1_2D_NAlignes"
 			if optimisation_masse:
 				masse, pas_final, ep_finale, porosite = opti_masse(	
 					doc,
-					"Body_Hex_Tri",
+					nom_body,
 					nom_pad_par_couche,
 					nom_pad_plateaux,
 					nom_sketch_par_couche,
@@ -646,7 +647,7 @@ if lecture_param_ok:
 					debug,
 					tolerance,
 					nb_pas_max,
-					[0 for i in range(nb_pas_max)],
+					[0 for i in range(nb_pas_max + 1)],
 					ep,
 					0,
 					correction_ep_par_pas,
@@ -671,7 +672,7 @@ if lecture_param_ok:
 					extrude,
 					nom_sketch_par_couche,
 					nom_sketch_plateaux,
-					"Body_Hex_Tri",
+					nom_body,
 					nom_pad_par_couche,
 					nom_pad_plateaux,
 					gen_plateaux,
@@ -697,7 +698,7 @@ if lecture_param_ok:
 											extrude,
 											nom_sketch_par_couche,
 											nom_sketch_plateaux,
-											"Body_Hex_Tri",
+											nom_body,
 											nom_pad_par_couche,
 											nom_pad_plateaux,
 											gen_plateaux,
@@ -705,10 +706,11 @@ if lecture_param_ok:
 											wdebug)
 
 		elif gen_tri_2D_grad:
+			nom_body = "Body_Tri"
 			if optimisation_masse:
 				masse, pas_final, ep_finale, porosite = opti_masse(	
 					doc,
-					"Body_Hex_Tri",
+					nom_body,
 					nom_pad_par_couche,
 					nom_pad_plateaux,
 					nom_sketch_par_couche,
@@ -719,7 +721,7 @@ if lecture_param_ok:
 					debug,
 					tolerance,
 					nb_pas_max,
-					[0 for i in range(nb_pas_max)],
+					[0 for i in range(nb_pas_max + 1)],
 					ep,
 					0,
 					correction_ep_par_pas,
@@ -744,7 +746,7 @@ if lecture_param_ok:
 					extrude,
 					nom_sketch_par_couche,
 					nom_sketch_plateaux,
-					"Body_Tri",
+					nom_body,
 					nom_pad_par_couche,
 					nom_pad_plateaux,
 					gen_plateaux,
@@ -770,7 +772,7 @@ if lecture_param_ok:
 									extrude,
 									nom_sketch_par_couche,
 									nom_sketch_plateaux,
-									"Body_Tri",
+									nom_body,
 									nom_pad_par_couche,
 									nom_pad_plateaux,
 									gen_plateaux,
@@ -779,10 +781,10 @@ if lecture_param_ok:
 
 	if optimisation_masse:
 		# Affichage du graphe de convergeance
-		affichage_calculs_masse(masse, objectif_masse, tolerance, pas_final, ep_finale, porosite, file_debug)
+		affichage_calculs_masse(masse, objectif_masse, tolerance, pas_final, ep_finale, porosite)
 
-	# Exportation en step de la pièce
-	export_body(doc, "Body_Losange", export, path_soft + export_path, export_name, debug, wdebug, file_debug)
+	# Exportation en stl de la pièce
+	export_body(doc, nom_body, export, path_soft + export_path, export_name, debug, wdebug, file_debug)
 
 	# Fin du programme
 	wdebug("\n\n---------------------\n", file_debug)

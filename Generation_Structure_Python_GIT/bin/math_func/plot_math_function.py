@@ -61,13 +61,12 @@ def plot_math_func(	nbpts=10,
 		if file_debug != None and debug:	wdebug("Création d'un nouveau document\n", file_debug)
 
 	if sketch == None:
-		print("ok")
 		sketch = doc.addObject("Sketcher::SketchObject", "Plot_Sketch")
 		if file_debug != None and debug:	wdebug("Création d'une nouvelle esquisse\n\n", file_debug)
 
 	# Calculer la fonction mathématique
 	if file_debug != None and debug:	wdebug("Calcul du vecteur d'échantillonnage = [", file_debug)
-	echantillonnage = np.ndarray.tolist(np.arange(xy_0, xy_fin, (xy_fin - xy_0) / nbpts))
+	echantillonnage = np.ndarray.tolist(np.arange(xy_0, xy_fin + (xy_fin - xy_0) / nbpts, (xy_fin - xy_0) / nbpts))
 	if file_debug != None and debug:
 		for e in echantillonnage:
 			wdebug("{0},".format(e), file_debug)

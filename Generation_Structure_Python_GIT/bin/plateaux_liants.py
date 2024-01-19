@@ -50,7 +50,6 @@ def gen_plateaux(	nb_couches=3,
 		# Construction des lignes des plateaux
 		current_posy = 0 				# Curseur de position du repère
 		body = doc.getObject(nom_body) 	# Récupération de l'objet body
-		print(body, nom_body)
 
 		for couchei in range(len(dimlat_par_couche)):
 			# Vérification que la couche doit être créée

@@ -4,7 +4,7 @@ HERMAN Adrien
 03/10/2023
 """
 
-def affichage_calculs_masse(masse, objectif_masse, tolerance, pas, ep, porosite, file_debug, precision=2):
+def affichage_calculs_masse(masse, objectif_masse, tolerance, pas, ep, porosite, precision=2):
 	"""
 	Afficher un graphique avec les calculs de la masse
 
@@ -56,15 +56,7 @@ def suppr_structure(doc,
 
 	import FreeCAD as App
 	import FreeCADGui as Gui
-
-	Gui.Selection.addSelectionGate("SELECT PartDesign::Body")
-	if len(Gui.Selection.getSelection()) != 0:	App.getDocument('Unnamed').removeObject(Gui.Selection.getSelection()[0].Label)
-	Gui.Selection.addSelectionGate("SELECT PartDesign::Pad")
-	if len(Gui.Selection.getSelection()) != 0:	App.getDocument('Unnamed').removeObject(Gui.Selection.getSelection()[0].Label)
-	Gui.Selection.addSelectionGate("SELECT Sketcher::SketchObject")
-	if len(Gui.Selection.getSelection()) != 0:	App.getDocument('Unnamed').removeObject(Gui.Selection.getSelection()[0].Label)
-
-	"""
+	
 	doc.getObject(nom_body).removeObjectsFromDocument()
 	doc.removeObject(nom_body)
 	if type(nom_sketch_losange) == list:
@@ -74,13 +66,9 @@ def suppr_structure(doc,
 	else:
 		doc.removeObject(nom_sketch_losange)
 
-	if type(nom_sketch_plateaux) == list:
-		for sketch_plateaux in nom_sketch_plateaux:
-			try:	doc.removeObject(sketch_plateaux)
-			except:	pass
-	else:
-		doc.removeObject(nom_sketch_plateaux)
-	"""
+	for obj in doc.Objects:
+		doc.removeObject(obj.Label)
+	
 	doc.recompute()
 
 def opti_masse(	doc,
@@ -174,7 +162,7 @@ def opti_masse(	doc,
 				wdebug("    Diminution du pas de correction : {0} mm\n".format(correction_ep_par_pas), file_debug)
 
 	# Test des pas de calculs
-	if pas < nb_pas_max - 1:
+	if pas < nb_pas_max:
 		# Test masse
 		if abs(masse[pas] - objectif_masse) <= tolerance / 2:	# Masse OK
 			if file_debug != None and debug:
