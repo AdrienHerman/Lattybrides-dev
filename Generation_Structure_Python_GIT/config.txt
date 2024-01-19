@@ -20,7 +20,7 @@
 #: ** correction_ep_par_pas, pourcentage_modification_correction,
 #: ** seuil_augmentation_correction, seuil_diminution_correction, rho
 #: ** doivent-être renseignées
-optimisation_masse:True:
+optimisation_masse:False:
 #: ** Objectif de masse à atteindre avant l'arrêt des calculs (en g)
 objectif_masse:18:
 #: ** Tolérance sur l'objectif de masse
@@ -56,11 +56,11 @@ gen_hex_tri1_2D_naligne_basic:False:
 gen_hex_tri1_2D_naligne_grad:False:
 #:
 #: Structure à base de triangles : No4
-gen_tri_2D_basic:False:
+gen_tri_2D_basic:True:
 gen_tri_2D_grad:False:
 #:
 #: Structure à base de cosinus : No5
-gen_cos_2D_basic:True:
+gen_cos_2D_basic:False:
 gen_cos_2D_grad:False:
 #:--------------------------------------
 #:
@@ -84,7 +84,7 @@ ep_plateau_dessus:0.25:
 #: /// PROPRIÉTÉS GÉOMÉTRIQUES COMMUNES \\\
 #: ** Choix de l'épaisseur des parois
 #: ** Entrer un nombre réel positif
-ep:0.5:
+ep:0.2:
 #:
 #: ** Choix de l'épaisseur d'extrusion du modèle
 #: ** Entrer un nombre réel positif
@@ -99,7 +99,7 @@ dimlat_y:40:
 #: /// GÉNÉRATION DE MOTIFS SANS GRADIENT \\\
 #: ** Choix du nombre de losange sur l'axe x et sur l'axe y
 #: ** Entrer un nombre entier
-nb_motif_x_sg:8:
+nb_motif_x_sg:4:
 nb_motif_y_sg:4:
 #:
 #:
