@@ -29,7 +29,7 @@ def gen_triangle_grad(	ep=0.4,
 						gen_tri=None,
 						wdebug=None):
 	"""
-	Génération de la structure de base.
+	Génération de la structure avec gradients.
 
 	-----------
 	Variables :
