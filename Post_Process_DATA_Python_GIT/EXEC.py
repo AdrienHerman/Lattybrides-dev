@@ -1,5 +1,5 @@
 """
-Corps principal
+Corps principal.
 HERMAN Adrien
 21/11/2023
 """
@@ -13,6 +13,7 @@ from bin.lecture_param import *
 from bin.lecture_ecriture_donnees import *
 from bin.afficher_data import *
 from bin.traitement_data import *
+from bin.errors import *
 
 # Lecture des parmaètres du programme
 [	type_fichier,
