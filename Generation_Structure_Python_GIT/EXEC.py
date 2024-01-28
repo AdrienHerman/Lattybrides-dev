@@ -104,7 +104,7 @@ if lecture_param_ok:
 	doc = FreeCAD.newDocument()											# Création d'un nouveau document FreeCAD
 
 	if gen_losange_basic:
-		nom_body = nom_body
+		nom_body = "Body_Losange"
 		if optimisation_masse:
 			masse, pas_final, ep_finale, porosite = opti_masse(	
 					doc,
