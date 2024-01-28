@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1187</width>
-    <height>669</height>
+    <height>671</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -614,34 +614,38 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_13">
         <item>
-         <widget class="QPushButton" name="pushButton_Defaults">
-          <property name="text">
-           <string>Valeurs par Défaut</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_MakeConfig">
-          <property name="text">
-           <string>Générer &quot;config.txt&quot;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_ExecDataTreatment">
-          <property name="text">
-           <string>Exécuter le Traitement des Données</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_Quit">
-          <property name="text">
-           <string>Quitter le Logiciel</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="pushButton_Defaults">
+            <property name="text">
+             <string>Valeurs par Défaut</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_MakeConfig">
+            <property name="text">
+             <string>Générer &quot;config.txt&quot;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_ExecDataTreatment">
+            <property name="text">
+             <string>Exécuter le Traitement des Données</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_Quit">
+            <property name="text">
+             <string>Quitter le Logiciel</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </item>

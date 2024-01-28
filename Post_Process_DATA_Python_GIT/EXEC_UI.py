@@ -621,6 +621,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 		return dialog.exec()
 
 if __name__ == "__main__":
+	# Modules du logiciel
+	from EXEC import *
+
+	# Affichage de l'interface graphique
 	app = QApplication(sys.argv)
 	window = MainWindow()
 	window.show()

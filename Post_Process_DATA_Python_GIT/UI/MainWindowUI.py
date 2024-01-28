@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1187, 669)
+        MainWindow.resize(1187, 671)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout_19 = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -323,6 +323,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_18.addWidget(self.checkBox_afficher_sep)
         self.verticalLayout_3.addWidget(self.groupBox_graphiques)
         self.verticalLayout_11.addWidget(self.groupBox_lecture_donnees)
+        self.verticalLayout_13 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.pushButton_Defaults = QtWidgets.QPushButton(parent=self.centralwidget)
@@ -337,7 +339,8 @@ class Ui_MainWindow(object):
         self.pushButton_Quit = QtWidgets.QPushButton(parent=self.centralwidget)
         self.pushButton_Quit.setObjectName("pushButton_Quit")
         self.horizontalLayout.addWidget(self.pushButton_Quit)
-        self.verticalLayout_11.addLayout(self.horizontalLayout)
+        self.verticalLayout_13.addLayout(self.horizontalLayout)
+        self.verticalLayout_11.addLayout(self.verticalLayout_13)
         self.horizontalLayout_19.addLayout(self.verticalLayout_11)
         self.line_9 = QtWidgets.QFrame(parent=self.centralwidget)
         self.line_9.setFrameShape(QtWidgets.QFrame.Shape.VLine)
