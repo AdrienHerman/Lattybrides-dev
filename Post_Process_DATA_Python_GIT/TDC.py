@@ -7,26 +7,32 @@ pyuic6 UI/MainWindow.ui -o UI/MainWindowUI.py
 """
 
 # Modules de Python
-import sys, datetime
+import sys, datetime, argparse, pathlib
 from PyQt6.QtWidgets import (
-	QApplication, QDialog, QMainWindow, QFileDialog, QPushButton, QMessageBox
+	QApplication, QDialog, QMainWindow, QFileDialog, QPushButton, QMessageBox, QLabel
 )
-from PyQt6.QtGui import QKeySequence
+from PyQt6.QtGui import (
+	QKeySequence, QIcon
+)
+from PyQt6.QtCore import Qt
 
 # Modules du Logiciel
 from UI.MainWindowUI import Ui_MainWindow
 from bin.lecture_param import *
 from bin.lecture_ecriture_donnees import *
+from bin.textes import *
+from bin.exec_traitement import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 	def __init__(self, parent=None):
 		"""
 		Initialisation de l'objet fenêtre
 		"""
-
+		
 		super().__init__(parent)
 		self.setupUi(self)              # Lancement de la fenêtre
 		self.connectSignalsSlots()      # Connexion des signaux
+		self.setWindowIcon(QIcon(os.getcwd() + "/UI/icon.png"))
 
 	def connectSignalsSlots(self):
 		"""
@@ -78,6 +84,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 		# Bouton "Parcourir" pour enregistrer_data
 		self.pushButton_parcourir_enregistrement.clicked.connect(self.pushButton_clicked_parcourir_enregistrement)
 
+		# Bouton "Exécuter le Traitement des Données"
+		self.pushButton_ExecDataTreatment.clicked.connect(self.pushButton_clicked_ExecDataTreatment)
+
 		# Actions du menu Fichiers
 		#   Quitter le logiciel
 		self.actionQuitter.triggered.connect(self.close)
@@ -85,6 +94,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 		#   Ouvrir un fichier de configuration
 		self.actionOuvrir_un_fichier_de_configuration.triggered.connect(self.actionOuvrir_trigger_un_fichier_de_configuration)
 		self.actionOuvrir_un_fichier_de_configuration.setShortcut(QKeySequence("Ctrl+O"))
+
+		# Actions du menu Aide
+		#	À Propos
+		self.action_APropos.triggered.connect(lambda: self.messagebox_ok(title="À Propos", text=version(tirets=False, center=False)))
 
 	def changeEnabled(self, list_objects, state):
 		"""
@@ -305,7 +318,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 			dossier_enregistrement = self.lineEdit_dossier_enregistrement.text()
 
 			# suppr_rollback
-			suppr_rollback = self.checkBox_suppr_rollback.isChecked()
+			suppr_rollback = self.checkBox_sppr_rollback.isChecked()
 
 			# recherche_deb_impact, taux_augmentation, nb_pas_avant_augmentation
 			recherche_deb_impact = self.checkBox_recherche_deb_impact.isChecked()
@@ -494,7 +507,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 			self.lineEdit_dossier_enregistrement.setText(dossier_enregistrement)
 
 			# suppr_rollback
-			self.checkBox_suppr_rollback.setChecked(sppr_rollback)
+			self.checkBox_sppr_rollback.setChecked(sppr_rollback)
 
 			# recherche_deb_impact, taux_augmentation, nb_pas_avant_augmentation
 			self.checkBox_recherche_deb_impact.setChecked(recherche_deb_impact)
@@ -527,6 +540,101 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 			self.checkBox_afficher_F_tmps.setChecked(afficher_F_tmps)
 			self.checkBox_afficher_F_dep.setChecked(afficher_F_dep)
 			self.checkBox_afficher_sep.setChecked(afficher_sep)
+
+	def pushButton_clicked_ExecDataTreatment(self):
+		"""
+		Exécution du Traitement des Données et Affichage des Graphes.
+		"""
+
+		# superposer_courbes, nom_fichier, nom_dossier
+		superposer_courbes = self.checkBox_superposer_courbes.isChecked()
+		nom_fichier = self.lineEdit_nom_fichier.text()
+		nom_dossier = self.lineEdit_nom_dossier.text()
+		if nom_fichier == "" or nom_dossier == "":
+			self.textEdit_terminal_addWarning("WARNING : nom_fichier ou nom_dossier ne sont pas renseignés ! Le traitement des données ne peut pas se faire !")
+			return
+
+		# type_fichier
+		type_fichier = self.comboBox_type_fichier.currentText().lower()
+
+		# calc_temps
+		calc_temps = self.checkBox_calc_temps.isChecked()
+
+		# enregistrer_data, nom_enregistrement, dossier_enregistrement
+		enregistrer_data = self.checkBox_enregistrer_data.isChecked()
+		nom_enregistrement = self.lineEdit_nom_enregistrement.text()
+		dossier_enregistrement = self.lineEdit_dossier_enregistrement.text()
+		if enregistrer_data and (nom_enregistrement == "" or dossier_enregistrement == ""):
+			self.textEdit_terminal_addWarning("WARNING : nom_enregistrement ou dossier_enregistrement ne sont pas renseignés alors que enregistrer_data est coché ! L'enregistrement des données de neut pas se faire !")
+			return
+
+		# suppr_rollback
+		sppr_rollback = self.checkBox_sppr_rollback.isChecked()
+
+		# recherche_deb_impact, taux_augmentation, nb_pas_avant_augmentation
+		recherche_deb_impact = self.checkBox_recherche_deb_impact.isChecked()
+		taux_augmentation = self.doubleSpinBox_taux_augmentation.value()
+		nb_pas_avant_augmentation = self.spinBox_nb_pas_avant_augmentation.value()
+
+		# deb_impact_manuel, tmps_deb_impact
+		deb_impact_manuel = self.checkBox_deb_impact_manuel.isChecked()
+		tmps_deb_impact = self.doubleSpinBox_tmps_deb_impact.value()
+
+		# tarrage_dep, tarrage_tmps
+		tarrage_dep = self.checkBox_tarrage_dep.isChecked()
+		tarrage_tmps = self.checkBox_tarrage_tmps.isChecked()
+
+		# detect_fin_essai, dep_max
+		detect_fin_essai = self.checkBox_detect_fin_essai.isChecked()
+		dep_max = self.doubleSpinBox_dep_max.value()
+
+		# calculer_energie, fact_force, fact_dep
+		calculer_energie = self.checkBox_calculer_energie.isChecked()
+		fact_force = self.doubleSpinBox_fact_force.value()
+		fact_dep = self.doubleSpinBox_fact_dep.value()
+
+		# calc_vitesse_impact, nbpts_vitesse_impact
+		calc_vitesse_impact = self.checkBox_calc_vitesse_impact.isChecked()
+		nbpts_vitesse_impact = self.spinBox_nbpts_vitesse_impact.value()
+
+		# afficher_dep_tmps, afficher_F_tmps, afficher_F_dep, afficher_sep
+		afficher_dep_tmps = self.checkBox_afficher_dep_tmps.isChecked()
+		afficher_F_tmps = self.checkBox_afficher_F_tmps.isChecked()
+		afficher_F_dep = self.checkBox_afficher_F_dep.isChecked()
+		afficher_sep = self.checkBox_afficher_sep.isChecked()
+
+		if exec_traitement(	QWindow=self,
+							superposer_courbes=superposer_courbes,
+							nom_fichier=nom_fichier,
+							nom_dossier=nom_dossier,
+							type_fichier=type_fichier,
+							calc_temps=calc_temps,
+							enregistrer_data=enregistrer_data,
+							nom_enregistrement=nom_enregistrement,
+							dossier_enregistrement=dossier_enregistrement,
+							sppr_rollback=sppr_rollback,
+							recherche_deb_impact=recherche_deb_impact,
+							taux_augmentation=taux_augmentation,
+							nb_pas_avant_augmentation=nb_pas_avant_augmentation,
+							deb_impact_manuel=deb_impact_manuel,
+							tmps_deb_impact=tmps_deb_impact,
+							tarrage_dep=tarrage_dep,
+							tarrage_tmps=tarrage_tmps,
+							detect_fin_essai=detect_fin_essai,
+							dep_max=dep_max,
+							calculer_energie=calculer_energie,
+							fact_force=fact_force,
+							fact_dep=fact_dep,
+							calc_vitesse_impact=calc_vitesse_impact,
+							nbpts_vitesse_impact=nbpts_vitesse_impact,
+							afficher_dep_tmps=afficher_dep_tmps,
+							afficher_F_tmps=afficher_F_tmps,
+							afficher_F_dep=afficher_F_dep,
+							afficher_sep=afficher_sep):
+			self.textEdit_terminal_addText("Les données ont été traitées avec succès !")
+
+		else:
+			self.textEdit_terminal_addError("ERREUR : Le traitement des données ne s'est pas terminé correctement !")
 
 	def save_file_dialog(self, folderName="", fileType="Fichiers Traités TXT (*.TXT *.txt)"):
 		"""
@@ -613,19 +721,76 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 		---------
 		"""
 
-		dialog = QMessageBox(QWindow)
+		dialog = QMessageBox(self)
 		dialog.setWindowTitle(title)
 		dialog.setText(text)
 		dialog.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
 		return dialog.exec()
 
-if __name__ == "__main__":
-	# Modules du logiciel
-	from EXEC import *
+	def messagebox_ok(self, title="", text="", center_text=True):
+		"""
+		Afficher une MessageBox avec un bouton Ok.
 
-	# Affichage de l'interface graphique
+		----------
+		Variables:
+			- title       : Titre de la fenêtre.
+			- text        : Texte de la fenêtre.
+			- center_text : True si Qt doit centrer le texte
+		----------
+
+		---------
+		Retours : 
+			- Réponse de la messagebox : QMessageBox.StandardButton.Ok
+		---------
+		"""
+
+		dialog = QMessageBox(self)
+		dialog.setWindowTitle(title)
+		dialog.setText(text)
+		if center_text:	dialog.findChild(QLabel, "qt_msgbox_label").setAlignment(Qt.AlignmentFlag.AlignCenter)
+		dialog.setStandardButtons(QMessageBox.StandardButton.Ok)
+		dialog.setStyleSheet("QLabel {min-width: 400px;}")
+
+		return dialog.exec()
+
+# Exécution du logiciel
+if __name__ == "__main__":
+	# Définition de l'objet de parsing
+	parser = argparse.ArgumentParser(add_help=False)
+
+	# Définition des objets application et fenêtre
 	app = QApplication(sys.argv)
 	window = MainWindow()
-	window.show()
-	sys.exit(app.exec())
+
+	# Définition des arguments possibles en entrée du logiciel
+	parser.add_argument("-h", "--help",
+						action="help",
+						default=argparse.SUPPRESS,
+                    	help="Afficher l'aide du logiciel.")
+	parser.add_argument("-v", "--version",
+						help="Afficher la version du logiciel.",
+                    	action="store_true")
+	parser.add_argument("-c_c", "--custom_configuration",
+						type=pathlib.Path,
+						help="Utiliser une configuration autre que la configuration par défaut.")
+	parser.add_argument("-d_c", "--default_configuration",
+						help="Utiliser la configuration par défaut.",
+						action="store_true")
+
+	# Parsing des arguments d'exécution du logiciel
+	args = parser.parse_args()
+
+	# Afficher la version du logiciel
+	if args.version:
+		print(version())		
+
+	# Changer le fichier de configuration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	if args.custom_configuration:
+		print(args.custom_configuration)
+
+	# Si aucun argument n'est renseigné lancer l'interface graphique du logiciel
+	if not args.version and not args.custom_configuration and not args.default_configuration:
+		print(texte_demarrage())
+		window.show()
+		sys.exit(app.exec())

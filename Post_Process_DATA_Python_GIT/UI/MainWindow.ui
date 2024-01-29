@@ -241,7 +241,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_12">
               <item>
-               <widget class="QCheckBox" name="checkBox_suppr_rollback">
+               <widget class="QCheckBox" name="checkBox_sppr_rollback">
                 <property name="text">
                  <string>sppr_rollback</string>
                 </property>
@@ -717,7 +717,7 @@
     </property>
     <addaction name="actionAide"/>
     <addaction name="separator"/>
-    <addaction name="action_Propos_2"/>
+    <addaction name="action_APropos"/>
    </widget>
    <addaction name="menuFichers"/>
    <addaction name="menuAide"/>
@@ -751,7 +751,7 @@
     <string>À Propos</string>
    </property>
   </action>
-  <action name="action_Propos_2">
+  <action name="action_APropos">
    <property name="text">
     <string>À Propos</string>
    </property>

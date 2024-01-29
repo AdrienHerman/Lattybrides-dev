@@ -174,7 +174,7 @@ def lire_en_tete_csv_oscilo(lignes=[], QWindow=None):
 
 		return "", "", .0, "", ""
 
-def lire_contenu_csv_oscillo(lignes=[]):
+def lire_contenu_csv_oscillo(lignes=[], QWindow=None):
 	"""
 	Lecture des données de l'expériences (à partir de la
 	ligne 16 du fichier .csv provenant de l'osciloscope)

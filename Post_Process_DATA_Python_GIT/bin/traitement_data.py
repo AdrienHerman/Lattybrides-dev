@@ -389,7 +389,7 @@ def debut_impact_manuel(F=[], dep=[], tmps=[], tmps_deb_impact=5.0, QWindow=None
 
 	return F, dep, tmps
 
-def calc_vitesse(dep1=None, dep2=None, tmps1=None, tmps2=None):
+def calc_vitesse(dep1=None, dep2=None, tmps1=None, tmps2=None, QWindow=None):
 	"""
 	Calcul de la vitesse d'impact en fonction de deux points.
 
@@ -397,7 +397,20 @@ def calc_vitesse(dep1=None, dep2=None, tmps1=None, tmps2=None):
 	Variables :
 		- dep1, dep2   : Déplacement.
 		- tmps1, tmps2 : Temps.
+		- QWindow      : Objet fenêtre.
 	-----------
+
+	---------
+	Retours :
+		- float : Vitesse d'impact.
+	---------
 	"""
 
-	return (dep1 - dep2) / (tmps1 - tmps2)
+	if dep1 != None and dep2 != None and tmps1 != None and tmps2 != None:
+		return (dep1 - dep2) / (tmps1 - tmps2)
+
+	else:
+		print_or_addterminal_message(	QWindow=QWindow,
+										type_msg="err",
+										text="calc_vitesse\nL'une des données d'entrée n'est pas renseignées !\n     dep1 = {0}\n     dep2 = {1}\n     tmps1 = {2}\n     tmps2 = {3}".format(dep1, dep2, tmps1, tmps2))
+		return 0.0
