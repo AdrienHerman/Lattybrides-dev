@@ -99,8 +99,8 @@ dimlat_y:40:
 #: /// GÉNÉRATION DE MOTIFS SANS GRADIENT \\\
 #: ** Choix du nombre de losange sur l'axe x et sur l'axe y
 #: ** Entrer un nombre entier
-nb_motif_x_sg:7:
-nb_motif_y_sg:11:
+nb_motif_x_sg:4:
+nb_motif_y_sg:9:
 #:
 #:
 #: /// GÉNÉRATION DE MOTIFS AVEC GRADIENT \\\
