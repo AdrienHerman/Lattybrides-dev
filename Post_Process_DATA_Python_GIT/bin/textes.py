@@ -33,9 +33,16 @@ def version(tirets=True, center=True):
 
 	return string
 
-def texte_demarrage():
+def texte_demarrage(tirets=True, center=True, aff_version=True):
 	"""
 	Retourne le texte à afficher au démarrage du logiciel.
+
+	-----------
+	Variables :
+		- tirets : True = Affiche les tirets sinon ne les affiche pas.
+		- center : True = Centre lui-même le texte sinon ne le centre pas.
+		- version : True = Affiche la version du logiciel en même temps.
+	-----------
 
 	---------
 	Retours :
@@ -43,14 +50,17 @@ def texte_demarrage():
 	---------
 	"""
 	
-	string = """***************************************
-=============   |==========   |========
-      |         |         |   |
-      |         |         |   |
-      |         |         |   |
-      |         |         |   |
-      |         |         |   |
-      |         |==========   |========
-***************************************\n\n""" + version()
+	string = "***************************************\n"
+	string += "=============   |==========   |========\n"
+	string += "      |         |         |   |\n"
+	string += "      |         |         |   |\n"
+	string += "      |         |         |   |\n"
+	string += "      |         |         |   |\n"
+	string += "      |         |         |   |\n"
+	string += "      |         |==========   |========\n"
+	string += "***************************************\n\n"
+
+	if aff_version:
+		string += version(tirets=tirets, center=center)
 
 	return string

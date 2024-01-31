@@ -50,7 +50,7 @@ def graphe(	data_x=[],
 	elif fig == None or ax == None:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="graphe\nLes objets contenant les données du graphique ne sont pas corrects")
+										text="graphe\nERREUR : Les objets contenant les données du graphique ne sont pas corrects")
 
 	ax.set_title(titre)
 	ax.set_xlabel(label_x)
@@ -60,7 +60,7 @@ def graphe(	data_x=[],
 	if type(data_x) != list or type(data_y) != list:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="graphe\nLes types des arguments ne sont pas correctes.\n     type(data_x)={0}\n     type(data_y)={1}".format(type(data_x), type(data_y)))
+										text="graphe\nERREUR : Les types des arguments ne sont pas correctes.\n     type(data_x)={0}\n     type(data_y)={1}".format(type(data_x), type(data_y)))
 
 		return None
 
@@ -75,7 +75,7 @@ def graphe(	data_x=[],
 		if len(data_x[i]) != len(data_y[i]) and len(data_x[i]) != 0:
 			print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="graphe\nLes vecteurs de données doivent-être de même longueur et non vides.\n     len(data_x)={0}\n     len(data_y)={1}".format(len(data_x), len(data_y)))
+										text="graphe\nERREUR : Les vecteurs de données doivent-être de même longueur et non vides.\n     len(data_x)={0}\n     len(data_y)={1}".format(len(data_x), len(data_y)))
 
 			return None
 
@@ -85,7 +85,7 @@ def graphe(	data_x=[],
 		else:
 			print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="graphe\nLe type du nom de fichier est incorrect !\n     type(fileName)={0}\n     fileName={1}".format(type(fileName), fileName))
+										text="graphe\nERREUR : Le type du nom de fichier est incorrect !\n     type(fileName)={0}\n     fileName={1}".format(type(fileName), fileName))
 
 	if (type(fileName) == str and fileName != "") or type(fileName) == list:
 		ax.legend()

@@ -30,7 +30,7 @@ def lire_fichier_csv_oscilo(filePath=None, QWindow=None):
 	if not (filePath.split("/")[len(filePath.split("/")) - 1] in os.listdir(path)):
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="lire_fichier_csv_oscilo\nLe fichier a ouvrir n'existe pas !\n     filePath={0}".format(filePath))
+										text="lire_fichier_csv_oscilo\nERREUR : Le fichier a ouvrir n'existe pas !\n     filePath={0}".format(filePath))
 
 		return []
 
@@ -46,7 +46,7 @@ def lire_fichier_csv_oscilo(filePath=None, QWindow=None):
 	except:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="lire_fichier_csv_oscilo\nImpossible de lire le fichier :\n     filePath={0}".format(filePath))
+										text="lire_fichier_csv_oscilo\nERREUR : Impossible de lire le fichier :\n     filePath={0}".format(filePath))
 
 		return []
 
@@ -95,7 +95,7 @@ def lire_fichier_txt_python(filePath=None, QWindow=None):
 				except:
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="err",
-													text="lire_fichier_txt_python\nLe fichier n'a pas une mise en forme correcte ou ses données ne sont pas au bon format")
+													text="lire_fichier_txt_python\nERREUR : Le fichier n'a pas une mise en forme correcte ou ses données ne sont pas au bon format")
 
 					return [], [], [], "", "", .0, "", ""
 	
@@ -110,14 +110,14 @@ def lire_fichier_txt_python(filePath=None, QWindow=None):
 			except:
 				print_or_addterminal_message(	QWindow=QWindow,
 												type_msg="err",
-												text="lire_fichier_txt_python\nLe fichier n'a pas une mise en forme correcte ou ses données ne sont pas au bon format")
+												text="lire_fichier_txt_python\nERREUR : Le fichier n'a pas une mise en forme correcte ou ses données ne sont pas au bon format")
 
 				return [], [], [], "", "", .0, "", ""
 	
 	except:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="lire_fichier_txt_python\nImpossible de lire le fichier :\n     filePath={0}".format(filePath))
+										text="lire_fichier_txt_python\nERREUR : Impossible de lire le fichier :\n     filePath={0}".format(filePath))
 
 		return [], [], [], "", "", .0, "", ""
 
@@ -170,7 +170,7 @@ def lire_en_tete_csv_oscilo(lignes=[], QWindow=None):
 	else:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="lire_en_tete_csv_oscilo\nLa variable contenant les données du fichier .csv est vide ou du mauvais type\n     lignes={0}".format(lignes))
+										text="lire_en_tete_csv_oscilo\nERREUR : La variable contenant les données du fichier .csv est vide ou du mauvais type\n     lignes={0}".format(lignes))
 
 		return "", "", .0, "", ""
 
@@ -205,13 +205,13 @@ def lire_contenu_csv_oscillo(lignes=[], QWindow=None):
 		except:
 				print_or_addterminal_message(	QWindow=QWindow,
 												type_msg="err",
-												text="lire_contenu_csv_oscillo\nLe fichier n'a pas une mise en forme correcte ou ses données ne sont pas au bon format")
+												text="lire_contenu_csv_oscillo\nERREUR : Le fichier n'a pas une mise en forme correcte ou ses données ne sont pas au bon format")
 
 				return [], []
 	else:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="lire_contenu_csv_oscillo\nLa variable contenant les données du fichier .csv est vide ou du mauvais type\n     lignes={0}".format(lignes))
+										text="lire_contenu_csv_oscillo\nERREUR : La variable contenant les données du fichier .csv est vide ou du mauvais type\n     lignes={0}".format(lignes))
 
 		return [], []
 
@@ -237,7 +237,7 @@ def calc_temps_essai(dep=[], echantillonage=.0, QWindow=None):
 	if type(dep) != list or type(echantillonage) != float:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="calc_temps_essai\nLes types des arguments ne sont pas correctes.\n     type(dep)={0}\n     type(echantillonage)={1}".format(type(dep), type(echantillonage)))
+										text="calc_temps_essai\nERREUR : Les types des arguments ne sont pas correctes.\n     type(dep)={0}\n     type(echantillonage)={1}".format(type(dep), type(echantillonage)))
 
 		return []
 
@@ -251,7 +251,7 @@ def calc_temps_essai(dep=[], echantillonage=.0, QWindow=None):
 	else:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="calc_temps_essai\nLes données de déplacement ou d'échantillonage sont inexistantes.\n     dep={0}\n     echantillonage={1}".format(dep, echantillonage))
+										text="calc_temps_essai\nERREUR : Les données de déplacement ou d'échantillonage sont inexistantes.\n     dep={0}\n     echantillonage={1}".format(dep, echantillonage))
 
 		return []
 
@@ -296,7 +296,7 @@ def enregistrer_donnees(F=[],
 	if type(dep) != list or type(F) != list or type(tmps) != list or type(calc_temps) != bool or type(filePath) != str or type(unite_F) != str or type(unite_dep) != str or type(echantillonage) != float or type(date) != str or type(heure) != str:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="""enregistrer_donnees\nLes types des arguments ne sont pas correctes.\n
+										text="""enregistrer_donnees\nERREUR : Les types des arguments ne sont pas correctes.\n
 												 type(dep)={0}\n
 												 type(echantillonage)={1}\n
 												 type(tmps)={2}\n
@@ -322,7 +322,7 @@ def enregistrer_donnees(F=[],
 	if len(F) != len(dep) or len(dep) != len(tmps):
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="enregistrer_donnees\nLes vecteurs de données doivent avoir la même longueur.\n     len(F)={0}\n     len(dep)={1}\n     len(tmps)={2}".format(len(F), len(dep), len(tmps)))
+										text="enregistrer_donnees\nERREUR : Les vecteurs de données doivent avoir la même longueur.\n     len(F)={0}\n     len(dep)={1}\n     len(tmps)={2}".format(len(F), len(dep), len(tmps)))
 
 		return False
 
@@ -336,7 +336,7 @@ def enregistrer_donnees(F=[],
 			else:
 				print_or_addterminal_message(	QWindow=QWindow,
 												type_msg="err",
-												text="enregistrer_donnees\nLe vecteur temps est vide.\n     tmps={0}".format(tmps))
+												text="enregistrer_donnees\nERREUR : Le vecteur temps est vide.\n     tmps={0}".format(tmps))
 
 				return False
 
@@ -353,7 +353,7 @@ def enregistrer_donnees(F=[],
 		except:
 			print_or_addterminal_message(	QWindow=QWindow,
 											type_msg="err",
-											text="enregistrer_donnees\nL'enregistrement du fichier à échoué. Le chemin est peut-être incorrect.\n     filePath={0}".format(filePath))
+											text="enregistrer_donnees\nERREUR : L'enregistrement du fichier à échoué. Le chemin est peut-être incorrect.\n     filePath={0}".format(filePath))
 
 			return False
 
@@ -361,7 +361,7 @@ def enregistrer_donnees(F=[],
 	else:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="enregistrer_donnees\nLes vecteurs force et/ou déplacement sont vides.\n     F={0}\n     dep={1}".format(F, dep))
+										text="enregistrer_donnees\nERREUR : Les vecteurs force et/ou déplacement sont vides.\n     F={0}\n     dep={1}".format(F, dep))
 
 		return False
 
@@ -385,14 +385,14 @@ def liste_fichier_dossier(path="", fileType=".csv", QWindow=None):
 	if type(path) != str or type(fileType) != str:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="liste_fichier_dossier\nLes types d'entrée ne sont pas corrects !\n     type(path)={0}\n     type(fileType)={1}".format(type(path), type(filePath)))
+										text="liste_fichier_dossier\nERREUR : Les types d'entrée ne sont pas corrects !\n     type(path)={0}\n     type(fileType)={1}".format(type(path), type(filePath)))
 
 		return []
 
 	if not "." in fileType and fileType != "*":
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="liste_fichier_dossier\nLe format de fichier n'est pas correct !\n     fileType={0}".format(fileType))
+										text="liste_fichier_dossier\nERREUR : Le format de fichier n'est pas correct !\n     fileType={0}".format(fileType))
 
 		return []
 
@@ -403,30 +403,37 @@ def liste_fichier_dossier(path="", fileType=".csv", QWindow=None):
 		except:
 			print_or_addterminal_message(	QWindow=QWindow,
 											type_msg="err",
-											text="liste_fichier_dossier\nLe dossier de recherche n'est pas correct !\n     path={0}".format(path))
+											text="liste_fichier_dossier\nERREUR : Le dossier de recherche n'est pas correct !\n     path={0}".format(path))
 
 			return []
 
 	else:
 		try:
-			files = os.listdir(path)
+			files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 
 		except:
 			print_or_addterminal_message(	QWindow=QWindow,
 											type_msg="err",
-											text="liste_fichier_dossier\nLe dossier de recherche n'est pas correct !\n     path={0}".format(path))
+											text="liste_fichier_dossier\nERREUR : Le dossier de recherche n'est pas correct !\n     path={0}".format(path))
 
 			return []
 
-		fileType = fileType.lower()
+		fileType = fileType.lower().split('.')[1]
 		j = 0
 
 		for i in range(len(files)):
-			if fileType.split('.')[1] != files[j].lower().split('.')[1]:
+			f = files[j].lower().split('.')
+			
+			if len(f) > 1 and fileType != f[1]:
 				del files[j]
 
-			else:
+			elif len(f) > 1 and fileType == f[1]:
 				j += 1
+
+			elif len(f) <= 1:
+				print_or_addterminal_message(	QWindow=QWindow,
+												type_msg="err",
+												text="liste_fichier_dossier\nERREUR : Quelque chose c'est mal passé lors de la lecture des fichier (possible présence d'un dossier dans la liste des fichiers) !\n     path={0}".format(path))
 
 	return files
 
@@ -477,10 +484,10 @@ def enregistrer_configuration(	folder="",
 											text="Voulez-vous écraser le fichier de configuration existant ?")
 
 		if button == QMessageBox.StandardButton.Yes:
-			QWindow.textEdit_terminal_addWarning("WARNING : Le fichier config.conf va être écrasé !")
+			QWindow.textEdit_terminal_addWarning("enregistrer_configuration\nWARNING : Le fichier config.conf va être écrasé !")
 
 		elif button == QMessageBox.StandardButton.No:
-			QWindow.textEdit_terminal_addWarning("WARNING : Abandon de la sauvegarde du fichier config.conf !")
+			QWindow.textEdit_terminal_addWarning("enregistrer_configuration\nWARNING : Abandon de la sauvegarde du fichier config.conf !")
 			return
 
 	# Enregistrement du fichier
@@ -492,4 +499,4 @@ def enregistrer_configuration(	folder="",
 		QWindow.textEdit_terminal_addText("Le fichier config.conf a été enregistré avec succès !")
 
 	except:
-		QWindow.textEdit_terminal_addError("ERREUR : Impossible d'écrire dans le fichier config.conf !")
+		QWindow.textEdit_terminal_addError("enregistrer_configuration\nERREUR : Impossible d'écrire dans le fichier config.conf !")

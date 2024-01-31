@@ -31,14 +31,14 @@ def suppr_rollback(F=[], dep=[], tmps=[], QWindow=None):
 	if type(F) != list or type(dep) != list or type(tmps) != list:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="suppr_rollback\nLes types des arguments ne sont pas correctes.\n     type(F)={0}\n     type(dep)={1}\n     type(tmps)={2}".format(type(F), type(dep), type(tmps)))
+										text="suppr_rollback\nERREUR : Les types des arguments ne sont pas correctes.\n     type(F)={0}\n     type(dep)={1}\n     type(tmps)={2}".format(type(F), type(dep), type(tmps)))
 
 		return [], [], []
 
 	if len(F) == 0 and (len(F) != len(dep) or len(dep) != len(tmps)):
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="suppr_rollback\nLes vecteurs d'entrée doivent-être de même longueur et non vides !")
+										text="suppr_rollback\nERREUR : Les vecteurs d'entrée doivent-être de même longueur et non vides !")
 
 		return [], [], []
 
@@ -97,7 +97,7 @@ def recherche_debut_impact(	F=[],
 	if type(F) != list or type(dep) != list or type(tmps) != list or type(taux_augmentation) != float or type(nb_pas_avant_augmentation) != int or type(fileName) != str:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="""	recherche_debut_impact\nLes types des arguments ne sont pas correctes.\n
+										text="""	recherche_debut_impact\nERREUR : Les types des arguments ne sont pas correctes.\n
 													     type(F)={0}\n
 													     type(dep)={1}\n
 													     type(tmps)={2}\n
@@ -115,21 +115,21 @@ def recherche_debut_impact(	F=[],
 	if len(F) == 0 and (len(F) != len(dep) or len(dep) != len(tmps)):
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="recherche_debut_impact\nLes vecteurs d'entrée doivent-être de même longueur et non vides !")
+										text="recherche_debut_impact\nERREUR : Les vecteurs d'entrée doivent-être de même longueur et non vides !")
 
 		return [], [], []
 
 	if taux_augmentation <= 0:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="recherche_debut_impact\nLe taux d'augmentation doit être positif strict !")
+										text="recherche_debut_impact\nERREUR : Le taux d'augmentation doit être positif strict !")
 
 		return F, dep, tmps
 
 	if nb_pas_avant_augmentation < 0:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="recherche_debut_impact\nLe nombre de pas avant augmentation doit être supérieur ou égal à 0 !")
+										text="recherche_debut_impact\nERREUR : Le nombre de pas avant augmentation doit être supérieur ou égal à 0 !")
 
 		return F, dep, tmps
 
@@ -155,7 +155,7 @@ def recherche_debut_impact(	F=[],
 	else:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="wrg",
-										text="recherche_debut_impact\n!!! WARNING : Début de l'impact non trouvé {0} !!!".format(fileName))
+										text="recherche_debut_impact\nWARNING : Début de l'impact non trouvé {0} !".format(fileName))
 
 		return F, dep, tmps
 
@@ -186,14 +186,14 @@ def energie(F=[],
 	if type(F) != list or type(dep) != list:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="energie\nLes types des arguments ne sont pas correctes.\n     type(F)={0}\n     type(dep)={1}".format(type(F), type(dep)))
+										text="energie\nERREUR : Les types des arguments ne sont pas correctes.\n     type(F)={0}\n     type(dep)={1}".format(type(F), type(dep)))
 
 		return [], []
 
 	if len(F) == 0 and len(F) != len(dep):
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="energie\nLes vecteurs d'entrée doivent-être de même longueur et non vides !")
+										text="energie\nERREUR : Les vecteurs d'entrée doivent-être de même longueur et non vides !")
 
 		return F, dep
 
@@ -225,14 +225,14 @@ def tare_dep(dep=[], QWindow=None):
 	if type(dep) != list:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="tare_dep\nLes types des arguments ne sont pas correctes.\n     type(dep)={1}".format(type(dep)))
+										text="tare_dep\nERREUR : Les types des arguments ne sont pas correctes.\n     type(dep)={1}".format(type(dep)))
 
 		return []
 
 	if len(dep) == 0:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="tare_dep\nLe vecteur d'entrée doit-être non vide !")
+										text="tare_dep\nERREUR : Le vecteur d'entrée doit-être non vide !")
 
 		return dep
 
@@ -263,14 +263,14 @@ def tare_tmps(tmps=[], QWindow=None):
 	if type(tmps) != list:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="tare_tmps\nLes types des arguments ne sont pas correctes.\n     type(tmps)={1}".format(type(tmps)))
+										text="tare_tmps\nERREUR : Les types des arguments ne sont pas correctes.\n     type(tmps)={1}".format(type(tmps)))
 
 		return []
 
 	if len(tmps) == 0:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="tare_tmps\nLe vecteur d'entrée doit-être non vide !")
+										text="tare_tmps\nERREUR : Le vecteur d'entrée doit-être non vide !")
 
 		return tmps
 
@@ -307,14 +307,14 @@ def fin_essai(F=[], dep=[], tmps=[], dep_max=19.0, QWindow=None):
 	if type(F) != list or type(dep) != list or type(tmps) != list or type(dep_max) != float:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="fin_essai\nLes types des arguments ne sont pas correctes.\n     type(F)={0}\n     type(dep)={1}\n     type(tmps)={2}\n     type(dep_max)={3}".format(type(F), type(dep), type(tmps), type(dep_max)))
+										text="fin_essai\nERREUR : Les types des arguments ne sont pas correctes.\n     type(F)={0}\n     type(dep)={1}\n     type(tmps)={2}\n     type(dep_max)={3}".format(type(F), type(dep), type(tmps), type(dep_max)))
 
 		return [], [], []
 
 	if len(F) == 0 and (len(F) != len(dep) or len(dep) != len(tmps)):
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="fin_essai\nLes vecteurs d'entrée doivent-être de même longueur et non vides !")
+										text="fin_essai\nERREUR : Les vecteurs d'entrée doivent-être de même longueur et non vides !")
 
 		return [], [], []
 
@@ -355,21 +355,21 @@ def debut_impact_manuel(F=[], dep=[], tmps=[], tmps_deb_impact=5.0, QWindow=None
 	if type(F) != list or type(dep) != list or type(tmps) != list or type(tmps_deb_impact) != float:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="debut_impact_manuel\nLes types des arguments ne sont pas correctes.\n     type(F)={0}\n     type(dep)={1}\n     type(tmps)={2}\n     type(tmps_deb_impact)={3}".format(type(F), type(dep), type(tmps), type(tmps_deb_impact)))
+										text="debut_impact_manuel\nERREUR : Les types des arguments ne sont pas correctes.\n     type(F)={0}\n     type(dep)={1}\n     type(tmps)={2}\n     type(tmps_deb_impact)={3}".format(type(F), type(dep), type(tmps), type(tmps_deb_impact)))
 
 		return [], [], []
 
 	if len(F) == 0 and (len(F) != len(dep) or len(dep) != len(tmps)):
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="debut_impact_manuel\nLes vecteurs d'entrée doivent-être de même longueur et non vides !")
+										text="debut_impact_manuel\nERREUR : Les vecteurs d'entrée doivent-être de même longueur et non vides !")
 
 		return [], [], []
 
 	if tmps_deb_impact <= .0:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="debut_impact_manuel\ntmps_deb_impact doit être positif strictement !\n     tmps_deb_impact = {0}".format(tmps_deb_impact))
+										text="debut_impact_manuel\nERREUR : tmps_deb_impact doit être positif strictement !\n     tmps_deb_impact = {0}".format(tmps_deb_impact))
 
 		return F, dep, tmps
 
@@ -385,7 +385,7 @@ def debut_impact_manuel(F=[], dep=[], tmps=[], tmps_deb_impact=5.0, QWindow=None
 	else:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="debut_impact_manuel\nLe vecteur temps ne contient pas de temps supérieurs à tmps_deb_impact !\n     tmps_deb_impact = {0}".format(tmps_deb_impact))
+										text="debut_impact_manuel\nERREUR : Le vecteur temps ne contient pas de temps supérieurs à tmps_deb_impact !\n     tmps_deb_impact = {0}".format(tmps_deb_impact))
 
 	return F, dep, tmps
 
@@ -412,5 +412,5 @@ def calc_vitesse(dep1=None, dep2=None, tmps1=None, tmps2=None, QWindow=None):
 	else:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="calc_vitesse\nL'une des données d'entrée n'est pas renseignées !\n     dep1 = {0}\n     dep2 = {1}\n     tmps1 = {2}\n     tmps2 = {3}".format(dep1, dep2, tmps1, tmps2))
+										text="calc_vitesse\nERREUR : L'une des données d'entrée n'est pas renseignées !\n     dep1 = {0}\n     dep2 = {1}\n     tmps1 = {2}\n     tmps2 = {3}".format(dep1, dep2, tmps1, tmps2))
 		return 0.0

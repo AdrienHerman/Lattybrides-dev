@@ -3,7 +3,11 @@ Corps principal de l'application avec interface graphique.
 HERMAN Adrien
 22/01/2024
 
+Build PyQt6 *.ui files
 pyuic6 UI/MainWindow.ui -o UI/MainWindowUI.py
+
+Build py file to exe
+pyinstaller --add-data config_default.conf:. --add-data UI/icon.png:UI --add-data DATA/.:DATA/. TDC.py
 """
 
 # Modules de Python
@@ -550,9 +554,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 		superposer_courbes = self.checkBox_superposer_courbes.isChecked()
 		nom_fichier = self.lineEdit_nom_fichier.text()
 		nom_dossier = self.lineEdit_nom_dossier.text()
-		if nom_fichier == "" or nom_dossier == "":
+		if not superposer_courbes and (nom_fichier == "" or nom_dossier == ""):
 			self.textEdit_terminal_addWarning("WARNING : nom_fichier ou nom_dossier ne sont pas renseignés ! Le traitement des données ne peut pas se faire !")
-			return
+			return 
+		elif superposer_courbes and nom_dossier == "":
+			self.textEdit_terminal_addWarning("WARNING : nom_dossier n'est pas renseigné ! Le traitement des données ne peut pas se faire !")
+			return 
 
 		# type_fichier
 		type_fichier = self.comboBox_type_fichier.currentText().lower()
@@ -728,7 +735,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 		return dialog.exec()
 
-	def messagebox_ok(self, title="", text="", center_text=True):
+	def messagebox_ok(self, title="", text="", center_text=True, min_width=400):
 		"""
 		Afficher une MessageBox avec un bouton Ok.
 
@@ -737,6 +744,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 			- title       : Titre de la fenêtre.
 			- text        : Texte de la fenêtre.
 			- center_text : True si Qt doit centrer le texte
+			- min_width   : Nombre de pixels minimum dans la largeur de la fenêtre
 		----------
 
 		---------
@@ -750,14 +758,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 		dialog.setText(text)
 		if center_text:	dialog.findChild(QLabel, "qt_msgbox_label").setAlignment(Qt.AlignmentFlag.AlignCenter)
 		dialog.setStandardButtons(QMessageBox.StandardButton.Ok)
-		dialog.setStyleSheet("QLabel {min-width: 400px;}")
+		dialog.setStyleSheet("QLabel {min-width: " + str(min_width) + "px;}")
 
 		return dialog.exec()
 
 # Exécution du logiciel
 if __name__ == "__main__":
 	# Définition de l'objet de parsing
-	parser = argparse.ArgumentParser(add_help=False)
+	parser = argparse.ArgumentParser(	prog="TDC",
+										add_help=False)
 
 	# Définition des objets application et fenêtre
 	app = QApplication(sys.argv)
@@ -783,7 +792,11 @@ if __name__ == "__main__":
 
 	# Afficher la version du logiciel
 	if args.version:
-		print(version())		
+		print(version())
+
+	else:
+		# Afficher le texte de démarrage
+		print(texte_demarrage())
 
 	# Changer le fichier de configuration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if args.custom_configuration:
@@ -791,6 +804,5 @@ if __name__ == "__main__":
 
 	# Si aucun argument n'est renseigné lancer l'interface graphique du logiciel
 	if not args.version and not args.custom_configuration and not args.default_configuration:
-		print(texte_demarrage())
 		window.show()
 		sys.exit(app.exec())

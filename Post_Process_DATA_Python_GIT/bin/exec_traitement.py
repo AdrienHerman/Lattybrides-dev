@@ -68,7 +68,7 @@ def exec_traitement(QWindow=None,
 		if not nom_fichier in fichiers:
 			print_or_addterminal_message(	QWindow=QWindow,
 											type_msg="err",
-											text="exec_traitement ERREUR : Le fichier sélectionné n'existe pas ou le type de fichier associé n'est pas correct !")
+											text="exec_traitement\nERREUR : Le fichier sélectionné n'existe pas ou le type de fichier associé n'est pas correct !")
 
 			return False
 
@@ -89,10 +89,13 @@ def exec_traitement(QWindow=None,
 				if calc_temps and type_fichier != "txt":
 					tmps = calc_temps_essai(dep=dep, echantillonage=echantillonage, QWindow=QWindow)
 
+				elif not calc_temps:
+					tmps = []
+
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : L'option de calcul du temps de l'essai n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : L'option de calcul du temps de l'essai n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 
 				# Suppression du rollback
 				if sppr_rollback and type_fichier != "txt":
@@ -101,7 +104,7 @@ def exec_traitement(QWindow=None,
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : L'option sppr_rollback n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : L'option sppr_rollback n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 
 				# Recherche du début de l'impact
 				if taux_augmentation != None and nb_pas_avant_augmentation != None and recherche_deb_impact and not deb_impact_manuel and type_fichier != "txt":
@@ -127,7 +130,7 @@ def exec_traitement(QWindow=None,
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : La détection du début d'impact automatique n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : La détection du début d'impact automatique n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 
 				# Début d'impact manuel
 				if deb_impact_manuel and calc_temps and type_fichier != "txt":
@@ -137,27 +140,42 @@ def exec_traitement(QWindow=None,
 														tmps_deb_impact=tmps_deb_impact,
 														QWindow=QWindow)
 
+				elif deb_impact_manuel and calc_temps:
+					print_or_addterminal_message(	QWindow=QWindow,
+													type_msg="wrg",
+													text="exec_traitement\nWARNING : La détection du début d'impact manuel n'est pas disponnible  si le calcul du temps est désactivé")
+
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : La détection du début d'impact manuel n'est sont pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : La détection du début d'impact manuel n'est sont pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 
 				# Tarrage du déplacement et du temps
-				if tarrage_dep and (recherche_deb_impact or deb_impact_manuel) and type_fichier != "txt":
+				if tarrage_dep and (recherche_deb_impact or deb_impact_manuel) and type_fichier != "txt" and calc_temps:
 					dep = tare_dep(dep=dep, QWindow=QWindow)
 
-				if tarrage_tmps and (recherche_deb_impact or deb_impact_manuel) and type_fichier != "txt":
-					tmps = tare_tmps(tmps=tmps, QWindow=QWindow)
-
-				elif type_fichier == "txt":
+				elif tarrage_dep and not calc_temps:
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : Le tarrage de temps / déplacement n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : Le tarrage du déplacement (tarrage_dep) ne peut pas s'exécuter si le calcul du temps est désactivé (calc_temps) !")
+
+				if tarrage_tmps and (recherche_deb_impact or deb_impact_manuel) and type_fichier != "txt" and calc_temps:
+					tmps = tare_tmps(tmps=tmps, QWindow=QWindow)
+
+				elif tarrage_tmps and not calc_temps:
+					print_or_addterminal_message(	QWindow=QWindow,
+													type_msg="wrg",
+													text="exec_traitement\nWARNING : Le tarrage du temps (tarrage_tmps) ne peut pas s'exécuter si le calcul du temps est désactivé (calc_temps) !")
+
+				elif tarrage_tmps and type_fichier == "txt":
+					print_or_addterminal_message(	QWindow=QWindow,
+													type_msg="wrg",
+													text="exec_traitement\nWARNING : Le tarrage de temps / déplacement n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 				
 				# Suppression des données après la fin de l'impact
 				impact_text = ""
 
-				if detect_fin_essai and ((sppr_rollback and recherche_deb_impact and tarrage_dep) or deb_impact_manuel) and type_fichier != "txt":
+				if detect_fin_essai and ((sppr_rollback and recherche_deb_impact and tarrage_dep) or deb_impact_manuel) and type_fichier != "txt" and calc_temps:
 					F, dep, tmps, impact = fin_essai(F=F, dep=dep, tmps=tmps, dep_max=dep_max, QWindow=QWindow)
 
 					if impact:
@@ -174,7 +192,12 @@ def exec_traitement(QWindow=None,
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : La détection de la fin de l'essai n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : La détection de la fin de l'essai n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+
+				elif detect_fin_essai and not calc_temps:
+					print_or_addterminal_message(	QWindow=QWindow,
+													type_msg="wrg",
+													text="exec_traitement\nWARNING : La détection de la fin de l'essai n'est pas disponnible si le calcul du temps est désactivé !")
 
 				# Calcul de l'énergie
 				if calculer_energie:
@@ -197,10 +220,10 @@ def exec_traitement(QWindow=None,
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : L'enregistrement des données traitées ne peut pas être réalisée si ces données proviennent d'un fichier déjà traité (.txt)")
+													text="exec_traitement\nWARNING : L'enregistrement des données traitées ne peut pas être réalisée si ces données proviennent d'un fichier déjà traité (.txt)")
 
 				# Calcul de la vitesse d'impact au début de l'essai
-				if calc_vitesse_impact:
+				if calc_vitesse_impact and calc_temps:
 					calcul_ok_vimpact = True
 					v_pts = []
 
@@ -218,39 +241,87 @@ def exec_traitement(QWindow=None,
 					if not calcul_ok_vimpact:
 						print_or_addterminal_message(	QWindow=QWindow,
 														type_msg="wrg",
-														text="exec_traitement WARNING : Le vecteur ne dispose pas d'assez de points pour calculer la vitesse d'impact !")
+														text="exec_traitement\nWARNING : Le vecteur ne dispose pas d'assez de points pour calculer la vitesse d'impact !")
 
 					else:
 						# Afficher un avertissement si la vitesse d'impact est calculée trop loin dans le temps de l'essai
 						if tmps[nbpts_vitesse_impact] >= tmps_max_vitess_impact:
 							print_or_addterminal_message(	QWindow=QWindow,
 															type_msg="wrg",
-															text="exec_traitement WARNING : La vitesse d'impact est calculée jusqu'à un temps élevé de l'essai !\n     tmps={0} >= {1}".format(tmps[nbpts_vitesse_impact], tmps_max_vitess_impact))
+															text="exec_traitement\nWARNING : La vitesse d'impact est calculée jusqu'à un temps élevé de l'essai !\n     tmps={0} >= {1}".format(tmps[nbpts_vitesse_impact], tmps_max_vitess_impact))
 
-					# Création des trois graphes dans une figure
-					if afficher_sep:
-						figs = [0, 0, 0]
-						axs = [0, 0, 0]
+				elif calc_vitesse_impact and not calc_temps:
+					print_or_addterminal_message(	QWindow=QWindow,
+															type_msg="wrg",
+															text="exec_traitement\nWARNING : Le calcul de la vitesse d'impact n'est pas possible si le calcul du temps est désactivé (calc_temps)")
 
-						for i in range([afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True)):
-							figs[i], axs[i] = plt.subplots()
+				# Création des trois graphes dans une figure
+				if afficher_sep:
+					figs = [0, 0, 0]
+					axs = [0, 0, 0]
 
-					elif not afficher_sep and [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) > 0:
-						fig, axs = plt.subplots([afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True), 1)
+					for i in range([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True)):
+						figs[i], axs[i] = plt.subplots()
 
-					if afficher_sep != None:
-						i = 0
+				elif not afficher_sep and [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) > 0:
+					fig, axs = plt.subplots([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True), 1)
 
-						if afficher_dep_tmps:
-							if afficher_sep:
-								fig = figs[i]
-								ax = axs[i]
+				if afficher_sep != None:
+					i = 0
+
+					if afficher_dep_tmps and calc_temps:
+						if afficher_sep:
+							fig = figs[i]
+							ax = axs[i]
+						else:
+							if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) == 1:
+								ax = axs
 							else:
-								if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) == 1:
-									ax = axs
-								else:
-									ax = axs[i]
+								ax = axs[i]
 
+						# Titre du graphique
+						titre = ""
+						
+						if calculer_energie:
+							titre = "Énergie Calculée = " + str(round(energie_impact, 2)) + " J" + impact_text
+
+						if calc_vitesse_impact:
+							if titre != "":	titre += " / "
+
+							if not calcul_ok_vimpact:
+								titre += "Vitesse d'Impact = NON CALCULABLE !"
+							else:
+								titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
+
+						graphe(	data_x=[tmps],
+								data_y=[dep],
+								fig=fig,
+								ax=ax,
+								label_x="Temps (ms)",
+								label_y="Déplacement ({0})".format(unite_dep),
+								fileName=[nom_fichier],
+								titre=titre,
+								QWindow=QWindow)
+						i += 1
+
+					elif afficher_dep_tmps and not calc_temps:
+						print_or_addterminal_message(	QWindow=QWindow,
+														type_msg="wrg",
+														text="exec_traitement\nWARNING : Impossible d'afficher le graphique déplacement=f(temps) car le calcul du temps est désactivé !")
+
+					if afficher_F_tmps and calc_temps:
+						if afficher_sep:
+							fig = figs[i]
+							ax = axs[i]
+						else:
+							if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) == 1:
+								ax = axs
+							else:
+								ax = axs[i]
+
+						titre = ""
+
+						if (afficher_dep_tmps == None or not afficher_dep_tmps) or afficher_sep:
 							# Titre du graphique
 							titre = ""
 							
@@ -260,96 +331,63 @@ def exec_traitement(QWindow=None,
 							if calc_vitesse_impact:
 								if titre != "":	titre += " / "
 
-								if not calcul_ok_vimpact:
-									titre += "Vitesse d'Impact = NON CALCULABLE !"
-								else:
-									titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
-
-							graphe(	data_x=[tmps],
-									data_y=[dep],
-									fig=fig,
-									ax=ax,
-									label_x="Temps (ms)",
-									label_y="Déplacement ({0})".format(unite_dep),
-									fileName=[nom_fichier],
-									titre=titre,
-									QWindow=QWindow)
-							i += 1
-
-						if afficher_F_tmps:
-							if afficher_sep:
-								fig = figs[i]
-								ax = axs[i]
+							if not calcul_ok_vimpact:
+								titre += "Vitesse d'Impact = NON CALCULABLE !"
 							else:
-								if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) == 1:
-									ax = axs
-								else:
-									ax = axs[i]
+								titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
 
-							titre = ""
+						graphe(	data_x=[tmps],
+								data_y=[F],
+								label_x="Temps (ms)",
+								label_y="Force ({0})".format(unite_F),
+								titre=titre,
+								fig=fig,
+								ax=ax,
+								fileName=[nom_fichier],
+								QWindow=QWindow)
+						i += 1
 
-							if (afficher_dep_tmps == None or not afficher_dep_tmps) or afficher_sep:
-								# Titre du graphique
-								titre = ""
-								
-								if calculer_energie:
-									titre = "Énergie Calculée = " + str(round(energie_impact, 2)) + " J" + impact_text
+					elif afficher_dep_tmps and not calc_temps:
+						print_or_addterminal_message(	QWindow=QWindow,
+														type_msg="wrg",
+														text="exec_traitement\nWARNING : Impossible d'afficher le graphique force=f(temps) car le calcul du temps est désactivé !")
 
-								if calc_vitesse_impact:
-									if titre != "":	titre += " / "
-
-								if not calcul_ok_vimpact:
-									titre += "Vitesse d'Impact = NON CALCULABLE !"
-								else:
-									titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
-
-							graphe(	data_x=[tmps],
-									data_y=[F],
-									label_x="Temps (ms)",
-									label_y="Force ({0})".format(unite_F),
-									titre=titre,
-									fig=fig,
-									ax=ax,
-									fileName=[nom_fichier],
-									QWindow=QWindow)
-							i += 1
-
-						if afficher_F_dep:
-							if afficher_sep:
-								fig = figs[i]
-								ax = axs[i]
+					if afficher_F_dep:
+						if afficher_sep:
+							fig = figs[i]
+							ax = axs[i]
+						else:
+							if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) == 1:
+								ax = axs
 							else:
-								if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) == 1:
-									ax = axs
-								else:
-									ax = axs[i]
+								ax = axs[i]
 
+						titre = ""
+
+						if ((afficher_dep_tmps == None or not afficher_dep_tmps) and (afficher_F_tmps == None or not afficher_F_tmps)) or afficher_sep:
+							# Titre du graphique
 							titre = ""
+							
+							if calculer_energie:
+								titre = "Énergie Calculée = " + str(round(energie_impact, 2)) + " J" + impact_text
 
-							if ((afficher_dep_tmps == None or not afficher_dep_tmps) and (afficher_F_tmps == None or not afficher_F_tmps)) or afficher_sep:
-								# Titre du graphique
-								titre = ""
-								
-								if calculer_energie:
-									titre = "Énergie Calculée = " + str(round(energie_impact, 2)) + " J" + impact_text
+							if calc_vitesse_impact:
+								if titre != "":	titre += " / "
 
-								if calc_vitesse_impact:
-									if titre != "":	titre += " / "
+							if not calcul_ok_vimpact:
+								titre += "Vitesse d'Impact = NON CALCULABLE !"
+							else:
+								titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
 
-								if not calcul_ok_vimpact:
-									titre += "Vitesse d'Impact = NON CALCULABLE !"
-								else:
-									titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
-
-							graphe(	data_x=[dep],
-									data_y=[F],
-									label_x="Déplacement ({0})".format(unite_dep),
-									label_y="Force ({0})".format(unite_F),
-									titre=titre,
-									fig=fig,
-									ax=ax,
-									fileName=[nom_fichier],
-									QWindow=QWindow)
+						graphe(	data_x=[dep],
+								data_y=[F],
+								label_x="Déplacement ({0})".format(unite_dep),
+								label_y="Force ({0})".format(unite_F),
+								titre=titre,
+								fig=fig,
+								ax=ax,
+								fileName=[nom_fichier],
+								QWindow=QWindow)
 
 	elif superposer_courbes:	# Si on affiche les fichiers de données d'un dossier
 		# Lecture des fichiers
@@ -359,7 +397,7 @@ def exec_traitement(QWindow=None,
 		if nb_fichiers <= 1:
 			print_or_addterminal_message(	QWindow=QWindow,
 											type_msg="err",
-											text="exec_traitement ERREUR : Il n'y a pas assez de fichiers pour superposer les courbes !")
+											text="exec_traitement\nERREUR : Il n'y a pas assez de fichiers pour superposer les courbes !")
 			return False
 
 		else:
@@ -369,7 +407,7 @@ def exec_traitement(QWindow=None,
 					if len(l) == 0:
 						print_or_addterminal_message(	QWindow=QWindow,
 														type_msg="err",
-														text="exec_traitement ERREUR : Le fichier lu est vide !")
+														text="exec_traitement\nERREUR : Le fichier lu est vide !")
 						return False
 				
 				en_tetes = [lire_en_tete_csv_oscilo(lignes=l, QWindow=QWindow) for l in lignes]
@@ -393,7 +431,7 @@ def exec_traitement(QWindow=None,
 					if F[i] == [] and dep[i] == [] and tmps[i] == [] and unite_F[i] == "" and unite_dep[i] == "" and echantillonage[i] == .0 and date[i] == "" and heure[i] == "":
 						print_or_addterminal_message(	QWindow=QWindow,
 														type_msg="err",
-														text="exec_traitement ERREUR : Le fichier lu est vide !")
+														text="exec_traitement\nERREUR : Le fichier lu est vide !")
 						return False
 
 				en_tetes = [[unite_F[i], unite_dep[i], echantillonage[i], date[i], heure[i]] for i in range(nb_fichiers)]
@@ -401,12 +439,15 @@ def exec_traitement(QWindow=None,
 			if type_fichier != None and nb_fichiers != 0:
 				# Calcul des temps des essais
 				if calc_temps and type_fichier != "txt":
-					tmps = [calc_temps_essai(dep=dep[i], echantillonage=en_tetes[i][2], QWindow=QWindow) for i in range(len(dep))]
+					tmps = [calc_temps_essai(dep=dep[i], echantillonage=en_tetes[i][2], QWindow=QWindow) for i in range(nb_fichiers)]
+
+				elif not calc_temps:
+					tmps = [[] for i in range(nb_fichiers)]
 
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : L'option de calcul du temps de l'essai n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : L'option de calcul du temps de l'essai n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 
 				# Suppression du rollback
 				if sppr_rollback and type_fichier != "txt":
@@ -415,7 +456,7 @@ def exec_traitement(QWindow=None,
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : L'option suppr_rollback n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : L'option suppr_rollback n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 
 				# Recherche du début de l'impact
 				if taux_augmentation != None and nb_pas_avant_augmentation != None and recherche_deb_impact and not deb_impact_manuel and type_fichier != "txt":
@@ -431,19 +472,19 @@ def exec_traitement(QWindow=None,
 				elif (nb_pas_avant_augmentation == None or taux_augmentation == None) and recherche_deb_impact and type_fichier != "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="err",
-													text="exec_traitement ERREUR : La variable taux_augmentation et nb_pas_avant_augmentation doivent-être renseignées dans le fichier de configuration !")
+													text="exec_traitement\nERREUR : La variable taux_augmentation et nb_pas_avant_augmentation doivent-être renseignées dans le fichier de configuration !")
 					return False
 
 				elif deb_impact_manuel and recherche_deb_impact and type_fichier != "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="err",
-													text="exec_traitement ERREUR : La recherche de début d'impact manuel ne peut pas être activée en même temps que la recherche d'impact automatique !")
+													text="exec_traitement\nERREUR : La recherche de début d'impact manuel ne peut pas être activée en même temps que la recherche d'impact automatique !")
 					return False
 
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : La détection du début d'impact automatique n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : La détection du début d'impact automatique n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 
 				# Début d'impact manuel
 				if deb_impact_manuel and calc_temps and type_fichier != "txt":
@@ -454,27 +495,42 @@ def exec_traitement(QWindow=None,
 																	tmps_deb_impact=tmps_deb_impact,
 																	QWindow=QWindow)
 
+				elif deb_impact_manuel and calc_temps:
+					print_or_addterminal_message(	QWindow=QWindow,
+													type_msg="wrg",
+													text="exec_traitement\nWARNING : La détection du début d'impact manuel n'est pas disponnible  si le calcul du temps est désactivé")
+
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : La détection du début d'impact manuel n'est sont pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : La détection du début d'impact manuel n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 
 				# Tarrage du déplacement et du temps
-				if tarrage_dep and (recherche_deb_impact or deb_impact_manuel) and type_fichier != "txt":
+				if tarrage_dep and (recherche_deb_impact or deb_impact_manuel) and type_fichier != "txt" and calc_temps:
 					dep = [tare_dep(dep=d, QWindow=QWindow) for d in dep]
 				
-				if tarrage_tmps and (recherche_deb_impact or deb_impact_manuel) and type_fichier != "txt":
-					tmps = [tare_tmps(tmps=t, QWindow=QWindow) for t in tmps]
-
-				elif type_fichier == "txt":
+				elif tarrage_dep and not calc_temps:
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : Le tarrage de temps / déplacement n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : Le tarrage du déplacement (tarrage_dep) ne peut pas s'exécuter si le calcul du temps est désactivé (calc_temps) !")
+
+				if tarrage_tmps and (recherche_deb_impact or deb_impact_manuel) and type_fichier != "txt" and calc_temps:
+					tmps = [tare_tmps(tmps=t, QWindow=QWindow) for t in tmps]
+
+				elif tarrage_tmps and not calc_temps:
+					print_or_addterminal_message(	QWindow=QWindow,
+													type_msg="wrg",
+													text="exec_traitement\nWARNING : Le tarrage du temps (tarrage_tmps) ne peut pas s'exécuter si le calcul du temps est désactivé (calc_temps) !")
+
+				elif tarrage_tmps and type_fichier == "txt":
+					print_or_addterminal_message(	QWindow=QWindow,
+													type_msg="wrg",
+													text="exec_traitement\nWARNING : Le tarrage de temps / déplacement n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
 
 				# Suppression des données après la fin de l'impact
 				impact_text = ""
 
-				if detect_fin_essai and ((sppr_rollback and recherche_deb_impact and tarrage_dep) or deb_impact_manuel) and type_fichier != "txt":
+				if detect_fin_essai and ((sppr_rollback and recherche_deb_impact and tarrage_dep) or deb_impact_manuel) and type_fichier != "txt" and calc_temps:
 					impact = [True for i in range(len(F))]
 					for i in range(len(F)):
 						F[i], dep[i], tmps[i], impact[i] = fin_essai(	F=F[i],
@@ -493,13 +549,18 @@ def exec_traitement(QWindow=None,
 				elif (not sppr_rollback or not recherche_deb_impact or not tarrage_dep) and not deb_impact_manuel:
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="err",
-													text="exec_traitement ERREUR : Les paramètres deb_impact_manuel ou sppr_rollback, recherche_deb_impact et tarrage_dep doivent-être activés pour effectuer la détection de fin d'impact !")
+													text="exec_traitement\nERREUR : Les paramètres deb_impact_manuel ou sppr_rollback, recherche_deb_impact et tarrage_dep doivent-être activés pour effectuer la détection de fin d'impact !")
 					return False
 
 				elif type_fichier == "txt":
 					print_or_addterminal_message(	QWindow=QWindow,
 													type_msg="wrg",
-													text="exec_traitement WARNING : La détection de la fin de l'essai n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt)")
+													text="exec_traitement\nWARNING : La détection de la fin de l'essai n'est pas disponnible sur des données déjà traitées (prevenant d'un fichier .txt) !")
+
+				elif detect_fin_essai and not calc_temps:
+					print_or_addterminal_message(	QWindow=QWindow,
+													type_msg="wrg",
+													text="exec_traitement\nWARNING : La détection de la fin de l'essai n'est pas disponnible si le calcul du temps est désactivé !")
 
 				# Calcul de l'énergie de chaque courbes
 				if calculer_energie:
@@ -532,13 +593,14 @@ def exec_traitement(QWindow=None,
 											QWindow=QWindow)
 
 				# Calcul de la vitesse d'impact au début de l'essai
-				if calc_vitesse_impact:
+				if calc_vitesse_impact and calc_temps:
 					vitesse_impact_moyenne_tab = []
 					calcul_ok_vimpact = True
 
 					for j in range(nb_fichiers):
 						v_pts = []
 
+						# Récupération du nombre de points pour le calcul de la vitesse d'impact
 						for i in range(nbpts_vitesse_impact):
 							if len(tmps[j]) > nbpts_vitesse_impact:
 								v_pts.append(calc_vitesse(dep1=dep[j][i], dep2=dep[j][i+1], tmps1=tmps[j][i], tmps2=tmps[j][i+1], QWindow=QWindow))
@@ -559,7 +621,7 @@ def exec_traitement(QWindow=None,
 					if not calcul_ok_vimpact:
 						print_or_addterminal_message(	QWindow=QWindow,
 														type_msg="wrg",
-														text="exec_traitement WARNING : L'un des vecteurs ne dispose pas d'assez de points pour calculer la vitesse d'impact !")
+														text="exec_traitement\nWARNING : L'un des vecteurs ne dispose pas d'assez de points pour calculer la vitesse d'impact !")
 					
 					else:
 						# Afficher un avertissement si la vitesse d'impact est calculée trop loin dans le temps de l'essai
@@ -568,24 +630,74 @@ def exec_traitement(QWindow=None,
 								if tmps[j][nbpts_vitesse_impact] >= tmps_max_vitess_impact:
 									print_or_addterminal_message(	QWindow=QWindow,
 																	type_msg="wrg",
-																	text="exec_traitement WARNING : La vitesse d'impact est calculée jusqu'à un temps élevé de l'essai !\n     tmps={0} >= {1}".format(tmps[j][nbpts_vitesse_impact], tmps_max_vitess_impact))
+																	text="exec_traitement\nWARNING : La vitesse d'impact est calculée jusqu'à un temps élevé de l'essai !\n     tmps={0} >= {1}".format(tmps[j][nbpts_vitesse_impact], tmps_max_vitess_impact))
 
-					# Création des trois graphes dans une figure
-					if afficher_sep:
-						figs = [0, 0, 0]
-						axs = [0, 0, 0]
+				elif calc_vitesse_impact and not calc_temps:
+					print_or_addterminal_message(	QWindow=QWindow,
+													type_msg="wrg",
+													text="exec_traitement\nWARNING : Le calcul de la vitesse d'impact n'est pas possible si le calcul du temps est désactivé (calc_temps)")
 
-						for i in range([afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True)):
-							figs[i], axs[i] = plt.subplots()
+				# Création des trois graphes dans une figure
+				if afficher_sep:
+					figs = [0, 0, 0]
+					axs = [0, 0, 0]
 
-					elif not afficher_sep and [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) > 0:
-						fig, axs = plt.subplots([afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True), 1)
-					
-					if afficher_sep != None:
-						i = 0
-						j = 0
+					for i in range([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True)):
+						figs[i], axs[i] = plt.subplots()
 
-						if afficher_dep_tmps:
+				elif not afficher_sep and [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) > 0:
+					fig, axs = plt.subplots([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True), 1)
+				
+				if afficher_sep != None:
+					i = 0
+					j = 0
+
+					if afficher_dep_tmps and calc_temps:
+						# Titre du graphique
+						titre = ""
+						
+						if calculer_energie:
+							titre = "Énergie Calculée = " + str(round(energie_moyenne, 2)) + " J" + impact_text
+
+						if calc_vitesse_impact:
+							if titre != "":	titre += " / "
+
+							if not calcul_ok_vimpact:
+								titre += "Vitesse d'Impact = NON CALCULABLE !"
+							else:
+								titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
+
+						if afficher_sep:
+							fig = figs[i]
+							ax = axs[i]
+
+						else:
+							if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) == 1:
+								ax = axs
+							else:
+								ax = axs[i]
+
+						graphe(	data_x=tmps,
+								data_y=dep,
+								fig=fig,
+								ax=ax,
+								label_x="Temps (ms)",
+								label_y="Déplacement ({0})".format(en_tetes[j][1]),
+								fileName=fichiers,
+								titre=titre,
+								QWindow=QWindow)
+
+						i += 1
+
+					elif afficher_dep_tmps and not calc_temps:
+						print_or_addterminal_message(	QWindow=QWindow,
+														type_msg="wrg",
+														text="exec_traitement\nWARNING : Impossible d'afficher le graphique déplacement=f(temps) car le calcul du temps est désactivé !")
+
+					if afficher_F_tmps and calc_temps:
+						titre = ""
+
+						if not afficher_dep_tmps or afficher_sep:
 							# Titre du graphique
 							titre = ""
 							
@@ -599,121 +711,87 @@ def exec_traitement(QWindow=None,
 									titre += "Vitesse d'Impact = NON CALCULABLE !"
 								else:
 									titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
-
-							if afficher_sep:
-								fig = figs[i]
-								ax = axs[i]
-
-							else:
-								if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) == 1:
-									ax = axs
-								else:
-									ax = axs[i]
-
-							graphe(	data_x=tmps,
-									data_y=dep,
-									fig=fig,
-									ax=ax,
-									label_x="Temps (ms)",
-									label_y="Déplacement ({0})".format(en_tetes[j][1]),
-									fileName=fichiers,
-									titre=titre,
-									QWindow=QWindow)
-
-							i += 1
-
-						if afficher_F_tmps:
+						else:
 							titre = ""
 
-							if not afficher_dep_tmps or afficher_sep:
-								# Titre du graphique
-								titre = ""
-								
-								if calculer_energie:
-									titre = "Énergie Calculée = " + str(round(energie_moyenne, 2)) + " J" + impact_text
-
-								if calc_vitesse_impact:
-									if titre != "":	titre += " / "
-
-									if not calcul_ok_vimpact:
-										titre += "Vitesse d'Impact = NON CALCULABLE !"
-									else:
-										titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
+						if afficher_sep:
+							fig = figs[i]
+							ax = axs[i]
+						else:
+							if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) == 1:
+								ax = axs
 							else:
-								titre = ""
-
-							if afficher_sep:
-								fig = figs[i]
 								ax = axs[i]
-							else:
-								if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) == 1:
-									ax = axs
+
+						graphe(	data_x=tmps,
+								data_y=F,
+								label_x="Temps (ms)",
+								label_y="Force ({0})".format(en_tetes[j][0]),
+								titre=titre,
+								fig=fig,
+								ax=ax,
+								fileName=fichiers,
+								QWindow=QWindow,)
+
+						i += 1
+
+
+					elif afficher_dep_tmps and not calc_temps:
+						print_or_addterminal_message(	QWindow=QWindow,
+														type_msg="wrg",
+														text="exec_traitement\nWARNING : Impossible d'afficher le graphique force=f(temps) car le calcul du temps est désactivé !")
+
+					if afficher_F_dep:
+						titre = ""
+
+						if not afficher_dep_tmps and not afficher_F_tmps or afficher_sep:
+							# Titre du graphique
+							titre = ""
+							
+							if calculer_energie:
+								titre = "Énergie Calculée = " + str(round(energie_moyenne, 2)) + " J" + impact_text
+
+							if calc_vitesse_impact:
+								if titre != "":	titre += " / "
+
+								if not calcul_ok_vimpact:
+									titre += "Vitesse d'Impact = NON CALCULABLE !"
 								else:
-									ax = axs[i]
-
-							graphe(	data_x=tmps,
-									data_y=F,
-									label_x="Temps (ms)",
-									label_y="Force ({0})".format(en_tetes[j][0]),
-									titre=titre,
-									fig=fig,
-									ax=ax,
-									fileName=fichiers,
-									QWindow=QWindow,)
-
-							i += 1
-
-						if afficher_F_dep:
+									titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
+						else:
 							titre = ""
 
-							if not afficher_dep_tmps and not afficher_F_tmps or afficher_sep:
-								# Titre du graphique
-								titre = ""
-								
-								if calculer_energie:
-									titre = "Énergie Calculée = " + str(round(energie_moyenne, 2)) + " J" + impact_text
-
-								if calc_vitesse_impact:
-									if titre != "":	titre += " / "
-
-									if not calcul_ok_vimpact:
-										titre += "Vitesse d'Impact = NON CALCULABLE !"
-									else:
-										titre += "Vitesse Impact = " + str(round(vitesse_impact_moyenne, 2)) + "m/s"
+						if afficher_sep:
+							fig = figs[i]
+							ax = axs[i]
+						else:
+							if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) == 1:
+								ax = axs
 							else:
-								titre = ""
-
-							if afficher_sep:
-								fig = figs[i]
 								ax = axs[i]
-							else:
-								if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) == 1:
-									ax = axs
-								else:
-									ax = axs[i]
 
-							graphe(	data_x=dep,
-									data_y=F,
-									label_x="Déplacement ({0})".format(en_tetes[j][1]),
-									label_y="Force ({0})".format(en_tetes[j][0]),
-									titre=titre,
-									fig=fig,
-									ax=ax,
-									fileName=fichiers,
-									QWindow=QWindow)
-						
-						j += 1
+						graphe(	data_x=dep,
+								data_y=F,
+								label_x="Déplacement ({0})".format(en_tetes[j][1]),
+								label_y="Force ({0})".format(en_tetes[j][0]),
+								titre=titre,
+								fig=fig,
+								ax=ax,
+								fileName=fichiers,
+								QWindow=QWindow)
+					
+					j += 1
 
 	try:
 		if afficher_sep != None:
 			i = 0
 
-			if afficher_dep_tmps:
+			if afficher_dep_tmps and calc_temps:
 				if afficher_sep:
 					fig = figs[i]
 					ax = axs[i]
 				else:
-					if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) == 1:
+					if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) == 1:
 						ax = axs
 					else:
 						ax = axs[i]
@@ -723,12 +801,12 @@ def exec_traitement(QWindow=None,
 
 				i += 1
 
-			if afficher_F_tmps:
+			if afficher_F_tmps and calc_temps:
 				if afficher_sep:
 					fig = figs[i]
 					ax = axs[i]
 				else:
-					if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) == 1:
+					if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) == 1:
 						ax = axs
 					else:
 						ax = axs[i]
@@ -743,7 +821,7 @@ def exec_traitement(QWindow=None,
 					fig = figs[i]
 					ax = axs[i]
 				else:
-					if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) == 1:
+					if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) == 1:
 						ax = axs
 					else:
 						ax = axs[i]
@@ -751,7 +829,7 @@ def exec_traitement(QWindow=None,
 				fig.set_figheight(6)
 				fig.set_figwidth(10)
 
-		if [afficher_dep_tmps, afficher_F_dep, afficher_F_tmps].count(True) != 0:
+		if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) != 0:
 			plt.subplots_adjust(left=0.075, right=0.975, top=0.94, bottom=0.08, hspace=0.36, wspace=0.2)
 			plt.show()
 
@@ -760,5 +838,5 @@ def exec_traitement(QWindow=None,
 	except:
 		print_or_addterminal_message(	QWindow=QWindow,
 										type_msg="err",
-										text="exec_traitement ERREUR : Impossible de redimensionner et/ou d'afficher le graphique !")
+										text="exec_traitement\nERREUR : Impossible de redimensionner et/ou d'afficher le graphique !")
 		return False

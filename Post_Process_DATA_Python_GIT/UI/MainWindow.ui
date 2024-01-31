@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Analyse des Données Expérimentales</string>
+   <string>TDC</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../505c2615/icon.png</normaloff>../505c2615/icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_19">
@@ -40,6 +44,9 @@
              <property name="text">
               <string>superposer_courbes</string>
              </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -49,7 +56,7 @@
                <item>
                 <widget class="QLabel" name="label_nom_fichier">
                  <property name="enabled">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                  <property name="text">
                   <string>nom_fichier</string>
@@ -59,14 +66,14 @@
                <item>
                 <widget class="QLineEdit" name="lineEdit_nom_fichier">
                  <property name="enabled">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QPushButton" name="pushButton_nom_fichier">
                  <property name="enabled">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                  <property name="text">
                   <string>Parcourir</string>
@@ -97,7 +104,7 @@
                <item>
                 <widget class="QPushButton" name="pushButton_nom_dossier">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="text">
                   <string>Parcourir</string>
@@ -153,6 +160,9 @@
               <widget class="QCheckBox" name="checkBox_calc_temps">
                <property name="text">
                 <string>calc_temps</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
