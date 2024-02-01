@@ -44,8 +44,8 @@ rho:1.24:
 #:
 #: /// GÉNÉRATION DE STRUCTURES \\\
 #: Structure à base de losanges : No1
-gen_losange_basic:True:
-gen_losange_grad:False:
+gen_losange_basic:False:
+gen_losange_grad:True:
 #:
 #: Structure à base d'hexagones et de triangles alignés : No2
 gen_hex_tri1_2D_aligne_basic:False:
@@ -99,7 +99,7 @@ dimlat_y:40:
 #: /// GÉNÉRATION DE MOTIFS SANS GRADIENT \\\
 #: ** Choix du nombre de losange sur l'axe x et sur l'axe y
 #: ** Entrer un nombre entier
-nb_motif_x_sg:4:
+nb_motif_x_sg:3:
 nb_motif_y_sg:9:
 #:
 #:
@@ -107,11 +107,11 @@ nb_motif_y_sg:9:
 #: ** Choix du nombre de losanges en y par couches
 #: ** Les nombre de losanges doivent-être séparés par une ,
 #: ** ATTENTION : Il ne doit pas il y avoir un espace !
-nb_y_par_couche:4,6,4:
+nb_y_par_couche:4,3,3,4:
 #:
 #: ** Choix du nombre de losanges en x par couches
 #: ** ATTENTION : Il doit il y avoir le même nombre de valeur que nb_y_par_couche
-nb_x_par_couche:7,7,7:
+nb_x_par_couche:5,5,4,3:
 #:
 #: ** Épaisseur des couches (en y)
 #: ** Si dimlat_par_couche_manuel = False, les dimensions des couches
@@ -121,17 +121,17 @@ nb_x_par_couche:7,7,7:
 #: ** les épaisseur de chaque couches
 dimlat_par_couche_manuel:False:
 #: ** ATTENTION : Il doit il y avoir le même nombre de valeur que nb_y_par_couche
-dimlat_par_couche:13.3,17.7,0:
+dimlat_par_couche:13.3,17.7,0,0:
 #:
 #: ** Choix de l'épaisseur des parois de chaque couche
 #: ** ep_par_couche est en pourcentage de l'épaisseur ep définie ci-dessus
 #: ** ATTENTION : Il doit il y avoir le même nombre de valeur que nb_y_par_couche
-ep_par_couche:0.73,1,0.73:
+ep_par_couche:1.1,1.0,0.9,0.8:
 #:
 #: ** Choix de l'épaisseur des plateaux liants les différentes couches en (mm)
 #: ** Laisser la valeur à 0 si le plateau ne doit pas être créé
 #: ** ATTENTION : Il doit il y avoir une valeur de moins que nb_y_par_couche
-ep_plateaux:0,0:
+ep_plateaux:0.3,0.3,0.3:
 #:
 #: /// GÉNÉRATION DE LA STRUCTURE HEXAGONES + TRIANGLES1 2D ALIGNÉS OU NON \\\
 #: Radians

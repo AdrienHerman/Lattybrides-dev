@@ -11,7 +11,7 @@ import FreeCADGui, ImportGui, Part, Sketcher, math, os, sys, time
 
 # Modules du Logiciel
 #path_soft = "C:/Users/Adrien Herman/Documents/Shadow Drive/INSA 5A/PLP/Python/Utilisation/Generation Structures Python/"
-path_soft = "/home/adrienherman/Documents/Shadow Drive/INSA 5A/PLP/Python/dev/Generation_Structure_Python_GIT/"
+path_soft = "/home/adrien/Documents/Shadow Drive/INSA 5A/PLP/Python/dev/Generation_Structure_Python_GIT/"
 sys.path.append(path_soft + "bin/")
 sys.path.append(path_soft + "bin/losange/")
 sys.path.append(path_soft + "bin/hexagone_triangle1_2D/")
