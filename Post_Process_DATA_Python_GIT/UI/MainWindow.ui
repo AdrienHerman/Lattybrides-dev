@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1187</width>
-    <height>671</height>
+    <width>1117</width>
+    <height>705</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,6 +58,9 @@
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nom du fichier à traiter.&lt;/p&gt;&lt;p&gt;N'est pas nécessaire à renseigner si superposer_courbes = True.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                  <property name="text">
                   <string>nom_fichier</string>
                  </property>
@@ -68,12 +71,18 @@
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nom du fichier à traiter.&lt;/p&gt;&lt;p&gt;N'est pas nécessaire à renseigner si superposer_courbes = True.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                 </widget>
                </item>
                <item>
                 <widget class="QPushButton" name="pushButton_nom_fichier">
                  <property name="enabled">
                   <bool>false</bool>
+                 </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Parcourir le fichier à traiter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="text">
                   <string>Parcourir</string>
@@ -89,6 +98,9 @@
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Chemin vers le dossier du/des fichier(s) à traiter.&lt;/p&gt;&lt;p&gt;Ce paramètre est tout le temps à renseigner.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                  <property name="text">
                   <string>nom_dossier</string>
                  </property>
@@ -99,12 +111,18 @@
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Chemin vers le dossier du/des fichier(s) à traiter.&lt;/p&gt;&lt;p&gt;Ce paramètre est tout le temps à renseigner.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                 </widget>
                </item>
                <item>
                 <widget class="QPushButton" name="pushButton_nom_dossier">
                  <property name="enabled">
                   <bool>true</bool>
+                 </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Parcourir le dossier du/des fichier(s) à traiter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="text">
                   <string>Parcourir</string>
@@ -128,6 +146,9 @@
               <layout class="QHBoxLayout" name="horizontalLayout_5">
                <item>
                 <widget class="QLabel" name="label_type_fichier">
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Type du fichier à traiter. Le type CSV provient de l'oscilloscope et le type TXT provient de l'enregistrement de ce logiciel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                  <property name="text">
                   <string>type_fichier</string>
                  </property>
@@ -135,6 +156,9 @@
                </item>
                <item>
                 <widget class="QComboBox" name="comboBox_type_fichier">
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Type du fichier à traiter. Le type CSV provient de l'oscilloscope et le type TXT provient de l'enregistrement de ce logiciel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                  <item>
                   <property name="text">
                    <string>CSV</string>
@@ -158,6 +182,9 @@
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_calc_temps">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Calculer le temps de l'essai à partir du temps d'échantillonnage.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="text">
                 <string>calc_temps</string>
                </property>
@@ -178,6 +205,9 @@
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <item>
              <widget class="QCheckBox" name="checkBox_enregistrer_data">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activer / Désactiver l'enregistement des données traitées en format .txt. Les données ainsi traitée pourront être lues sans avoir à effectuer le traitement une nouvelle fois.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>enregistrer_data</string>
               </property>
@@ -192,6 +222,9 @@
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nom du fichier d'enregistrement.&lt;/p&gt;&lt;p&gt;Si superposer_courbes et actif, le nom des fichiers sera sous la forme nom_enregistrement_X où X est le numéro de lecture du fichier.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ATTENTION : Il faut mettre .txt à la fin du nom du fichier même si superposer_courbes est actif.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>nom_enregistrement</string>
                   </property>
@@ -201,6 +234,9 @@
                  <widget class="QLineEdit" name="lineEdit_nom_enregistrement">
                   <property name="enabled">
                    <bool>false</bool>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nom du fichier d'enregistrement.&lt;/p&gt;&lt;p&gt;Si superposer_courbes et actif, le nom des fichiers sera sous la forme nom_enregistrement_X où X est le numéro de lecture du fichier.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ATTENTION : Il faut mettre .txt à la fin du nom du fichier même si superposer_courbes est actif.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                  </widget>
                 </item>
@@ -213,6 +249,9 @@
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Chemin vers le dossier d'enregistrement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>dossier_enregistrement</string>
                   </property>
@@ -222,6 +261,9 @@
                  <widget class="QLineEdit" name="lineEdit_dossier_enregistrement">
                   <property name="enabled">
                    <bool>false</bool>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Chemin vers le dossier d'enregistrement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                  </widget>
                 </item>
@@ -233,6 +275,9 @@
              <widget class="QPushButton" name="pushButton_parcourir_enregistrement">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Parcourrir le chemin et le nom du fichier d'enregistrement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="text">
                <string>Parcourir</string>
@@ -252,6 +297,9 @@
              <layout class="QHBoxLayout" name="horizontalLayout_12">
               <item>
                <widget class="QCheckBox" name="checkBox_sppr_rollback">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Suppression des données comportant un retour en arrière du déplacement. Cette fonctionnalité permet d'éliminer les boucles de retour en arrière sur les courbes Force = f(Déplacement)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
                 <property name="text">
                  <string>sppr_rollback</string>
                 </property>
@@ -271,6 +319,9 @@
                <layout class="QVBoxLayout" name="verticalLayout_5">
                 <item>
                  <widget class="QCheckBox" name="checkBox_recherche_deb_impact">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Recherche du début de l'impact automatiquement.&lt;/p&gt;&lt;p&gt;Critère de recherche : pas(i) &amp;gt;= pas(i-1) * (1 + taux_agmentation) =&amp;gt; Impact&lt;/p&gt;&lt;p&gt;taux_augmentation en % (ex: 10% =&amp;gt; taux_augmentation = 0.1)&lt;/p&gt;&lt;p&gt;Si recherche_deb_impact = True, la recherche du début de l'impact est effectué et les variables taux_augmentation et nb_pas_avant_augmentation doivent-être renseignées.&lt;/p&gt;&lt;p&gt;Si le début de l'essai est trouvé et qu'il correspond à la position i des vecteurs de données, les données entre 0 et i - nb_pas_avant_augmentation sont supprimées.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>recherche_deb_impact</string>
                   </property>
@@ -286,6 +337,9 @@
                     <property name="enabled">
                      <bool>true</bool>
                     </property>
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;taux_augmentation en % (ex: 10% =&amp;gt; taux_augmentation = 0.1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="text">
                      <string>taux_augmentation</string>
                     </property>
@@ -295,6 +349,9 @@
                    <widget class="QDoubleSpinBox" name="doubleSpinBox_taux_augmentation">
                     <property name="enabled">
                      <bool>true</bool>
+                    </property>
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;taux_augmentation en % (ex: 10% =&amp;gt; taux_augmentation = 0.1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                     </property>
                     <property name="maximum">
                      <double>5.000000000000000</double>
@@ -316,6 +373,9 @@
                     <property name="enabled">
                      <bool>true</bool>
                     </property>
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nombre de pas de données à garder avant le début d'impact détecté automatiquement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="text">
                      <string>nb_pas_avant_augmentation</string>
                     </property>
@@ -325,6 +385,9 @@
                    <widget class="QSpinBox" name="spinBox_nb_pas_avant_augmentation">
                     <property name="enabled">
                      <bool>true</bool>
+                    </property>
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nombre de pas de données à garder avant le début&lt;/p&gt;&lt;p&gt;d'impact détecté automatiquement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                     </property>
                     <property name="maximum">
                      <number>30</number>
@@ -346,26 +409,46 @@
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <layout class="QVBoxLayout" name="verticalLayout_14">
                 <item>
                  <widget class="QCheckBox" name="checkBox_deb_impact_manuel">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Début d'impact manuel : Paramétrage d'un temps au bout duquel le logiciel commençera à tracer les courbes. tmps_deb_impact doit être exprimé en (ms).&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ATTENTION : Si deb_impact_manuel = True, calc_temps doit être activé !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>deb_impact_manuel</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QDoubleSpinBox" name="doubleSpinBox_tmps_deb_impact">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="maximum">
-                   <double>10000.000000000000000</double>
-                  </property>
-                  <property name="value">
-                   <double>200.000000000000000</double>
-                  </property>
-                 </widget>
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <item>
+                   <widget class="QLabel" name="label_tmps_deb_impact">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temps manuel définissant le début de l'impact.&lt;/p&gt;&lt;p&gt;tmps_deb_impact doit être exprimé en (ms).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                    <property name="text">
+                     <string>tmps_deb_impact</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_tmps_deb_impact">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temps manuel définissant le début de l'impact.&lt;/p&gt;&lt;p&gt;tmps_deb_impact doit être exprimé en (ms).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                    <property name="maximum">
+                     <double>10000.000000000000000</double>
+                    </property>
+                    <property name="value">
+                     <double>200.000000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </item>
@@ -384,6 +467,9 @@
                <layout class="QVBoxLayout" name="verticalLayout_6">
                 <item>
                  <widget class="QCheckBox" name="checkBox_tarrage_dep">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Le tarrage du déplacement permet d'avoir des graphes commençant à 0 mm.&lt;/p&gt;&lt;p&gt;Ce paramètre n'est valable que si recherche_deb_impact ou deb_impact_manuel = True.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>tarrage_dep</string>
                   </property>
@@ -394,6 +480,9 @@
                 </item>
                 <item>
                  <widget class="QCheckBox" name="checkBox_tarrage_tmps">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Le tarrage du temps permet d'avoir des graphes commençant à 0 ms.&lt;/p&gt;&lt;p&gt;Ce paramètre n'est valable que si recherche_deb_impact ou deb_impact_manuel = True.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>tarrage_tmps</string>
                   </property>
@@ -415,6 +504,9 @@
                <layout class="QVBoxLayout" name="verticalLayout_7">
                 <item>
                  <widget class="QCheckBox" name="checkBox_detect_fin_essai">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;La détection de fin de l'essai permet d'identifier si l'impacteur est arrivé à bout de course et ainsi de savoir si la structure a emmagasinée toute l'énergie de l'impact.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ATTENTION : dep_max doit être renseigné dans la même unité que le vecteur déplacement !&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ATTENTION : detect_fin_essai ne peut-être activé que lorsque sppr_rollback, recherche_deb_impact ou deb_impact_manuel et tarrage_dep sont activés !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>detect_fin_essai</string>
                   </property>
@@ -427,6 +519,9 @@
                  <layout class="QHBoxLayout" name="horizontalLayout_13">
                   <item>
                    <widget class="QLabel" name="label_dep_max">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Déplacement maximal de l'impacteur après le début de l'essai.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ATTENTION : dep_max doit être renseigné dans la même unité que le vecteur déplacement !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="text">
                      <string>dep_max</string>
                     </property>
@@ -434,6 +529,9 @@
                   </item>
                   <item>
                    <widget class="QDoubleSpinBox" name="doubleSpinBox_dep_max">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Déplacement maximal de l'impacteur après le début de l'essai.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ATTENTION : dep_max doit être renseigné dans la même unité que le vecteur déplacement !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="maximum">
                      <double>100000.000000000000000</double>
                     </property>
@@ -460,6 +558,9 @@
                <layout class="QVBoxLayout" name="verticalLayout_8">
                 <item>
                  <widget class="QCheckBox" name="checkBox_calculer_energie">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si calculer_energie est activé, un calcul de l'énergie (intégration des données Force = f(Déplacement) avec la méthode des trapèzes) est effectué.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ATTENTION : à l'unité du résultat ! Les variables fact_force et fact_dep sont là pour changer l'unité de la force et du déplacement.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>calculer_energie</string>
                   </property>
@@ -472,6 +573,9 @@
                  <layout class="QHBoxLayout" name="horizontalLayout_14">
                   <item>
                    <widget class="QLabel" name="label_fact_force">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Facteur d'unité pour la force (Newton pour obtenir des joules).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="text">
                      <string>fact_force</string>
                     </property>
@@ -479,6 +583,9 @@
                   </item>
                   <item>
                    <widget class="QDoubleSpinBox" name="doubleSpinBox_fact_force">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Facteur d'unité pour la force (Newton pour obtenir des joules).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="decimals">
                      <number>6</number>
                     </property>
@@ -499,6 +606,9 @@
                  <layout class="QHBoxLayout" name="horizontalLayout_15">
                   <item>
                    <widget class="QLabel" name="label_fact_dep">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Facteur d'unité pour le déplacement (Mètres pour obtenir des Joules).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="text">
                      <string>fact_dep</string>
                     </property>
@@ -506,6 +616,9 @@
                   </item>
                   <item>
                    <widget class="QDoubleSpinBox" name="doubleSpinBox_fact_dep">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Facteur d'unité pour le déplacement (Mètres pour obtenir des Joules).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="decimals">
                      <number>6</number>
                     </property>
@@ -535,6 +648,9 @@
                <layout class="QVBoxLayout" name="verticalLayout_9">
                 <item>
                  <widget class="QCheckBox" name="checkBox_calc_vitesse_impact">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Calcul de la vitesse de l'impacteur au début de l'essai.&lt;/p&gt;&lt;p&gt;Pour que cette fonctionnalité soit opérationnelle, il faut que le début d'impact ait été détecté et soit correct.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>calc_vitesse_impact</string>
                   </property>
@@ -547,6 +663,9 @@
                  <layout class="QHBoxLayout" name="horizontalLayout_17">
                   <item>
                    <widget class="QLabel" name="label_nbpts_vitesse_impact">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce paramètre correspond au nombre de points pris pour calculer la pente déplacement = f(temps) et faire la moyenne pour obtenir la vitesse d'impact. En général 3 points sont suffisants.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="text">
                      <string>nbpts_vitesse_impact</string>
                     </property>
@@ -554,6 +673,9 @@
                   </item>
                   <item>
                    <widget class="QSpinBox" name="spinBox_nbpts_vitesse_impact">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce paramètre correspond au nombre de points pris pour calculer la pente déplacement = f(temps) et faire la moyenne pour obtenir la vitesse d'impact. En général 3 points sont suffisants.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
                     <property name="maximum">
                      <number>30</number>
                     </property>
@@ -579,6 +701,9 @@
            <layout class="QHBoxLayout" name="horizontalLayout_18">
             <item>
              <widget class="QCheckBox" name="checkBox_afficher_dep_tmps">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Afficher le graphique Déplacement = f(Temps).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>afficher_dep_tmps</string>
               </property>
@@ -589,6 +714,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="checkBox_afficher_F_tmps">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Afficher le graphique Force = f(Temps).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>afficher_F_tmps</string>
               </property>
@@ -599,6 +727,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="checkBox_afficher_F_dep">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Afficher le graphique Force = f(Déplacement).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>afficher_F_dep</string>
               </property>
@@ -609,6 +740,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="checkBox_afficher_sep">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Afficher les graphiques séparéments.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>afficher_sep</string>
               </property>
@@ -629,6 +763,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QPushButton" name="pushButton_Defaults">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Paramétrer les valeurs par défaut dans la fenêtre.&lt;/p&gt;&lt;p&gt;Ces valeurs se trouvent dans le fichier config_default.conf à la racine des fichiers du logiciel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
             <property name="text">
              <string>Valeurs par Défaut</string>
             </property>
@@ -636,6 +773,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_MakeConfig">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Générer un fichier de configuration à partir de la configuration renseignée dans la fenêtre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
             <property name="text">
              <string>Générer &quot;config.txt&quot;</string>
             </property>
@@ -643,6 +783,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_ExecDataTreatment">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exécuter le traitement des données et afficher les graphes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
             <property name="text">
              <string>Exécuter le Traitement des Données</string>
             </property>
@@ -650,6 +793,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_Quit">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quitter le logiciel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
             <property name="text">
              <string>Quitter le Logiciel</string>
             </property>
@@ -685,6 +831,9 @@
           <height>0</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Terminal où les infos, warning et erreurs de traitement seront affichés.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="undoRedoEnabled">
          <bool>false</bool>
         </property>
@@ -695,6 +844,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_effacer_terminal">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Effacer tous les messages du terminal.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
          <string>Effacer les Messages du Terminal</string>
         </property>
@@ -709,9 +861,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1187</width>
-     <height>23</height>
+     <width>1117</width>
+     <height>30</height>
     </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>false</bool>
    </property>
    <widget class="QMenu" name="menuFichers">
     <property name="title">

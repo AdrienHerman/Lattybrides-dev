@@ -67,7 +67,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 		# Action d'activer / désactiver les éléments pour checkBox_detect_fin_essai
 		self.checkBox_calc_vitesse_impact.stateChanged.connect(self.checkBox_stateChanged_calc_vitesse_impact)
 
-		# Charger la configuration par défaut dans la fenêtre
+		# Bouton "Valeurs par Défaut"
 		self.pushButton_Defaults.clicked.connect(lambda: self.load_config())
 
 		# Bouton "Quitter le Logiciel"
@@ -459,91 +459,98 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 			- path_config : Chemin vers le fichier de configuration
 		-----------
 		"""
-		
-		return_list = lecture_param(path_config=path_config, QWindow=self)
 
-		if None in return_list:
-			self.textEdit_terminal_addError("ERREUR : Impossible de lire le fichier de configuration par défaut !")
+		btn = self.messagebox_yes_no(	title="Confirmation",
+										text="Êtes-vous sûr de vouloir écraser la configuration en cours ?")
+
+		if btn == QMessageBox.StandardButton.Yes:
+			return_list = lecture_param(path_config=path_config, QWindow=self)
+
+			if None in return_list:
+				self.textEdit_terminal_addError("ERREUR : Impossible de lire le fichier de configuration par défaut !")
+
+			else:
+				[   type_fichier,
+					superposer_courbes,
+					nom_fichier,
+					nom_dossier,
+					calc_temps,
+					enregistrer_data,
+					nom_enregistrement,
+					dossier_enregistrement,
+					sppr_rollback,
+					recherche_deb_impact,
+					deb_impact_manuel,
+					tmps_deb_impact,
+					tarrage_dep,
+					tarrage_tmps,
+					detect_fin_essai,
+					dep_max,
+					calculer_energie,
+					fact_force,
+					fact_dep,
+					taux_augmentation,
+					nb_pas_avant_augmentation,
+					calc_vitesse_impact,
+					nbpts_vitesse_impact,
+					afficher_dep_tmps,
+					afficher_F_tmps,
+					afficher_F_dep,
+					afficher_sep] = return_list
+
+				# superposer_courbes, nom_fichier, nom_dossier
+				self.checkBox_superposer_courbes.setChecked(superposer_courbes)
+				self.lineEdit_nom_fichier.setText(nom_fichier)
+				self.lineEdit_nom_dossier.setText(nom_dossier)
+
+				# type_fichier
+				self.comboBox_type_fichier.setCurrentText(type_fichier.upper())
+
+				# calc_temps
+				self.checkBox_calc_temps.setChecked(calc_temps)
+
+				# enregistrer_data, nom_enregistrement, dossier_enregistrement
+				self.checkBox_enregistrer_data.setChecked(enregistrer_data)
+				self.lineEdit_nom_enregistrement.setText(nom_enregistrement)
+				self.lineEdit_dossier_enregistrement.setText(dossier_enregistrement)
+
+				# suppr_rollback
+				self.checkBox_sppr_rollback.setChecked(sppr_rollback)
+
+				# recherche_deb_impact, taux_augmentation, nb_pas_avant_augmentation
+				self.checkBox_recherche_deb_impact.setChecked(recherche_deb_impact)
+				self.doubleSpinBox_taux_augmentation.setValue(taux_augmentation)
+				self.spinBox_nb_pas_avant_augmentation.setValue(nb_pas_avant_augmentation)
+
+				# deb_impact_manuel, tmps_deb_impact
+				self.checkBox_deb_impact_manuel.setChecked(deb_impact_manuel)
+				self.doubleSpinBox_tmps_deb_impact.setValue(tmps_deb_impact)
+
+				# tarrage_dep, tarrage_tmps
+				self.checkBox_tarrage_dep.setChecked(tarrage_dep)
+				self.checkBox_tarrage_tmps.setChecked(tarrage_tmps)
+
+				# detect_fin_essai, dep_max
+				self.checkBox_detect_fin_essai.setChecked(detect_fin_essai)
+				self.doubleSpinBox_dep_max.setValue(dep_max)
+
+				# calculer_energie, fact_force, fact_dep
+				self.checkBox_calculer_energie.setChecked(calculer_energie)
+				self.doubleSpinBox_fact_force.setValue(fact_force)
+				self.doubleSpinBox_fact_dep.setValue(fact_dep)
+
+				# calc_vitesse_impact, nbpts_vitesse_impact
+				self.checkBox_calc_vitesse_impact.setChecked(calc_vitesse_impact)
+				self.spinBox_nbpts_vitesse_impact.setValue(nbpts_vitesse_impact)
+
+				# afficher_dep_tmps, afficher_F_tmps, afficher_F_dep
+				self.checkBox_afficher_dep_tmps.setChecked(afficher_dep_tmps)
+				self.checkBox_afficher_F_tmps.setChecked(afficher_F_tmps)
+				self.checkBox_afficher_F_dep.setChecked(afficher_F_dep)
+				self.checkBox_afficher_sep.setChecked(afficher_sep)
 
 		else:
-			[   type_fichier,
-				superposer_courbes,
-				nom_fichier,
-				nom_dossier,
-				calc_temps,
-				enregistrer_data,
-				nom_enregistrement,
-				dossier_enregistrement,
-				sppr_rollback,
-				recherche_deb_impact,
-				deb_impact_manuel,
-				tmps_deb_impact,
-				tarrage_dep,
-				tarrage_tmps,
-				detect_fin_essai,
-				dep_max,
-				calculer_energie,
-				fact_force,
-				fact_dep,
-				taux_augmentation,
-				nb_pas_avant_augmentation,
-				calc_vitesse_impact,
-				nbpts_vitesse_impact,
-				afficher_dep_tmps,
-				afficher_F_tmps,
-				afficher_F_dep,
-				afficher_sep] = return_list
-
-			# superposer_courbes, nom_fichier, nom_dossier
-			self.checkBox_superposer_courbes.setChecked(superposer_courbes)
-			self.lineEdit_nom_fichier.setText(nom_fichier)
-			self.lineEdit_nom_dossier.setText(nom_dossier)
-
-			# type_fichier
-			self.comboBox_type_fichier.setCurrentText(type_fichier.upper())
-
-			# calc_temps
-			self.checkBox_calc_temps.setChecked(calc_temps)
-
-			# enregistrer_data, nom_enregistrement, dossier_enregistrement
-			self.checkBox_enregistrer_data.setChecked(enregistrer_data)
-			self.lineEdit_nom_enregistrement.setText(nom_enregistrement)
-			self.lineEdit_dossier_enregistrement.setText(dossier_enregistrement)
-
-			# suppr_rollback
-			self.checkBox_sppr_rollback.setChecked(sppr_rollback)
-
-			# recherche_deb_impact, taux_augmentation, nb_pas_avant_augmentation
-			self.checkBox_recherche_deb_impact.setChecked(recherche_deb_impact)
-			self.doubleSpinBox_taux_augmentation.setValue(taux_augmentation)
-			self.spinBox_nb_pas_avant_augmentation.setValue(nb_pas_avant_augmentation)
-
-			# deb_impact_manuel, tmps_deb_impact
-			self.checkBox_deb_impact_manuel.setChecked(deb_impact_manuel)
-			self.doubleSpinBox_tmps_deb_impact.setValue(tmps_deb_impact)
-
-			# tarrage_dep, tarrage_tmps
-			self.checkBox_tarrage_dep.setChecked(tarrage_dep)
-			self.checkBox_tarrage_tmps.setChecked(tarrage_tmps)
-
-			# detect_fin_essai, dep_max
-			self.checkBox_detect_fin_essai.setChecked(detect_fin_essai)
-			self.doubleSpinBox_dep_max.setValue(dep_max)
-
-			# calculer_energie, fact_force, fact_dep
-			self.checkBox_calculer_energie.setChecked(calculer_energie)
-			self.doubleSpinBox_fact_force.setValue(fact_force)
-			self.doubleSpinBox_fact_dep.setValue(fact_dep)
-
-			# calc_vitesse_impact, nbpts_vitesse_impact
-			self.checkBox_calc_vitesse_impact.setChecked(calc_vitesse_impact)
-			self.spinBox_nbpts_vitesse_impact.setValue(nbpts_vitesse_impact)
-
-			# afficher_dep_tmps, afficher_F_tmps, afficher_F_dep
-			self.checkBox_afficher_dep_tmps.setChecked(afficher_dep_tmps)
-			self.checkBox_afficher_F_tmps.setChecked(afficher_F_tmps)
-			self.checkBox_afficher_F_dep.setChecked(afficher_F_dep)
-			self.checkBox_afficher_sep.setChecked(afficher_sep)
+			self.textEdit_terminal_addText("La configuration par défaut n'a pas été chargée.")
 
 	def pushButton_clicked_ExecDataTreatment(self):
 		"""

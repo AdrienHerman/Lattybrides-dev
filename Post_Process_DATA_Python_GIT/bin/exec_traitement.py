@@ -576,8 +576,8 @@ def exec_traitement(QWindow=None,
 				# Enregistrement des données traitées
 				if enregistrer_data and type_fichier != "txt":
 					fichiers_enregistrement = []
-					for i in range(len(fichiers)):
-						fichiers_enregistrement.append(fichiers[i].split(".")[0])
+					for i in range(nb_fichiers):
+						fichiers_enregistrement.append(nom_enregistrement.split(".")[0] + "_" + str(i))
 
 					for i in range(len(F)):
 						enregistrer_donnees(F=F[i],
