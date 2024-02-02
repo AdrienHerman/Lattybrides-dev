@@ -35,7 +35,7 @@ def graphe(	data_x=[],
 		- label_x / label_y      : Label des axes x et y
 		- fileName               : Nom de fichier d'expérience
 		- couleurs / type_lignes : Formattage des données dans le graphique
-		- plt / fig / ax         : Objets contenant le graphique
+		- fig / ax               : Objets contenant le graphique
 		- QWindow                : Objet fenêtre.
 	-----------
 

@@ -10,7 +10,7 @@ import os
 # Modules du Logiciel
 from bin.errors import *
 
-def lecture_param(path_config="config.conf", QWindow=None):
+def lecture_param(path_config="config_default.conf", QWindow=None):
 	"""
 	Lecture des paramètres
 
@@ -387,31 +387,31 @@ def lecture_param(path_config="config.conf", QWindow=None):
 										text="lecture_param\nWARNING : afficher_sep est non défini")
 
 	return_list = [	type_fichier,
-				superposer_courbes,
-				nom_fichier,
-				nom_dossier,
-				calc_temps,
-				enregistrer_data,
-				nom_enregistrement,
-				dossier_enregistrement,
-				sppr_rollback,
-				recherche_deb_impact,
-				deb_impact_manuel,
-				tmps_deb_impact,
-				tarrage_dep,
-				tarrage_tmps,
-				detect_fin_essai,
-				dep_max,
-				calculer_energie,
-				fact_force,
-				fact_dep,
-				taux_augmentation,
-				nb_pas_avant_augmentation,
-				calc_vitesse_impact,
-				nbpts_vitesse_impact,
-				afficher_dep_tmps,
-				afficher_F_tmps,
-				afficher_F_dep,
-				afficher_sep]
+					superposer_courbes,
+					nom_fichier,
+					nom_dossier,
+					calc_temps,
+					enregistrer_data,
+					nom_enregistrement,
+					dossier_enregistrement,
+					sppr_rollback,
+					recherche_deb_impact,
+					deb_impact_manuel,
+					tmps_deb_impact,
+					tarrage_dep,
+					tarrage_tmps,
+					detect_fin_essai,
+					dep_max,
+					calculer_energie,
+					fact_force,
+					fact_dep,
+					taux_augmentation,
+					nb_pas_avant_augmentation,
+					calc_vitesse_impact,
+					nbpts_vitesse_impact,
+					afficher_dep_tmps,
+					afficher_F_tmps,
+					afficher_F_dep,
+					afficher_sep]
 
 	return return_list

@@ -6,7 +6,8 @@ HERMAN Adrien
 """
 
 # Modules de Python
-import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Qt5Cairo')
 from statistics import mean
 
 # Modules du Logiciel
@@ -261,10 +262,10 @@ def exec_traitement(QWindow=None,
 					axs = [0, 0, 0]
 
 					for i in range([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True)):
-						figs[i], axs[i] = plt.subplots()
+						figs[i], axs[i] = matplotlib.pyplot.subplots()
 
 				elif not afficher_sep and [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) > 0:
-					fig, axs = plt.subplots([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True), 1)
+					fig, axs = matplotlib.pyplot.subplots([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True), 1)
 
 				if afficher_sep != None:
 					i = 0
@@ -643,10 +644,10 @@ def exec_traitement(QWindow=None,
 					axs = [0, 0, 0]
 
 					for i in range([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True)):
-						figs[i], axs[i] = plt.subplots()
+						figs[i], axs[i] = matplotlib.pyplot.subplots()
 
 				elif not afficher_sep and [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) > 0:
-					fig, axs = plt.subplots([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True), 1)
+					fig, axs = matplotlib.pyplot.subplots([afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True), 1)
 				
 				if afficher_sep != None:
 					i = 0
@@ -830,8 +831,8 @@ def exec_traitement(QWindow=None,
 				fig.set_figwidth(10)
 
 		if [afficher_dep_tmps and calc_temps, afficher_F_dep and calc_temps, afficher_F_tmps].count(True) != 0:
-			plt.subplots_adjust(left=0.075, right=0.975, top=0.94, bottom=0.08, hspace=0.36, wspace=0.2)
-			plt.show()
+			matplotlib.pyplot.subplots_adjust(left=0.075, right=0.975, top=0.94, bottom=0.08, hspace=0.36, wspace=0.2)
+			matplotlib.pyplot.show()
 
 		return True
 

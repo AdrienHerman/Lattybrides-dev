@@ -11,7 +11,7 @@ pyinstaller --add-data config_default.conf:. --add-data UI/icon.png:UI --add-dat
 """
 
 # Modules de Python
-import sys, datetime, argparse, pathlib
+import sys, datetime, argparse, pathlib, pyquark
 from PyQt6.QtWidgets import (
 	QApplication, QDialog, QMainWindow, QFileDialog, QPushButton, QMessageBox, QLabel
 )
@@ -100,12 +100,37 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 		self.actionOuvrir_un_fichier_de_configuration.setShortcut(QKeySequence("Ctrl+O"))
 
 		# Actions du menu Aide
+		#	Aide
+		self.actionAide.triggered.connect(lambda: self.open_pdf(file="help.pdf"))
 		#	À Propos
 		self.action_APropos.triggered.connect(lambda: self.messagebox_ok(title="À Propos", text=version(tirets=False, center=False)))
+
+	def open_pdf(self, file="help.pdf"):
+		"""
+		Action d'ouvrier le fichier PDF d'aide du logiciel.
+		Ouvres le PDF avec un lecteur préinstallé sur le système.
+
+		-----------
+		Variables :
+			- file : Chemin vers le fichier PDF d'aide.
+		-----------
+		"""
+
+		try:
+			pyquark.filestart(file)
+
+		except:
+			self.textEdit_terminal_addError("ERREUR : Le PDF de l'aide n'a pas pu se lancer !")
 
 	def changeEnabled(self, list_objects, state):
 		"""
 		Action d'activer / désactiver une liste d'objets
+
+		-----------
+		Variables :
+			- list_objects : Liste des objets à où l'état est à modifier.
+			- state        : État de l'objet à modifier. True = Enabled.
+		-----------
 		"""
 		
 		for o in list_objects:  o.setEnabled(state)
@@ -789,7 +814,7 @@ if __name__ == "__main__":
                     	action="store_true")
 	parser.add_argument("-c_c", "--custom_configuration",
 						type=pathlib.Path,
-						help="Utiliser une configuration autre que la configuration par défaut.")
+						help="Utiliser une configuration autre que la configuration par défaut. (ATTENTION À METTRE DES GUILLEMETS POUR ENCADRER LE CHEMIN)")
 	parser.add_argument("-d_c", "--default_configuration",
 						help="Utiliser la configuration par défaut.",
 						action="store_true")
@@ -805,9 +830,121 @@ if __name__ == "__main__":
 		# Afficher le texte de démarrage
 		print(texte_demarrage())
 
-	# Changer le fichier de configuration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	# Changer le fichier de configuration
 	if args.custom_configuration:
-		print(args.custom_configuration)
+		[	type_fichier,
+			superposer_courbes,
+			nom_fichier,
+			nom_dossier,
+			calc_temps,
+			enregistrer_data,
+			nom_enregistrement,
+			dossier_enregistrement,
+			sppr_rollback,
+			recherche_deb_impact,
+			deb_impact_manuel,
+			tmps_deb_impact,
+			tarrage_dep,
+			tarrage_tmps,
+			detect_fin_essai,
+			dep_max,
+			calculer_energie,
+			fact_force,
+			fact_dep,
+			taux_augmentation,
+			nb_pas_avant_augmentation,
+			calc_vitesse_impact,
+			nbpts_vitesse_impact,
+			afficher_dep_tmps,
+			afficher_F_tmps,
+			afficher_F_dep,
+			afficher_sep] = lecture_param(path_config=str(args.custom_configuration), QWindow=None)
+		
+		exec_traitement(superposer_courbes=superposer_courbes,
+						nom_fichier=nom_fichier,
+						nom_dossier=nom_dossier,
+						type_fichier=type_fichier,
+						calc_temps=calc_temps,
+						enregistrer_data=enregistrer_data,
+						nom_enregistrement=nom_enregistrement,
+						dossier_enregistrement=dossier_enregistrement,
+						sppr_rollback=sppr_rollback,
+						recherche_deb_impact=recherche_deb_impact,
+						taux_augmentation=taux_augmentation,
+						nb_pas_avant_augmentation=nb_pas_avant_augmentation,
+						deb_impact_manuel=deb_impact_manuel,
+						tmps_deb_impact=tmps_deb_impact,
+						tarrage_dep=tarrage_dep,
+						tarrage_tmps=tarrage_tmps,
+						detect_fin_essai=detect_fin_essai,
+						dep_max=dep_max,
+						calculer_energie=calculer_energie,
+						fact_force=fact_force,
+						fact_dep=fact_dep,
+						calc_vitesse_impact=calc_vitesse_impact,
+						nbpts_vitesse_impact=nbpts_vitesse_impact,
+						afficher_dep_tmps=afficher_dep_tmps,
+						afficher_F_tmps=afficher_F_tmps,
+						afficher_F_dep=afficher_F_dep,
+						afficher_sep=afficher_sep)
+
+	# Exécuter la configuration par défaut
+	if args.default_configuration:
+		[	type_fichier,
+			superposer_courbes,
+			nom_fichier,
+			nom_dossier,
+			calc_temps,
+			enregistrer_data,
+			nom_enregistrement,
+			dossier_enregistrement,
+			sppr_rollback,
+			recherche_deb_impact,
+			deb_impact_manuel,
+			tmps_deb_impact,
+			tarrage_dep,
+			tarrage_tmps,
+			detect_fin_essai,
+			dep_max,
+			calculer_energie,
+			fact_force,
+			fact_dep,
+			taux_augmentation,
+			nb_pas_avant_augmentation,
+			calc_vitesse_impact,
+			nbpts_vitesse_impact,
+			afficher_dep_tmps,
+			afficher_F_tmps,
+			afficher_F_dep,
+			afficher_sep] = lecture_param(path_config="config_default.conf", QWindow=None)
+
+		exec_traitement(superposer_courbes=superposer_courbes,
+						nom_fichier=nom_fichier,
+						nom_dossier=nom_dossier,
+						type_fichier=type_fichier,
+						calc_temps=calc_temps,
+						enregistrer_data=enregistrer_data,
+						nom_enregistrement=nom_enregistrement,
+						dossier_enregistrement=dossier_enregistrement,
+						sppr_rollback=sppr_rollback,
+						recherche_deb_impact=recherche_deb_impact,
+						taux_augmentation=taux_augmentation,
+						nb_pas_avant_augmentation=nb_pas_avant_augmentation,
+						deb_impact_manuel=deb_impact_manuel,
+						tmps_deb_impact=tmps_deb_impact,
+						tarrage_dep=tarrage_dep,
+						tarrage_tmps=tarrage_tmps,
+						detect_fin_essai=detect_fin_essai,
+						dep_max=dep_max,
+						calculer_energie=calculer_energie,
+						fact_force=fact_force,
+						fact_dep=fact_dep,
+						calc_vitesse_impact=calc_vitesse_impact,
+						nbpts_vitesse_impact=nbpts_vitesse_impact,
+						afficher_dep_tmps=afficher_dep_tmps,
+						afficher_F_tmps=afficher_F_tmps,
+						afficher_F_dep=afficher_F_dep,
+						afficher_sep=afficher_sep)
 
 	# Si aucun argument n'est renseigné lancer l'interface graphique du logiciel
 	if not args.version and not args.custom_configuration and not args.default_configuration:
