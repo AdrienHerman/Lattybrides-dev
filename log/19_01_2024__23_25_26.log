@@ -1,0 +1,64 @@
+-----------------------
+--- Début Programme ---
+-----------------------
+dimlat_x:40.0
+												
+dimlat_y:40.0
+												
+dimlat_ep:40.0
+												
+nb_tri_x:4
+												
+nb_tri_y:4
+												
+nom_sketch_tri:Sketch_Tri_2D
+												
+alpha:1.01
+												
+----
+lx:5.0
+												
+ly:5.0
+												
+----
+Création de l'esquisse du triangle : Sketch_Tri_2D
+Création du body du triangle : Body_Tri_2D
+
+
+     Construction du rectangle de délimitation de la structure
+Construction de la ligne entre (0.0, 0.0, 0.0) et (40.0, 0.0, 0.0)
+
+
+
+     Construction du rectangle de délimitation de la structure
+Construction de la ligne entre (40.0, 0.0, 0.0) et (40.0, 40.0, 0.0)
+
+
+
+     Construction du rectangle de délimitation de la structure
+Construction de la ligne entre (40.0, 40.0, 0.0) et (0.0, 40.0, 0.0)
+
+
+
+     Construction du rectangle de délimitation de la structure
+Construction de la ligne entre (0.0, 40.0, 0.0) et (0.0, 0.0, 0.0)
+
+Extrusion de la structure
+Création des plateaux liants les extrémités de la structure.
+Création de l'esquisse des plateaux : Sketch_Plateau_Dessous
+Construction de la ligne entre (0.0, 0.125, 0.0) et (40.0, 0.125, 0.0)
+Construction de la ligne entre (40.0, 0.125, 0.0) et (40.0, -0.125, 0.0)
+Construction de la ligne entre (40.0, -0.125, 0.0) et (0.0, -0.125, 0.0)
+Construction de la ligne entre (0.0, -0.125, 0.0) et (0.0, 0.125, 0.0)
+Création de l'esquisse des plateaux : Sketch_Plateau_Dessus
+Construction de la ligne entre (0.0, 40.125, 0.0) et (40.0, 40.125, 0.0)
+Construction de la ligne entre (40.0, 40.125, 0.0) et (40.0, 39.875, 0.0)
+Construction de la ligne entre (40.0, 39.875, 0.0) et (0.0, 39.875, 0.0)
+Construction de la ligne entre (0.0, 39.875, 0.0) et (0.0, 40.125, 0.0)
+Extrusion des plateaux
+
+
+---------------------
+--- Fin Programme ---
+---------------------
+Temps d'exécution: 3.0s
