@@ -10,7 +10,7 @@ def cosinus_fct(x, phi, period_fact, amp):
 	Calcul du cos(x + phi) (x et phi en radians).
 	"""
 	import math
-	print("X:{0} phi:{1} period_fact:{2} amp:{3}".format(x, phi, period_fact, amp))
+	
 	return amp * math.cos(x * period_fact + phi)
 
 def gen_cosinus(	ep=0.4,
@@ -37,9 +37,11 @@ def gen_cosinus(	ep=0.4,
 					nom_body_cos="Body_Cos",
 					nom_pad_cos="Pad_Cos",
 					nom_pad_plateau_extremitees=["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
-					gen_plateaux=None,
 					generation_plateaux_extremitees=True,
-					wdebug=None):
+					wdebug=None,
+					create_body=True,
+					posy=0,
+					remove_fusion=True):
 	"""
 	Génération de la structure de base.
 
@@ -54,6 +56,7 @@ def gen_cosinus(	ep=0.4,
 		- phi -> Déphasage du cosinus (Si c'est une liste le déphasage sera effectué pour chaque cosinus)
 		- nbpts -> Nombre de points d'échantillonnage de la courbe
 		- plot_math_func -> Fonction de traçage de fonction mathématiques
+		- cosinus_func -> Fonction de calcul de points (cosinus)
 		- dimlat_x / dimlat_y -> Dimensions de la zone de construction
 		- dimlat_ep -> Épaisseur d'extrusion de la structure lattice
 		- ep_plateaux -> Épaisseur des plateaux liant les extrémités de la structure (dans le sens de chargement)
@@ -67,9 +70,11 @@ def gen_cosinus(	ep=0.4,
 		- nom_body_cos -> Nom de la pièce
 		- nom_pad_cos -> Nom du pad du motif cosinus
 		- nom_pad_plateau -> Nom des pad des plateaux liant les parties hautes et basses de la structure
-		- gen_plateaux -> Fonction de génération des plateaux liant les deux extrémités
 		- generation_plateaux_extremitees -> True = Les plateaux aux extrémités sont générés, False = Génération des plateaux ignorés
 		- wdebug -> Fonction d'écriture des informations de débogage dans le terminal et dans le fichier log
+		- create_body -> True s'il faut créer le body
+		- posy -> Position en y de l'esquisse
+		- remove_fusion -> True s'il faut enlever le pad et le sketch de fusion du solide
 	-----------
 	"""
 
@@ -142,10 +147,14 @@ def gen_cosinus(	ep=0.4,
 																	file_debug)
 
 	# Création d'un nouveau corps
-	if file_debug != None and debug:
-		wdebug("Création du body du cosinus : {0}\n".format(nom_body_cos), file_debug)
+	if create_body:
+		if file_debug != None and debug:
+			wdebug("Création du body du cosinus : {0}\n".format(nom_body_cos), file_debug)
 
-	body = doc.addObject('PartDesign::Body', nom_body_cos)
+		body = doc.addObject('PartDesign::Body', nom_body_cos)
+
+	else:
+		body = doc.getObject(nom_body_cos)
 
 	# Construction du rectangle de délimitation de la structure
 	#	Points de délimitation du quadrilatère (dans le sens anti-horaire)
@@ -162,6 +171,7 @@ def gen_cosinus(	ep=0.4,
 							App.Vector(dimlat_x - 0.05, dimlat_y, 0))
 
 		sketch_fusion = doc.addObject("Sketcher::SketchObject", "FusionSketch")
+		sketch_fusion.Placement = App.Placement(App.Vector(0, posy, 0), App.Rotation(0, 0, 0, 1))
 		for j in range(1, 5):	sketch_fusion.addGeometry(Part.LineSegment(point_fusion[(j - 1) % 4], point_fusion[j % 4]), False)
 
 		pad_fusion = body.newObject('PartDesign::Pad', "FusionPad")	# Créer un Pad
@@ -179,6 +189,7 @@ def gen_cosinus(	ep=0.4,
 									App.Vector(0, ep_plateaux[0], 0))
 
 		sketch_plateau_dessous = doc.addObject("Sketcher::SketchObject", nom_sketch_plateaux_extremitees[0])
+		sketch_plateau_dessous.Placement = App.Placement(App.Vector(0, posy, 0), App.Rotation(0, 0, 0, 1))
 		for j in range(1, 5):	sketch_plateau_dessous.addGeometry(Part.LineSegment(point_plateau_dessous[(j - 1) % 4], point_plateau_dessous[j % 4]), False)
 		sketch_plateau_dessous.Visibility = sketch_visible	
 
@@ -207,6 +218,7 @@ def gen_cosinus(	ep=0.4,
 
 		# Création de l'esquisse
 		sketch_cos_x.append(doc.addObject("Sketcher::SketchObject", nom_sketch_cos))
+		sketch_cos_x[i].Placement = App.Placement(App.Vector(0, posy, 0), App.Rotation(0, 0, 0, 1))
 		if file_debug != None and debug:
 			wdebug("Création de l'esquisse du cosinus.\n", file_debug)
 
@@ -308,6 +320,7 @@ def gen_cosinus(	ep=0.4,
 
 		# Création de l'esquisse et traçage des lignes
 		sketch_plateau.append(doc.addObject("Sketcher::SketchObject", "Sketch_Plateau_Y{0}".format(i)))
+		sketch_plateau[i].Placement = App.Placement(App.Vector(0, posy, 0), App.Rotation(0, 0, 0, 1))
 		for j in range(1, 5):	sketch_plateau[i].addGeometry(Part.LineSegment(point_plateau[(j - 1) % 4], point_plateau[j % 4]), False)
 		sketch_plateau[i].Visibility = sketch_visible
 
@@ -330,6 +343,7 @@ def gen_cosinus(	ep=0.4,
 									App.Vector(0, dimlat_y, 0))
 
 		sketch_plateau_dessus = doc.addObject("Sketcher::SketchObject", nom_sketch_plateaux_extremitees[1])
+		sketch_plateau_dessus.Placement = App.Placement(App.Vector(0, posy, 0), App.Rotation(0, 0, 0, 1))
 		for j in range(1, 5):	sketch_plateau_dessus.addGeometry(Part.LineSegment(point_plateau_dessous[(j - 1) % 4], point_plateau_dessous[j % 4]), False)
 		sketch_plateau_dessus.Visibility = sketch_visible	
 
@@ -337,10 +351,10 @@ def gen_cosinus(	ep=0.4,
 		pad_plateau_dessus.Profile = sketch_plateau_dessus										# Mettre l'esquisse dans le pad
 		pad_plateau_dessus.Length = dimlat_ep													# Définir la longueur d'extrustion
 		pad_plateau_dessus.ReferenceAxis = (sketch_plateau_dessus, ['N_Axis'])					# Définir la direction d'extrusion
-		doc.recompute()
 
-	# Suppression du solide de fusion de la structure
-	if extrude:
-		doc.removeObject("FusionPad")
-		doc.removeObject("FusionSketch")
+		# Suppression du solide de fusion de la structure
+		if remove_fusion:
+			doc.removeObject("FusionPad")
+			doc.removeObject("FusionSketch")
+
 		doc.recompute()

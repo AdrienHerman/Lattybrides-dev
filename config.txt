@@ -28,7 +28,7 @@ objectif_masse:18:
 tolerance:1e-1:
 #: ** Nombre d'itération maximale avant l'arrêt des calculs même si l'objectif
 #: ** de masse n'est pas atteint
-nb_pas_max:50:
+nb_pas_max:3:
 #: ** Valeur de correction de l'épaisseur des parois à chaque pas
 #: ** (augmentation ou diminution en mm)
 correction_ep_par_pas:7e-3:
@@ -60,8 +60,8 @@ gen_tri_2D_basic:False:
 gen_tri_2D_grad:False:
 #:
 #: Structure à base de cosinus : No5
-gen_cos_2D_basic:True:
-gen_cos_2D_grad:False:
+gen_cos_2D_basic:False:
+gen_cos_2D_grad:True:
 #:--------------------------------------
 #:
 #:-----------------------------------------
@@ -107,11 +107,11 @@ nb_motif_y_sg:4:
 #: ** Choix du nombre de losanges en y par couches
 #: ** Les nombre de losanges doivent-être séparés par une ,
 #: ** ATTENTION : Il ne doit pas il y avoir un espace !
-nb_y_par_couche:4,3,3,4:
+nb_y_par_couche:4,3:
 #:
 #: ** Choix du nombre de losanges en x par couches
 #: ** ATTENTION : Il doit il y avoir le même nombre de valeur que nb_y_par_couche
-nb_x_par_couche:5,5,4,3:
+nb_x_par_couche:5,5:
 #:
 #: ** Épaisseur des couches (en y)
 #: ** Si dimlat_par_couche_manuel = False, les dimensions des couches
@@ -147,7 +147,9 @@ alpha_tri_2D:1.01:
 #: ** Avec gradients
 alpha_tri_2D_grad:1.01,0.95,0.87:
 #:
-#: /// GÉNÉRATION DE LA STRUCTURE COSINUS 2D \\\
+#: /// GÉNÉRATION DE LA STRUCTURE COSINUS 2D SANS GRADIENTS \\\
+#: *** nb_motif_y_sg représente le nombre de plateaux
+#: ***
 #: *** Déphasage du cosinus en radians (cos(x + phi))
 #: *** Il est possible de renseigner plusieurs déphasages (un par cosinus
 #: *** tracé). Il faudra donc commenter les lignes sans plusieurs déphasages
@@ -171,6 +173,38 @@ amp:2.0:
 #: *** nbpts_cos = 4 points par période minimum pour avoir une
 #: *** bonne précision
 nbpts_cos:80:
+#:
+#: /// GÉNÉRATION DE LA STRUCTURE COSINUS 2D AVEC GRADIENTS \\\
+#: *** ATTENTION : DANS CETTE SECTION, LE DÉLIMITEUR DE COUCHE DE GRADIENT
+#: *** EST LE CARACTÈRE "|" ET LE DÉLIMITEUR DE GRADIENT DANS LA COUCHE
+#: *** (VARIATIONS D'UN PARAMÈTRE SUIVANT LE COSINUS DESSINÉ) EST LE
+#: *** CARACTÈRE ",".
+#: ***
+#: *** nb_y_par_couche représente le nombre de plateaux par couche
+#: ***
+#: *** Déphasage du cosinus en radians (cos(x + phi))
+#: *** Il est possible de renseigner plusieurs déphasages (un par cosinus
+#: *** tracé). Il faudra donc commenter les lignes sans plusieurs déphasages
+#: *** et s'assurer que phi_x et phi_x soient respectivements aussi longs que
+#: *** le nombres de motifs en x et en y.
+#: ATTENTION : Si phi_x contient pliseurs déphasages alors phi_y doit aussi
+#: contenir plusieurs déphasages même s'ils sont identiques.
+phi_grad:0.0|0.0:
+#:phi_grad:0.0,0.0|0.0,0.0|0.0,0.0:
+#: *** Facteur sur la période du cosinus (cos(x * period_fact))
+#: *** Même chose que sur le déphasage il est possible de renseigner
+#: *** plusieurs périodes.
+period_fact_grad:1.0|1.0:
+#:period_fact_grad:1.0,1.0|1.0,1.0|1.0,1.0:
+#: *** Amplitude du cosinus (amp * cos(x))
+#: *** Même chose que sur le déphasage il est possible de renseigner
+#: *** plusieurs amplitudes.
+amp_grad:2.0|2.0:
+#:amp_grad:2.0,2.0|2.0,2.0|2.0,2.0:
+#: *** Nombre de points de discrétisation du cosinus
+#: *** nbpts_cos = 4 points par période minimum pour avoir une
+#: *** bonne précision
+nbpts_cos_grad:80|80:
 #:
 #:-----------------------------------------
 #:

@@ -37,11 +37,11 @@ def losange_grad(	ep=0.4,
 		ep -> Épaisseur de référence pour les parois des différentes couches de la structure lattice
 		doc -> Document FreeCAD (Attention il s'agit de l'objet document, il doit-être ouvert)
 		file_debug -> Fichier de déboggage (ouvert)
-		nb_couches : Nombre de couches différentes à générer
-		nb_losange_par_couche : Liste des nombre de losange à générer pour chaque couche
-		dimlat_par_couche : Liste des dimensions y de chaque couches
-		ep_par_couche : Liste de tous les facteurs d'épaisseur à chaque couche (facteur * ep)
-		nom_sketch_par_couche : Liste de tous les noms d'esquisses
+		nb_couches -> Nombre de couches différentes à générer
+		nb_losange_par_couche -> Liste des nombre de losange à générer pour chaque couche
+		dimlat_par_couche -> Liste des dimensions y de chaque couches
+		ep_par_couche -> Liste de tous les facteurs d'épaisseur à chaque couche (facteur * ep)
+		nom_sketch_par_couche -> Liste de tous les noms d'esquisses
 		nom_pad_par_couche -> Nom de tous les pad des losanges pour chaque couche
 		dimlat_x -> Dimension de la zone de construction
 		dimlat_ep -> Épaisseur d'extrusion de la structure lattice

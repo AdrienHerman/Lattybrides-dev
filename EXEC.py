@@ -10,8 +10,8 @@ from PySide import QtGui
 import FreeCADGui, ImportGui, Part, Sketcher, math, os, sys, time
 
 # Modules du Logiciel
-#path_soft = "C:/Users/Adrien Herman/Documents/Shadow Drive/INSA 5A/PLP/Python/Utilisation/Generation Structures Python/"
-path_soft = "/home/adrien/Documents/Shadow Drive/INSA 5A/PLP/Python/dev/Generation_Structure_Python_GIT/"
+path_soft = "/home/adrien/Documents/Shadow Drive/INSA 5A/PLP/Python/Lattybrides/dev/"
+print(path_soft)
 sys.path.append(path_soft + "bin/")
 sys.path.append(path_soft + "bin/losange/")
 sys.path.append(path_soft + "bin/hexagone_triangle1_2D/")
@@ -75,6 +75,10 @@ from math_func.plot_math_function import *
 	period_fact,
 	amp,
 	nbpts_cos,
+	phi_grad,
+	period_fact_grad,
+	amp_grad,
+	nbpts_cos_grad,
 	extrude,
 	export,
 	export_name,
@@ -461,7 +465,7 @@ if lecture_param_ok:
 							generation_plateaux_extremitees,
 							wdebug)
 
-	elif gen_losange_grad or gen_hex_tri1_2D_aligne_grad or gen_hex_tri1_2D_naligne_grad or gen_tri_2D_grad:
+	elif gen_losange_grad or gen_hex_tri1_2D_aligne_grad or gen_hex_tri1_2D_naligne_grad or gen_tri_2D_grad or gen_cos_2D_grad:
 		# Création des listes pour les plateaux
 		plateaux = []
 		if generation_plateaux_extremitees:	plateaux.append(ep_plateaux_extremitees[0])
@@ -470,17 +474,22 @@ if lecture_param_ok:
 
 		# Création des listes pour les noms des objets
 		nb_couches = len(nb_y_par_couche)
-		nom_sketch_par_couche = ["Sketch_Losange" + str(i + 1) for i in range(nb_couches)]
-		nom_pad_par_couche = ["Pad_Losange" + str(i + 1) for i in range(nb_couches)]
+		if gen_losange_grad:				nom_struct = "Losange"
+		elif gen_hex_tri1_2D_aligne_grad:	nom_struct = "Hex_Tri_2D_aligne"
+		elif gen_hex_tri1_2D_naligne_grad:	nom_struct = "Hex_Tri_2D_naligne"
+		elif gen_tri_2D_grad:				nom_struct = "Tri_2D"
+		elif gen_cos_2D_grad:				nom_struct = "Cos_2D"
+		nom_sketch_par_couche = ["Sketch_" + nom_struct + str(i + 1) for i in range(nb_couches)]
+		nom_pad_par_couche = ["Pad_" + nom_struct + str(i + 1) for i in range(nb_couches)]
 		nom_sketch_plateaux = ["Sketch_Plateaux" + str(i + 1) for i in range(nb_couches + 1)]
 		nom_pad_plateaux = ["Pad_Plateaux" + str(i + 1) for i in range(nb_couches + 1)]
 
 		# Dimensions de chaques couches
-		if dimlat_par_couche_manuel:
+		if dimlat_par_couche_manuel:	# Manuel
 			dimlat_y = 0
 			for dimlat in dimlat_par_couche:	dimlat_y += dimlat
 
-		else:
+		else:							# Automatique
 			nb_losange_y = 0
 			for nb_losange in nb_y_par_couche:	nb_losange_y += nb_losange
 			dimlat_par_couche = [nb_y_par_couche[i] / nb_losange_y * dimlat_y for i in range(nb_couches)]
@@ -777,6 +786,89 @@ if lecture_param_ok:
 									nom_pad_plateaux,
 									gen_plateaux,
 									gen_triangle_basic,
+									wdebug)
+
+		if gen_cos_2D_grad:
+			nom_body = "Body_Cos"
+			if optimisation_masse:
+				masse, pas_final, ep_finale, porosite = opti_masse(	
+						doc,
+						nom_body,
+						nom_pad_par_couche,
+						nom_pad_plateaux,
+						nom_sketch_par_couche,
+						nom_sketch_plateaux,
+						gen_cosinus_grad,
+						file_debug,
+						wdebug,
+						debug,
+						tolerance,
+						nb_pas_max,
+						[0 for i in range(nb_pas_max + 1)],
+						ep,
+						0,
+						correction_ep_par_pas,
+						pourcentage_modification_correction,
+						seuil_augmentation_correction,
+						seuil_diminution_correction,
+						objectif_masse,
+						rho,
+						volume_max,
+						nb_couches,
+						ep_par_couche,
+						nb_x_par_couche,
+						nb_y_par_couche,
+						amp_grad,
+						period_fact_grad,
+						phi_grad,
+						nbpts_cos_grad,
+						plot_math_func,
+						cosinus_fct,
+						dimlat_x,
+						dimlat_par_couche,
+						dimlat_ep,
+						ep_plateaux,
+						semi_debug,
+						debug,
+						sketch_visible,
+						extrude,
+						nom_sketch_par_couche,
+						nom_sketch_plateaux,
+						nom_body,
+						nom_pad_par_couche,
+						nom_pad_plateaux,
+						gen_cosinus,
+						True,
+						wdebug)
+
+			else:
+				gen_cosinus_grad(	ep,
+									doc,
+									file_debug,nb_couches,
+									ep_par_couche,
+									nb_x_par_couche,
+									nb_y_par_couche,
+									amp_grad,
+									period_fact_grad,
+									phi_grad,
+									nbpts_cos_grad,
+									plot_math_func,
+									cosinus_fct,
+									dimlat_x,
+									dimlat_par_couche,
+									dimlat_ep,
+									ep_plateaux,
+									semi_debug,
+									debug,
+									sketch_visible,
+									extrude,
+									nom_sketch_par_couche,
+									nom_sketch_plateaux,
+									nom_body,
+									nom_pad_par_couche,
+									nom_pad_plateaux,
+									gen_cosinus,
+									True,
 									wdebug)
 
 	if optimisation_masse:
