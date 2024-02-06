@@ -225,7 +225,7 @@ export_name:structure:
 #: ** export_path ne doit contenir que le chemin à partir d'où le logiciel est avec le
 #: ** dossier où vous voulez exporter les structures. ATTENTION à ne pas oublier "/"
 #: ** à la fin du nom du dossier
-export_path:STRUCTURES_GENEREES/:
+export_path:/home/adrien/:
 #:
 #: ** Affiche l'(les)esquisse(s) de départ après l'extrusion
 #: ** True = Laisser l'(les) essquisse(s) affichées / False = Cacher la/les essquisse(s)

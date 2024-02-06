@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<package format="1" xmlns="https://wiki.freecad.org/Package_Metadata">
+	<name>Lattybrides</name>
+	<version>2.0</version>
+	<date>06/02/2024</date>
+	<description>Création de structures Lattices Hybrides à Gradients de réseau. Projet réalisé dans le cadre du projet de fin d'étude PLP23INT16 à l'INSA Hauts-de-France.</description>
+	<maintainer email="herman1.adrien@gmail.com">Adrien Herman</maintainer>
+	<licence>CC0-1.0</licence>
+	<icon>icons/softicon.png</icon>
+	<url branch="last_stable" type="repository">https://github.com/AdrienHerman/Lattybrides/tree/last_stable</url>
+	<url type="readme">https://github.com/AdrienHerman/Lattybrides/tree/last_stable/README.md</url>
+
+	<content>
+		<workbench>
+			<freecadmin>0.20.1</freecadmin>
+			<depend optional="False" type="automatic">Part</depend>
+			<depend optional="False" type="automatic">Sketcher</depend>
+			<classname>Lattybrides</classname>
+			<subdirectory>bin</subdirectory>
+		</workbench>
+	</content>
+</package>

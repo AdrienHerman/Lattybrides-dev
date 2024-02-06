@@ -22,24 +22,30 @@ def lecture_param(path_config="config.txt", debug=True):
 
 	# Récupération du dossier contenant le fichier
 	path = path_config.split("/")
-	del path[len(path) - 1]
-	path = '/'.join(path)
+	if len(path) > 1:
+		del path[-1]
+		path = '/'.join(path)
 
 	# Variable contenant les log
 	log = ""
+	return_nok = [False for i in range(54)]	# Liste à retourner si la lecture des parmaètres ne s'est pas terminée correctement
 
 	if path != "":
-		if not (path_config.split("/")[len(path_config.split("/")) - 1] in os.listdir(path)):
+		if not (path_config.split("/")[-1] in os.listdir(path)):
 			if debug:
 				log += "lecture_param\nLe fichier de paramètres n'existe pas !\n     path_config={0}\n".format(path_config)
 
-			return []
+			return_nok.append(log)
+
+			return return_nok
 	else:
 		if not (path_config in os.listdir()):
 			if debug:
 				log += "lecture_param\nLe fichier de paramètres n'existe pas !\n     path_config={0}\n".format(path_config)
 
-			return []
+			return_nok.append(log)
+
+			return return_nok
 
 	# Variables
 	# ATTENTION : À l'ajout de variable, ne pas oublier d'actualiser
@@ -601,59 +607,59 @@ def lecture_param(path_config="config.txt", debug=True):
 
 	# Traitement des données non définies
 	return_ok = [	True,
-				gen_losange_basic,
-				gen_losange_grad,
-				gen_hex_tri1_2D_aligne_basic,
-				gen_hex_tri1_2D_aligne_grad,
-				gen_hex_tri1_2D_naligne_basic,
-				gen_hex_tri1_2D_naligne_grad,
-				gen_tri_2D_basic,
-				gen_tri_2D_grad,
-				gen_cos_2D_basic,
-				gen_cos_2D_grad,
-				generation_plateaux_extremitees,
-				[ep_plateau_dessous, ep_plateau_dessus],
-				ep,
-				dimlat_ep,
-				dimlat_x,
-				dimlat_y,
-				optimisation_masse,
-				objectif_masse,
-				tolerance,
-				nb_pas_max,
-				correction_ep_par_pas,
-				pourcentage_modification_correction,
-				seuil_augmentation_correction,
-				seuil_diminution_correction,
-				rho,
-				nb_motif_x_sg,
-				nb_motif_y_sg,
-				nb_y_par_couche,
-				nb_x_par_couche,
-				dimlat_par_couche_manuel,
-				dimlat_par_couche,
-				ep_par_couche,
-				ep_plateaux,
-				alpha_hex_tri1_2D,
-				alpha_hex_tri1_2D_grad,
-				alpha_tri_2D,
-				alpha_tri_2D_grad,
-				phi,
-				period_fact,
-				amp,
-				nbpts_cos,
-				phi_grad,
-				period_fact_grad,
-				amp_grad,
-				nbpts_cos_grad,
-				extrude,
-				export,
-				export_name,
-				export_path,
-				sketch_visible,
-				semi_debug,
-				debug,
-				debug_current_folder]
+					gen_losange_basic,
+					gen_losange_grad,
+					gen_hex_tri1_2D_aligne_basic,
+					gen_hex_tri1_2D_aligne_grad,
+					gen_hex_tri1_2D_naligne_basic,
+					gen_hex_tri1_2D_naligne_grad,
+					gen_tri_2D_basic,
+					gen_tri_2D_grad,
+					gen_cos_2D_basic,
+					gen_cos_2D_grad,
+					generation_plateaux_extremitees,
+					[ep_plateau_dessous, ep_plateau_dessus],
+					ep,
+					dimlat_ep,
+					dimlat_x,
+					dimlat_y,
+					optimisation_masse,
+					objectif_masse,
+					tolerance,
+					nb_pas_max,
+					correction_ep_par_pas,
+					pourcentage_modification_correction,
+					seuil_augmentation_correction,
+					seuil_diminution_correction,
+					rho,
+					nb_motif_x_sg,
+					nb_motif_y_sg,
+					nb_y_par_couche,
+					nb_x_par_couche,
+					dimlat_par_couche_manuel,
+					dimlat_par_couche,
+					ep_par_couche,
+					ep_plateaux,
+					alpha_hex_tri1_2D,
+					alpha_hex_tri1_2D_grad,
+					alpha_tri_2D,
+					alpha_tri_2D_grad,
+					phi,
+					period_fact,
+					amp,
+					nbpts_cos,
+					phi_grad,
+					period_fact_grad,
+					amp_grad,
+					nbpts_cos_grad,
+					extrude,
+					export,
+					export_name,
+					export_path,
+					sketch_visible,
+					semi_debug,
+					debug,
+					debug_current_folder]
 	return_nok = [False for i in range(len(return_ok))]	# Liste à retourner si la lecture des parmaètres ne s'est pas terminée correctement
 
 	# 	Traitement du nombre de fonctions de génération
