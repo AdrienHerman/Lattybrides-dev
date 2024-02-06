@@ -22,24 +22,30 @@ def lecture_param(path_config="config.txt", debug=True):
 
 	# Récupération du dossier contenant le fichier
 	path = path_config.split("/")
-	del path[len(path) - 1]
-	path = '/'.join(path)
+	if len(path) > 1:
+		del path[-1]
+		path = '/'.join(path)
 
 	# Variable contenant les log
 	log = ""
+	return_nok = [False for i in range(54)]	# Liste à retourner si la lecture des parmaètres ne s'est pas terminée correctement
 
 	if path != "":
-		if not (path_config.split("/")[len(path_config.split("/")) - 1] in os.listdir(path)):
+		if not (path_config.split("/")[-1] in os.listdir(path)):
 			if debug:
 				log += "lecture_param\nLe fichier de paramètres n'existe pas !\n     path_config={0}\n".format(path_config)
 
-			return []
+			return_nok.append(log)
+
+			return return_nok
 	else:
 		if not (path_config in os.listdir()):
 			if debug:
 				log += "lecture_param\nLe fichier de paramètres n'existe pas !\n     path_config={0}\n".format(path_config)
 
-			return []
+			return_nok.append(log)
+
+			return return_nok
 
 	# Variables
 	# ATTENTION : À l'ajout de variable, ne pas oublier d'actualiser
@@ -47,7 +53,15 @@ def lecture_param(path_config="config.txt", debug=True):
 	#	Fonctions de génération
 	gen_losange_basic = None
 	gen_losange_grad = None
-	gen_func = [None for i in range(2)]
+	gen_hex_tri1_2D_aligne_basic = None
+	gen_hex_tri1_2D_aligne_grad = None
+	gen_hex_tri1_2D_naligne_basic = None
+	gen_hex_tri1_2D_naligne_grad = None
+	gen_tri_2D_basic = None
+	gen_tri_2D_grad = None
+	gen_cos_2D_basic = None
+	gen_cos_2D_grad = None
+	gen_func = [None for i in range(10)]
 	#	Géométrie générale
 	generation_plateaux_extremitees = None
 	ep_plateau_dessous = None
@@ -66,16 +80,32 @@ def lecture_param(path_config="config.txt", debug=True):
 	seuil_augmentation_correction = None
 	seuil_diminution_correction = None
 	rho = None
-	# 	Géométrie des losanges "basic"
+	# 	Géométries sans gradients
 	nb_motif_x_sg = None
 	nb_motif_y_sg = None
-	#	Géométrie des gradients
+	#	Géométries avec gradients
 	nb_y_par_couche = None
 	nb_x_par_couche = None
 	dimlat_par_couche_manuel = None
 	dimlat_par_couche = None
 	ep_par_couche = None
 	ep_plateaux = None
+	#	Géométrie Hexagones + Triangles 1 2D (Alignés ou Non / Avec ou sans gradients)
+	alpha_hex_tri1_2D = None
+	alpha_hex_tri1_2D_grad = None
+	#	Géométrie Triangles 2D (Avec ou sans gradients)
+	alpha_tri_2D = None
+	alpha_tri_2D_grad = None
+	#	Géométrie Cosinus 2D (Sans gradients)
+	phi = None
+	period_fact = None
+	amp = None
+	nbpts_cos = None
+	#	Géométrie Cosinus 2D (Avec gradients)
+	phi_grad = None
+	period_fact_grad = None
+	amp_grad = None
+	nbpts_cos_grad = None
 	#	Partie exploitation du modèle 3D
 	extrude = None 
 	export = None 
@@ -100,7 +130,7 @@ def lecture_param(path_config="config.txt", debug=True):
 			log += "Impossible d'ouvrir le fichier de configuration\n"
 
 	# Parsing des données
-	if debug and debug:
+	if debug:
 		log += "Début du parsing des données\n"
 
 	for i in range(len(lignes)):
@@ -132,6 +162,86 @@ def lecture_param(path_config="config.txt", debug=True):
 			else:
 				if debug:
 					log += "lecture_param\nCommande inconnue pour gen_losange_grad\n"
+		elif lignes[i][0] == "gen_hex_tri1_2D_aligne_basic":
+			if lignes[i][1] == "False":
+				gen_hex_tri1_2D_aligne_basic = False
+				gen_func[2] = False
+			elif lignes[i][1] == "True":
+				gen_hex_tri1_2D_aligne_basic = True
+				gen_func[2] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_hex_tri1_2D_aligne_basic\n"
+		elif lignes[i][0] == "gen_hex_tri1_2D_aligne_grad":
+			if lignes[i][1] == "False":
+				gen_hex_tri1_2D_aligne_grad = False
+				gen_func[3] = False
+			elif lignes[i][1] == "True":
+				gen_hex_tri1_2D_aligne_grad = True
+				gen_func[3] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_hex_tri1_2D_aligne_grad\n"
+		elif lignes[i][0] == "gen_hex_tri1_2D_naligne_basic":
+			if lignes[i][1] == "False":
+				gen_hex_tri1_2D_naligne_basic = False
+				gen_func[4] = False
+			elif lignes[i][1] == "True":
+				gen_hex_tri1_2D_naligne_basic = True
+				gen_func[4] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_hex_tri1_2D_naligne_basic\n"
+		elif lignes[i][0] == "gen_hex_tri1_2D_naligne_grad":
+			if lignes[i][1] == "False":
+				gen_hex_tri1_2D_naligne_grad = False
+				gen_func[5] = False
+			elif lignes[i][1] == "True":
+				gen_hex_tri1_2D_naligne_grad = True
+				gen_func[5] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_hex_tri1_2D_naligne_grad\n"
+		elif lignes[i][0] == "gen_tri_2D_basic":
+			if lignes[i][1] == "False":
+				gen_tri_2D_basic = False
+				gen_func[6] = False
+			elif lignes[i][1] == "True":
+				gen_tri_2D_basic = True
+				gen_func[6] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_tri_2D_basic\n"
+		elif lignes[i][0] == "gen_tri_2D_grad":
+			if lignes[i][1] == "False":
+				gen_tri_2D_grad = False
+				gen_func[7] = False
+			elif lignes[i][1] == "True":
+				gen_tri_2D_grad = True
+				gen_func[7] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_tri_2D_grad\n"
+		elif lignes[i][0] == "gen_cos_2D_basic":
+			if lignes[i][1] == "False":
+				gen_cos_2D_basic = False
+				gen_func[8] = False
+			elif lignes[i][1] == "True":
+				gen_cos_2D_basic = True
+				gen_func[8] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_cos_2D\n"
+		elif lignes[i][0] == "gen_cos_2D_grad":
+			if lignes[i][1] == "False":
+				gen_cos_2D_grad = False
+				gen_func[9] = False
+			elif lignes[i][1] == "True":
+				gen_cos_2D_grad = True
+				gen_func[9] = True
+			else:
+				if debug:
+					log += "lecture_param\nCommande inconnue pour gen_cos_2D_grad\n"
 
 		# Géométrie
 		if lignes[i][0] == "generation_plateaux_extremitees":
@@ -247,7 +357,7 @@ def lecture_param(path_config="config.txt", debug=True):
 					log += """	lecture_param\nLe type de données entrée dans rho n'est pas correct !
 									\n     rho={0}\n""".format(lignes[i][1])
 
-		# Géométrie des losanges "basic"
+		# Géométrie sans gradients
 		if lignes[i][0] == "nb_motif_x_sg":
 			try:
 				nb_motif_x_sg = int(lignes[i][1])
@@ -255,6 +365,10 @@ def lecture_param(path_config="config.txt", debug=True):
 				if debug:
 					log += """	lecture_param\nLe type de données entrée dans nb_motif_x_sg n'est pas correct !
 									\n     nb_motif_x_sg={0}\n""".format(lignes[i][1])
+
+			if nb_motif_x_sg != None and nb_motif_x_sg <= 0:
+				log += """lecture_param\nnb_motif_x_sg doit être un nombre entier positif strict !
+							\n     nb_motif_x_sg={0}\n""".format(lignes[i][1])
 		elif lignes[i][0] == "nb_motif_y_sg":
 			try:
 				nb_motif_y_sg = int(lignes[i][1])
@@ -263,7 +377,11 @@ def lecture_param(path_config="config.txt", debug=True):
 					log += """	lecture_param\nLe type de données entrée dans nb_motif_y_sg n'est pas correct !
 									\n     nb_motif_y_sg={0}\n""".format(lignes[i][1])
 
-		# Géométrie des losanges "grad"
+			if nb_motif_y_sg != None and nb_motif_y_sg <= 0:
+				log += """lecture_param\nnb_motif_y_sg doit être un nombre entier positif strict !
+							\n     nb_motif_y_sg={0}\n""".format(lignes[i][1])
+
+		# Géométries avec gradients
 		if lignes[i][0] == "nb_y_par_couche":
 			try:
 				nb_y_par_couche = [int(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
@@ -305,6 +423,147 @@ def lecture_param(path_config="config.txt", debug=True):
 				if debug:
 					log += """	lecture_param\nLe type de données entrée dans ep_plateaux n'est pas correct !
 									\n     ep_plateaux={0}\n""".format(lignes[i][1])
+
+		# Géométrie Hexagones + Triangles 1 2D (Alignés ou Non / Avec ou sans gradients)
+		if lignes[i][0] == "alpha_hex_tri1_2D":
+			try:
+				alpha_hex_tri1_2D = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans alpha_hex_tri1_2D n'est pas correct !
+									\n     alpha_hex_tri1_2D={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "alpha_hex_tri1_2D_grad":
+			try:
+				alpha_hex_tri1_2D_grad = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans alpha_hex_tri1_2D_grad n'est pas correct !
+									\n     alpha_hex_tri1_2D_grad={0}\n""".format(lignes[i][1])
+
+		# Géométrie Triangles 2D (Avec ou sans gradients)
+		if lignes[i][0] == "alpha_tri_2D":
+			try:
+				alpha_tri_2D = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans alpha_tri_2D n'est pas correct !
+									\n     alpha_tri_2D={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "alpha_tri_2D_grad":
+			try:
+				alpha_tri_2D_grad = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans alpha_tri_2D_grad n'est pas correct !
+									\n     alpha_tri_2D_grad={0}\n""".format(lignes[i][1])
+
+		# Géométrie Cosinus 2D (Sans gradients)
+		if lignes[i][0] == "phi" and ',' in lignes[i][1]:
+			try:
+				phi = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans phi n'est pas correct !
+									\n     phi={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "phi":
+			try:
+				phi = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans phi n'est pas correct !
+									\n     phi={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "period_fact" and ',' in lignes[i][1]:
+			try:
+				period_fact = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans period_fact n'est pas correct !
+									\n     period_fact={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "period_fact":
+			try:
+				period_fact = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans period_fact n'est pas correct !
+									\n     period_fact={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "amp" and ',' in lignes[i][1]:
+			try:
+				amp = [float(lignes[i][1].split(',')[j]) for j in range(len(lignes[i][1].split(',')))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans amp n'est pas correct !
+									\n     amp={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "amp":
+			try:
+				amp = float(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans amp n'est pas correct !
+									\n     amp={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "nbpts_cos":
+			try:
+				nbpts_cos = int(lignes[i][1])
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans nbpts_cos n'est pas correct !
+									\n     nbpts_cos={0}\n""".format(lignes[i][1])
+
+		# Géométrie Cosinus 2D (Avec gradients)
+		try:
+			lignes_s = lignes[i][1].split('|')
+		except:
+			if debug:
+				log += """	lecture_param\nLe type de données entrée dans phi_grad n'est pas correct !
+								\n     phi_grad={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "phi_grad" and '|' in lignes[i][1] and ',' in lignes[i][1]:
+			try:
+				phi_grad = [[float(phi_s) for phi_s in lignes_s[j].split(',')] for j in range(len(lignes_s))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans phi_grad n'est pas correct !
+									\n     phi_grad={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "phi_grad" and '|' in lignes[i][1]:
+			phi_grad = [float(phi_s) for phi_s in lignes_s]
+
+		try:
+			lignes_s = lignes[i][1].split('|')
+		except:
+			if debug:
+				log += """	lecture_param\nLe type de données entrée dans period_fact_grad n'est pas correct !
+								\n     period_fact_grad={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "period_fact_grad" and '|' in lignes[i][1] and ',' in lignes[i][1]:
+			try:
+				period_fact_grad = [[float(period_fact_s) for period_fact_s in lignes_s[j].split(',')] for j in range(len(lignes_s))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans period_fact_grad n'est pas correct !
+									\n     period_fact_grad={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "period_fact_grad" and '|' in lignes[i][1]:
+			period_fact_grad = [float(period_fact_s) for period_fact_s in lignes_s]
+
+		try:
+			lignes_s = lignes[i][1].split('|')
+		except:
+			if debug:
+				log += """	lecture_param\nLe type de données entrée dans amp_grad n'est pas correct !
+								\n     amp_grad={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "amp_grad" and '|' in lignes[i][1] and ',' in lignes[i][1]:
+			try:
+				amp_grad = [[float(amp_s) for amp_s in lignes_s[j].split(',')] for j in range(len(lignes_s))]
+			except:
+				if debug:
+					log += """	lecture_param\nLe type de données entrée dans amp_grad n'est pas correct !
+									\n     amp_grad={0}\n""".format(lignes[i][1])
+		elif lignes[i][0] == "amp_grad" and '|' in lignes[i][1]:
+			amp_grad = [float(amp_s) for amp_s in lignes_s]
+
+		try:
+			lignes_s = lignes[i][1].split('|')
+		except:
+			if debug:
+				log += """	lecture_param\nLe type de données entrée dans nbpts_cos_grad n'est pas correct !
+								\n     nbpts_cos_grad={0}\n""".format(lignes[i][1])
+		if lignes[i][0] == "nbpts_cos_grad" and '|' in lignes[i][1]:
+			nbpts_cos_grad = [int(nbpts_cos_s) for nbpts_cos_s in lignes_s]
 
 		# Partie exploitation du modèle 3D
 		if lignes[i][0] == "extrude":
@@ -348,39 +607,59 @@ def lecture_param(path_config="config.txt", debug=True):
 
 	# Traitement des données non définies
 	return_ok = [	True,
-				gen_losange_basic,
-				gen_losange_grad,
-				generation_plateaux_extremitees,
-				[ep_plateau_dessous, ep_plateau_dessus],
-				ep,
-				dimlat_ep,
-				dimlat_x,
-				dimlat_y,
-				optimisation_masse,
-				objectif_masse,
-				tolerance,
-				nb_pas_max,
-				correction_ep_par_pas,
-				pourcentage_modification_correction,
-				seuil_augmentation_correction,
-				seuil_diminution_correction,
-				rho,
-				nb_motif_x_sg,
-				nb_motif_y_sg,
-				nb_y_par_couche,
-				nb_x_par_couche,
-				dimlat_par_couche_manuel,
-				dimlat_par_couche,
-				ep_par_couche,
-				ep_plateaux,
-				extrude,
-				export,
-				export_name,
-				export_path,
-				sketch_visible,
-				semi_debug,
-				debug,
-				debug_current_folder]
+					gen_losange_basic,
+					gen_losange_grad,
+					gen_hex_tri1_2D_aligne_basic,
+					gen_hex_tri1_2D_aligne_grad,
+					gen_hex_tri1_2D_naligne_basic,
+					gen_hex_tri1_2D_naligne_grad,
+					gen_tri_2D_basic,
+					gen_tri_2D_grad,
+					gen_cos_2D_basic,
+					gen_cos_2D_grad,
+					generation_plateaux_extremitees,
+					[ep_plateau_dessous, ep_plateau_dessus],
+					ep,
+					dimlat_ep,
+					dimlat_x,
+					dimlat_y,
+					optimisation_masse,
+					objectif_masse,
+					tolerance,
+					nb_pas_max,
+					correction_ep_par_pas,
+					pourcentage_modification_correction,
+					seuil_augmentation_correction,
+					seuil_diminution_correction,
+					rho,
+					nb_motif_x_sg,
+					nb_motif_y_sg,
+					nb_y_par_couche,
+					nb_x_par_couche,
+					dimlat_par_couche_manuel,
+					dimlat_par_couche,
+					ep_par_couche,
+					ep_plateaux,
+					alpha_hex_tri1_2D,
+					alpha_hex_tri1_2D_grad,
+					alpha_tri_2D,
+					alpha_tri_2D_grad,
+					phi,
+					period_fact,
+					amp,
+					nbpts_cos,
+					phi_grad,
+					period_fact_grad,
+					amp_grad,
+					nbpts_cos_grad,
+					extrude,
+					export,
+					export_name,
+					export_path,
+					sketch_visible,
+					semi_debug,
+					debug,
+					debug_current_folder]
 	return_nok = [False for i in range(len(return_ok))]	# Liste à retourner si la lecture des parmaètres ne s'est pas terminée correctement
 
 	# 	Traitement du nombre de fonctions de génération
@@ -474,8 +753,8 @@ def lecture_param(path_config="config.txt", debug=True):
 		return_nok.append(log)
 		return return_nok
 
-	# 	Traitement des variables concernant la géométrie des losanges "basic"
-	if gen_losange_basic == True:
+	# 	Traitement des variables concernant les géométrie sans gradients
+	if gen_losange_basic or gen_hex_tri1_2D_aligne_basic:
 		if nb_motif_x_sg == None:
 			if debug:
 				log += "lecture_param\nnb_motif_x_sg n'est pas définie !\n"
@@ -487,8 +766,8 @@ def lecture_param(path_config="config.txt", debug=True):
 			return_nok.append(log)
 			return return_nok
 
-	# Géométrie des losanges "grad"
-	if gen_losange_grad == True:
+	# Géométries avec gradients
+	if gen_losange_grad or gen_hex_tri1_2D_aligne_grad:
 		if nb_y_par_couche == None:
 			if debug:
 				log += "lecture_param\nnb_y_par_couche n'est pas définie !\n"
@@ -504,7 +783,7 @@ def lecture_param(path_config="config.txt", debug=True):
 				log += "lecture_param\ndimlat_par_couche_manuel n'est pas définie !\n"
 			return_nok.append(log)
 			return return_nok
-		elif dimlat_par_couche == None:
+		elif dimlat_par_couche_manuel and dimlat_par_couche == None:
 			if debug:
 				log += "lecture_param\ndimlat_par_couche n'est pas définie !\n"
 			return_nok.append(log)
@@ -527,7 +806,7 @@ def lecture_param(path_config="config.txt", debug=True):
 																					len(nb_y_par_couche))
 			return_nok.append(log)
 			return return_nok
-		if len(dimlat_par_couche) != len(nb_y_par_couche):
+		if dimlat_par_couche_manuel and len(dimlat_par_couche) != len(nb_y_par_couche):
 			if debug:
 				log += """lecture_param\ndimlat_par_couche doit ({0}) avoir le 
 						même nombre d'items que nb_y_par_couche ({1}) !\n""".format(	len(dimlat_par_couche),
@@ -538,14 +817,125 @@ def lecture_param(path_config="config.txt", debug=True):
 			if debug:
 				log += """lecture_param\nep_par_couche doit ({0}) avoir le 
 						même nombre d'items que nb_y_par_couche ({1}) !\n""".format(	len(ep_par_couche),
-																					len(nb_y_par_couche))
+																						len(nb_y_par_couche))
 			return_nok.append(log)
 			return return_nok
 		if len(ep_plateaux) != len(nb_y_par_couche) - 1:
 			if debug:
 				log += """lecture_param\nep_plateaux doit ({0}) avoir un item de moins 
 						que nb_y_par_couche ({1}) !\n""".format(	len(ep_plateaux),
-																len(nb_y_par_couche))
+																	len(nb_y_par_couche))
+			return_nok.append(log)
+			return return_nok
+
+	# Géométrie Hexagones + Triangles 1 2D (Alignés ou Non Sans gradients)
+	if gen_hex_tri1_2D_aligne_basic:
+		if alpha_hex_tri1_2D == None:
+			if debug:
+				log += "lecture_param\nalpha_hex_tri1_2D n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+
+	# Géométrie Hexagones + Triangles 1 2D (Alignés ou Non Avec gradients)
+	if gen_hex_tri1_2D_aligne_grad:
+		if alpha_hex_tri1_2D_grad == None:
+			if debug:
+				log += "lecture_param\nalpha_hex_tri1_2D_grad n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif len(alpha_hex_tri1_2D_grad) != len(nb_y_par_couche):
+			if debug:
+				log += "lecture_param\nalpha_hex_tri1_2D_grad n'a pas le bon nombre d'éléments !\n"
+			return_nok.append(log)
+			return return_nok
+
+	# Géométrie Triangles 2D (Sans gradients)
+	if gen_tri_2D_basic:
+		if alpha_tri_2D == None:
+			if debug:
+				log += "lecture_param\nalpha_tri_2D n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+
+	# Géométrie Triangles 2D (Avec gradients)
+	if gen_tri_2D_grad:
+		if alpha_tri_2D_grad == None:
+			if debug:
+				log += "lecture_param\nalpha_tri_2D_grad n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif len(alpha_tri_2D_grad) != len(nb_y_par_couche):
+			if debug:
+				log += "lecture_param\nalpha_tri_2D_grad n'a pas le bon nombre d'éléments !\n"
+			return_nok.append(log)
+			return return_nok
+
+	# Géométrie Cosinus 2D (Sans gradients)
+	if gen_cos_2D_basic:
+		if phi == None:
+			if debug:
+				log += "lecture_param\nphi n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif period_fact == None:
+			if debug:
+				log += "lecture_param\nperiod_fact n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif amp == None:
+			if debug:
+				log += "lecture_param\namp n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif nbpts_cos == None:
+			if debug:
+				log += "lecture_param\nnbpts_cos n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+
+	# Géométrie Cosinus 2D (Avec gradients)
+	if gen_cos_2D_grad:
+		if phi_grad == None:
+			if debug:
+				log += "lecture_param\nphi_grad n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif len(phi_grad) != len(nb_y_par_couche):
+			if debug:
+				log += "lecture_param\nphi_grad n'a pas le bon nombre d'éléments !\n"
+			return_nok.append(log)
+			return return_nok
+		
+		if period_fact_grad == None:
+			if debug:
+				log += "lecture_param\nperiod_fact_grad n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif len(period_fact_grad) != len(nb_y_par_couche):
+			if debug:
+				log += "lecture_param\nperiod_fact_grad n'a pas le bon nombre d'éléments !\n"
+			return_nok.append(log)
+			return return_nok
+		
+		if amp_grad == None:
+			if debug:
+				log += "lecture_param\namp_grad n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif len(amp_grad) != len(nb_y_par_couche):
+			if debug:
+				log += "lecture_param\namp_grad n'a pas le bon nombre d'éléments !\n"
+			return_nok.append(log)
+			return return_nok
+		
+		if nbpts_cos_grad == None:
+			if debug:
+				log += "lecture_param\nnbpts_cos_grad n'est pas définie !\n"
+			return_nok.append(log)
+			return return_nok
+		elif len(nbpts_cos_grad) != len(nb_y_par_couche):
+			if debug:
+				log += "lecture_param\nnbpts_cos_grad n'a pas le bon nombre d'éléments !\n"
 			return_nok.append(log)
 			return return_nok
 

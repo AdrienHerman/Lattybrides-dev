@@ -31,33 +31,33 @@ def gen_losange(	ep=0.4,
 
 	-----------
 	Variables :
-		ep -> Épaisseur des parois de la structure lattice
-		doc -> Document FreeCAD (Attention il s'agit de l'objet document, il doit-être ouvert)
-		file_debug -> Fichier de déboggage (ouvert)
-		nb_losange_x / nb_losange_y -> Nombre de losanges sur la distance x / y
-		dimlat_ep -> Épaisseur d'extrusion de la structure lattice
-		dimlat_x / dimlat_y -> Dimensions de la zone de construction
-		ep_plateaux -> Épaisseur des plateaux liant les extrémités de la structure (dans le sens de chargement)
+		- ep -> Épaisseur des parois de la structure lattice
+		- doc -> Document FreeCAD (Attention il s'agit de l'objet document, il doit-être ouvert)
+		- file_debug -> Fichier de déboggage (ouvert)
+		- nb_losange_x / nb_losange_y -> Nombre de losanges sur la distance x / y
+		- dimlat_ep -> Épaisseur d'extrusion de la structure lattice
+		- dimlat_x / dimlat_y -> Dimensions de la zone de construction
+		- ep_plateaux -> Épaisseur des plateaux liant les extrémités de la structure (dans le sens de chargement)
 					   [Épaisseur du plateau du dessous, Épaisseur du plateau du dessus]
-		semi_debug -> Tracer les lignes de construction
-		debug -> Afficher les actions dans le terminal et dans le fichier de déboggage
-		sketch_visible -> Afficher l'esquisse de départ après l'extrusion = True
-		extrude -> Réaliser l'extrusion = True
-		nom_sketch_losange -> Nom de l'esquisse du losange
-		nom_sketch_plateaux_extremitees -> Nom des esquisses de définition des plateaux
-		nom_body_losange -> Nom de la pièce
-		nom_pad_losange -> Nom du pad du losange
-		nom_pad_plateau -> Nom des pad des plateaux liant les parties hautes et basses de la structure
-		gen_plateaux -> Fonction de génération des plateaux liant les deux extrémités
-		generation_plateaux_extremitees -> True = Les plateaux aux extrémités sont générés, False = Génération des plateaux ignorés
-		wdebug -> Fonction d'écriture des informations de débogage dans le terminal et dans le fichier log
-		sketch -> Objet contenant l'esquisse de la structure losange
+		- semi_debug -> Tracer les lignes de construction
+		- debug -> Afficher les actions dans le terminal et dans le fichier de déboggage
+		- sketch_visible -> Afficher l'esquisse de départ après l'extrusion = True
+		- extrude -> Réaliser l'extrusion = True
+		- nom_sketch_losange -> Nom de l'esquisse du losange
+		- nom_sketch_plateaux_extremitees -> Nom des esquisses de définition des plateaux
+		- nom_body_losange -> Nom de la pièce
+		- nom_pad_losange -> Nom du pad du losange
+		- nom_pad_plateau -> Nom des pad des plateaux liant les parties hautes et basses de la structure
+		- gen_plateaux -> Fonction de génération des plateaux liant les deux extrémités
+		- generation_plateaux_extremitees -> True = Les plateaux aux extrémités sont générés, False = Génération des plateaux ignorés
+		- wdebug -> Fonction d'écriture des informations de débogage dans le terminal et dans le fichier log
+		- sketch -> Objet contenant l'esquisse de la structure losange
 	-----------
 	"""
 
 	# Importation des modules externes
 	import FreeCAD as App
-	import FreeCADGui, ImportGui, Part, Sketcher, math, sys
+	import FreeCADGui, ImportGui, Part, Sketcher, math
 
 	if doc == None:	doc = FreeCAD.newDocument()
 
@@ -65,7 +65,7 @@ def gen_losange(	ep=0.4,
 	-------------------------------
 	--- Variables de l'objet 3D ---
 	-------------------------------
-	Note : Toutes les dimensions sont exprimées en mm
+	Note : Toutes les dimensions sont exprimées en mm et réfèrent au schéma
 	"""
 	# Listes de points utilisés
 	liste_points_dessous = [[None for i in range(nb_losange_x)] for j in range(nb_losange_y * 2)]
@@ -115,12 +115,12 @@ def gen_losange(	ep=0.4,
 	"""
 	# Création d'une nouvelle esquisse et de la pièce
 	if sketch == "":
+		if file_debug != None and debug:
+			wdebug("Création de l'esquisse du losange : {0}\n".format(nom_sketch_losange), file_debug)
+			wdebug("Création du body du losange : {0}\n".format(nom_body_losange), file_debug)
+		
 		sketch = doc.addObject("Sketcher::SketchObject", nom_sketch_losange)
 		doc.addObject('PartDesign::Body', nom_body_losange)
-
-	if file_debug != None and debug:
-		wdebug("Création de l'esquisse du losange : {0}\n".format(nom_sketch_losange), file_debug)
-		wdebug("Création du body du losange : {0}\n".format(nom_body_losange), file_debug)
 
 	# Construction du rectangle de délimitation de la structure
 	#	Points de délimitation du quadrilatère (dans le sens anti-horaire)
@@ -350,7 +350,7 @@ def gen_losange(	ep=0.4,
 							dimlat_par_couche=[dimlat_y],
 							dimlat_ep=dimlat_ep,
 							sketch_visible=sketch_visible,
-							nom_body_losange=nom_body_losange,
+							nom_body=nom_body_losange,
 							doc=doc,
 							nom_sketch_plateaux=nom_sketch_plateaux_extremitees,
 							nom_pad_plateaux=nom_pad_plateau_extremitees,

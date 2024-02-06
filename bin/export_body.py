@@ -46,4 +46,4 @@ def export_body(doc=None,
 				Mesh.export([doc.getObject(nom_body_losange)], export_path + export_name + ".stl")
 		except:
 			if file_debug != None and debug:
-				wdebug("L'exportation du modèle 3D à échoué : {0}\n".format(export_path + "/" + export_name + ".stl"), file_debug)
+				wdebug("L'exportation du modèle 3D à échoué : {0}\n".format(export_path + export_name + ".stl"), file_debug)

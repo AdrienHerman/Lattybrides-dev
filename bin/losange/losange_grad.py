@@ -5,29 +5,29 @@ HERMAN Adrien
 10/10/2023
 """
 
-def grad_ep(	ep=0.4,
-				doc=None,
-				file_debug=None,
-				nb_couches=3,
-				nb_losange_par_couche=[2,3,2],
-				dimlat_par_couche=[40/7*2,40/7*3,40/7*2],
-				ep_par_couche=[1,0.5,0.5,1],
-				nom_sketch_par_couche=["Sketch_Losange1","Sketch_Losange2","Sketch_Losange3"],
-				nom_pad_par_couche=["Pad_Losange1","Pad_Losange2","Pad_Losange3"],
-				dimlat_x=40,
-				dimlat_ep=40,
-				nb_losange_x=[7,4,7],
-				nom_sketch_plateaux=["Sketch_Plateaux1","Sketch_Plateaux2","Sketch_Plateaux3","Sketch_Plateaux4"],
-				nom_pad_plateaux=["Pad_Plateaux1","Pad_Plateaux2","Pad_Plateaux3","Pad_Plateaux4"],
-				nom_body_losange="Body_Losange",
-				ep_plateaux=[1,0.5,0.5,1],
-				gen_plateaux=None,
-				gen_losange=None,
-				sketch_visible=False,
-				extrude=True,
-				semi_debug=False,
-				debug=False,
-				wdebug=None):
+def losange_grad(	ep=0.4,
+					doc=None,
+					file_debug=None,
+					nb_couches=3,
+					nb_losange_par_couche=[2,3,2],
+					dimlat_par_couche=[40/7*2,40/7*3,40/7*2],
+					ep_par_couche=[1,0.5,0.5,1],
+					nom_sketch_par_couche=["Sketch_Losange1","Sketch_Losange2","Sketch_Losange3"],
+					nom_pad_par_couche=["Pad_Losange1","Pad_Losange2","Pad_Losange3"],
+					dimlat_x=40,
+					dimlat_ep=40,
+					nb_losange_x=[7,4,7],
+					nom_sketch_plateaux=["Sketch_Plateaux1","Sketch_Plateaux2","Sketch_Plateaux3","Sketch_Plateaux4"],
+					nom_pad_plateaux=["Pad_Plateaux1","Pad_Plateaux2","Pad_Plateaux3","Pad_Plateaux4"],
+					nom_body_losange="Body_Losange",
+					ep_plateaux=[1,0.5,0.5,1],
+					gen_plateaux=None,
+					gen_losange=None,
+					sketch_visible=False,
+					extrude=True,
+					semi_debug=False,
+					debug=False,
+					wdebug=None):
 	"""
 	Construire un gradient d'épaisseur dans la hauteur du losange
 	Couches de losanges d'épaisseur de parois différentes
@@ -37,11 +37,11 @@ def grad_ep(	ep=0.4,
 		ep -> Épaisseur de référence pour les parois des différentes couches de la structure lattice
 		doc -> Document FreeCAD (Attention il s'agit de l'objet document, il doit-être ouvert)
 		file_debug -> Fichier de déboggage (ouvert)
-		nb_couches : Nombre de couches différentes à générer
-		nb_losange_par_couche : Liste des nombre de losange à générer pour chaque couche
-		dimlat_par_couche : Liste des dimensions y de chaque couches
-		ep_par_couche : Liste de tous les facteurs d'épaisseur à chaque couche (facteur * ep)
-		nom_sketch_par_couche : Liste de tous les noms d'esquisses
+		nb_couches -> Nombre de couches différentes à générer
+		nb_losange_par_couche -> Liste des nombre de losange à générer pour chaque couche
+		dimlat_par_couche -> Liste des dimensions y de chaque couches
+		ep_par_couche -> Liste de tous les facteurs d'épaisseur à chaque couche (facteur * ep)
+		nom_sketch_par_couche -> Liste de tous les noms d'esquisses
 		nom_pad_par_couche -> Nom de tous les pad des losanges pour chaque couche
 		dimlat_x -> Dimension de la zone de construction
 		dimlat_ep -> Épaisseur d'extrusion de la structure lattice
@@ -76,7 +76,7 @@ def grad_ep(	ep=0.4,
 	for no_couche in range(nb_couches):
 		# Création de l'esquisse de la couche
 		if file_debug != None and debug:
-			wdebug("Création de l'esquisse du losange pour la couche {1}: {0}\n".format(nom_sketch_losange, no_couche), file_debug)
+			wdebug("Création de l'esquisse du losange pour la couche {1}: {0}\n".format(nom_sketch_par_couche[no_couche], no_couche), file_debug)
 
 		sketches.append(doc.addObject("Sketcher::SketchObject", nom_sketch_par_couche[no_couche]))
 		sketches[no_couche].Placement = App.Placement(App.Vector(0, posy, 0), App.Rotation(0, 0, 0, 1))
@@ -106,7 +106,6 @@ def grad_ep(	ep=0.4,
 						nom_pad_plateau_extremitees=nom_pad_plateaux[no_couche],
 						gen_plateaux=None,
 						generation_plateaux_extremitees=False,
-						export_body=False,
 						wdebug=wdebug,
 						sketch=sketches[no_couche])
 
@@ -137,7 +136,7 @@ def grad_ep(	ep=0.4,
 						dimlat_par_couche=dimlat_par_couche,
 						dimlat_ep=dimlat_ep,
 						sketch_visible=sketch_visible,
-						nom_body_losange=nom_body_losange,
+						nom_body=nom_body_losange,
 						doc=doc,
 						nom_sketch_plateaux=nom_sketch_plateaux,
 						nom_pad_plateaux=nom_pad_plateaux,

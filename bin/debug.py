@@ -9,17 +9,17 @@ def wdebug(string_debug, file_debug):
 	print(string_debug, end="")
 	file_debug.write(string_debug)
 
-def create_file_debug(debug_current_folder=True):
+def create_file_debug(debug_current_folder=True, debug_folder=""):
 	# Importation des modules externes
 	import datetime, os
 
 	# Création du fichier de déboggage
 	now = datetime.datetime.now()
 	dt_string = now.strftime("%d_%m_%Y__%H_%M_%S")
+
 	if debug_current_folder == True:
-		debug_folder = os.getcwd()
-	else:
-		debug_folder = debug_current_folder
+		debug_folder = os.path.join(os.path.dirname(__file__), "log")
+
 	nom_file_debug = debug_folder + dt_string + ".log"
 	file_debug = open(nom_file_debug, "a")
 
