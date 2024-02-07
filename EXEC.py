@@ -453,7 +453,6 @@ class EXEC_Class:
 							nom_body,
 							"Pad_Cos_2D",
 							["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
-							gen_plateaux,
 							generation_plateaux_extremitees,
 							wdebug)
 
@@ -482,7 +481,6 @@ class EXEC_Class:
 									nom_body,
 									"Pad_Cos_2D",
 									["Pad_Plateau_Dessous", "Pad_Plateau_Dessus"],
-									gen_plateaux,
 									generation_plateaux_extremitees,
 									wdebug)
 
